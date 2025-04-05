@@ -1,5 +1,5 @@
-import django.contrib
 from django import forms
+import django.contrib
 from django.contrib.auth.forms import (
     AuthenticationForm,
     UserChangeForm,

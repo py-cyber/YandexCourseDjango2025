@@ -1,12 +1,28 @@
+import os
 from pathlib import Path
+
+import django.db.models
+import dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-ewd5vgkqvxe$rgay&(*g0kyxb8x_ctx8heaq_dj#xz-6$m&fi-'
+dotenv.load_dotenv()
 
-DEBUG = True
 
-ALLOWED_HOSTS = []
+def get_env_bool(key: str, default: str = 'True') -> bool:
+    return os.getenv(key, default) in (
+        'true',
+        'True',
+        'yes',
+        'YES',
+        '1',
+        'y',
+    )
+
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'YOUR_KEY')
+DEBUG = get_env_bool('DJANGO_DEBUG')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 
 INSTALLED_APPS = [
@@ -16,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tasks.apps.TasksConfig',
 ]
 
 MIDDLEWARE = [

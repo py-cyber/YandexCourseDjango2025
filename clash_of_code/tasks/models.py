@@ -1,0 +1,114 @@
+import django.core.validators
+import django.db.models
+from django.utils.translation import gettext_lazy as _
+import tinymce.models
+
+
+class LanguageChoices(django.db.models.TextChoices):
+    Python_3_11 = 'Py3.11', 'Python 3.11'
+
+
+class Tag(django.db.models.Model):
+    name = django.db.models.CharField(
+        verbose_name=_('name', 'task'),
+        max_length=75,
+    )
+
+    class Meta:
+        verbose_name = _('tag')
+        verbose_name_plural = _('tags')
+
+
+class Task(django.db.models.Model):
+    name = django.db.models.CharField(
+        verbose_name=_('name', 'task'),
+        max_length=75,
+    )
+
+    description = tinymce.models.HTMLField(
+        verbose_name=_('description'),
+        help_text=_('Explain the idea of the task'),
+        max_length=8000,
+    )
+
+    is_public = django.db.models.BooleanField(
+        verbose_name=_('is public'),
+        help_text=_(
+            'If you open the task for public access, other users will be able to add'
+            ' it to their contests, and moderation will be able to evaluate it and add'
+            ' it to the general pool of tasks',
+        ),
+        default=False,
+    )
+
+    difficult = django.db.models.PositiveIntegerField(
+        verbose_name=_('difficult'),
+        help_text=_('Assess the complexity of your task'),
+        validators=[
+            django.core.validators.MaxValueValidator(100),
+        ],
+    )
+
+    auther_solution = django.db.models.TextField(
+        verbose_name=_('author solution'),
+        help_text=_(
+            "The author's solution is to take a long time to pass all the tests",
+        ),
+        max_length=8000,
+    )
+
+    auther_language = django.db.models.TextField(
+        verbose_name=_('author language'),
+        choices=LanguageChoices,
+    )
+
+    tags = django.db.models.ManyToManyField(
+        Tag,
+        verbose_name=_('tags'),
+        blank=True,
+        related_name='tasks',
+    )
+
+    def clean(self):
+        # TODO когда будет тест система нужно проверить
+        # авторское решение перед сейвом и добавлением теста
+        pass
+
+    class Meta:
+        verbose_name = _('task')
+        verbose_name_plural = _('tasks')
+
+
+class TestCase(django.db.models.Model):
+    task = django.db.models.ForeignKey(
+        Task,
+        verbose_name=_('task'),
+        on_delete=django.db.models.CASCADE,
+        related_name='tests',
+    )
+
+    visible = django.db.models.BooleanField(
+        verbose_name=_('visible'),
+        help_text=_('If True, then this test will be shown as an example.'),
+    )
+
+    input_data = django.db.models.TextField(
+        verbose_name=_('input data'),
+        help_text=_(
+            'Input data for the test. It will be passed '
+            'to the program during execution via the standard stream',
+        ),
+        max_length=10000000,
+    )
+
+    output_data = django.db.models.TextField(
+        verbose_name=_('output data'),
+        help_text=_(
+            'Test output. The program should output exactly this text in this format',
+        ),
+        max_length=10000000,
+    )
+
+    class Meta:
+        verbose_name = _('test case')
+        verbose_name_plural = _('tests cases')

@@ -6,7 +6,7 @@ flake8:
   stage: lint
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
-    - pip install -r requirements/flake8.txt
+    - pip install -r requirements/lint.txt
     - flake8 --verbose
 
 black:

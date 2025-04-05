@@ -1,6 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.deprecation import MiddlewareMixin
-
 from users.models import User
 
 

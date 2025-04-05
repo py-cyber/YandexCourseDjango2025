@@ -20,8 +20,5 @@ unit-test:
   script:
     - pip install -r requirements/test.txt
     - cd clash_of_code
-    - apt update
-    - apt install gettext -y
-    - django-admin compilemessages
     - python3 manage.py test
 

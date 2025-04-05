@@ -1,0 +1,89 @@
+{% load static %}
+{% load i18n %}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="">
+                <img src="{% static 'images/logo.png' %}" alt="Логотип" width="30" height="30">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if LANGUAGE_CODE == 'ru' %} Русский {% else %} English {% endif %}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                    <li>
+                        <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.path }}">
+                            <input type="hidden" name="language" value="ru">
+                            <button type="submit" class="dropdown-item">Русский</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.path }}">
+                            <input type="hidden" name="language" value="en">
+                            <button type="submit" class="dropdown-item">English</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    {% if user.is_superuser %}
+                        <li>
+                            <a class="nav-link {% if request.resolver_match.view_name == 'admin:index' %}active{% endif %}" {% if not request.resolver_match.view_name == 'admin:index' %} href="{% url 'admin:index' %}" {% endif %}>
+                                {% translate "Админка" %}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        {% if user.profile.image %}
+                            <img src="{{ user.profile.image.url }}" alt="Аватарка" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px;">
+                        {% else %}
+                            <img src="" alt="Аватарка" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px; background: #ccc;">
+                        {% endif %}
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            {% if user.is_authenticated %}
+                                <li>
+                                    <a class="dropdown-item text-center" href="{% url 'profile' %}">
+                                        {% translate "Профиль" %}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-center">
+                                        <form action="{% url 'logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">{% translate "Выйти из аккаунта" %}</button>
+                                        </form>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'login' %}">
+                                        {% translate "Войти" %}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'signup' %}">
+                                        {% translate "Регистрация" %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

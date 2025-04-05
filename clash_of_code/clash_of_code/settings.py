@@ -1,4 +1,7 @@
+import os
 from pathlib import Path
+
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -8,6 +11,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_USER_IS_ACTIVE = os.getenv(
+    'DJANGO_DEFAULT_USER_IS_ACTIVE',
+    default=DEBUG,
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -33,7 +41,7 @@ ROOT_URLCONF = 'clash_of_code.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,8 +82,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'users.backends.EmailAuthBackend',
+]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
+
+LANGUAGES = [
+    ('ru', _('Русский')),
+    ('en', _('English')),
+]
 
 TIME_ZONE = 'UTC'
 
@@ -83,7 +100,25 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = 'login'
 
 STATIC_URL = 'static/'
+
+STATIC_DIR = BASE_DIR / 'static'
+STATICFILES_DIRS = []
+if STATIC_DIR.exists():
+    STATICFILES_DIRS += [BASE_DIR / 'static']
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'send_mail/'
+
+MAIL = os.getenv('DJANGO_MAIL', 'example@example.com')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

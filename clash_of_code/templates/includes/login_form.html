@@ -1,0 +1,19 @@
+{% load static %}
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_username" class="form-label">Email</label>
+        <input type="email" class="form-control" id="id_username" name="username" value="{{ form.username.value|default:'' }}" required>
+        {% if form.username.errors %}
+            <div class="text-danger">{{ form.username.errors }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        <label for="id_password" class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="id_password" name="password" required>
+        {% if form.password.errors %}
+            <div class="text-danger">{{ form.password.errors }}</div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Войти</button>
+</form>

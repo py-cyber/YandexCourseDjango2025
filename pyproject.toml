@@ -1,5 +1,5 @@
 [tool.flake8]
-application-import-names = ["clash_of_code"]
+application-import-names = ["clash_of_code", "users",]
 exclude = [".git","__pycache",".venv","*migrations/"]
 import-order-style = "google"
 max-line-length = 88

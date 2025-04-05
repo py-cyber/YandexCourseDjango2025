@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title text-center">Мой профиль</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mb-4 text-center">
+                                {% if user.profile.image %}
+                                    <img src="{{ user.profile.image.url }}" alt="Аватарка" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                                {% else %}
+                                    <img src="" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; background-color: #ccc;">
+                                {% endif %}
+                                <p class="text-muted">Рейтинг: {{ score }}</p>
+                            </div>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for field, errors in form.errors.items %}
+                                            {% for error in errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="mb-3">
+                                    <label for="id_username" class="form-label">Логин</label>
+                                    <input type="text" class="form-control" id="id_username" value="{{ user.username }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="id_email" name="email" value="{{ form.email.value|default:user.email }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_first_name" class="form-label">Имя</label>
+                                    <input type="text" class="form-control" id="id_first_name" name="first_name" value="{{ form.first_name.value|default:user.first_name }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_last_name" class="form-label">Фамилия</label>
+                                    <input type="text" class="form-control" id="id_last_name" name="last_name" value="{{ form.last_name.value|default:user.last_name }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_image" class="form-label">Аватарка</label>
+                                    <input type="file" class="form-control" id="id_image" name="image">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Сохранить изменения</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Выйти из аккаунта</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

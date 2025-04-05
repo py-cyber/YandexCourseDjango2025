@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title text-center">Информация о пользователе</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            {% if user.profile.image %}
+                                <img src="{{ user.profile.image.url }}" alt="Аватарка" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                            {% else %}
+                                <div class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; background-color: #ccc;"></div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label class="form-label">Почта</label>
+                                <p>{{ user.email }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Имя</label>
+                                <p>
+                                    {% if user.first_name %}
+                                        {{ user.first_name }}
+                                    {% else %}
+                                        <span style="font-style: italic; color: #888;">не указано</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Фамилия</label>
+                                <p>
+                                    {% if user.last_name %}
+                                        {{ user.last_name }}
+                                    {% else %}
+                                        <span style="font-style: italic; color: #888;">не указано</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">День рождения</label>
+                                <p>
+                                    {% if user.profile.birthday %}
+                                        {{ user.profile.birthday|date:"d.m.Y" }}
+                                    {% else %}
+                                        <span style="font-style: italic; color: #888;">не указано</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">выпито кофе</label>
+                                <p>{{ user.profile.coffee_count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

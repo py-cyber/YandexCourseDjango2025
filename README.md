@@ -12,11 +12,11 @@ apt install gettext
 ## Установка проекта:
 Для установки проекта вы можете прописать следующую команду в терминал:
 ```bash
-git clone https://gitlab.crja72.ru/django/2025/spring/course/projects/team-1.git clash_of_code
+git clone https://gitlab.crja72.ru/django/2025/spring/course/projects/team-1.git
 ```
 После нужно перейти в директорию проекта:
 ```bash
-cd 169467-kostyatchikrizov-course-1340
+cd team-1
 ```
 ## Создание виртуального окружения для проекта:
 * Создание виртуального окружения: 
@@ -46,15 +46,8 @@ pip install -r requirements/test.txt
 cp template.env .env
 ```
 * Установите нужные вам настройки в файле .env:
-* В DJANGO_ALLOWED_HOSTS пишется список в формате string,string
-* В DJANGO_SECRET_KEY пишется ваш секретный ключ
-* В DJANGO_DEBUG указывается формат запуска приложения (в режиме отладки или нет), принимает значения типа bool
-* В DJANGO_ALLOW_REVERSE принимает значения bool и указывает нужно ли включить ReverseRussianWordsMiddleware
-* В DJANGO_MAIL хранится почта, с которой будет отсылаться сообщения
-* В DJANGO_MAX_AUTH_ATTEMPTS указывается количество попыток, доступных юзеру для авторизации, после чего его аккаунт деактивируется
-* В командной строке перейти в каталог lyceum с помощью 
 ```bash 
-cd lyceum
+cd clash_of_code
 ```
 ### Подготовка базы данных
 * Создание базы данных (для этого нужно применить все миграции):

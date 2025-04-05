@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 
-import django.db.models
 import dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent

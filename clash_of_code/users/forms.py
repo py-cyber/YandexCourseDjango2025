@@ -1,5 +1,4 @@
 import django.contrib
-import users.models
 from django import forms
 from django.contrib.auth.forms import (
     AuthenticationForm,
@@ -8,7 +7,8 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.utils import timezone
+
+import users.models
 from users.models import Profile
 
 

@@ -1,0 +1,193 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-06 21:23+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: .\clash_of_code\settings.py:112
+msgid "English"
+msgstr "Английский"
+
+#: .\clash_of_code\settings.py:113
+msgid "Russian"
+msgstr "Русский"
+
+#: .\tasks\apps.py:8
+msgid "Tasks"
+msgstr "Задачи"
+
+#: .\tasks\models.py:14 .\tasks\models.py:28
+msgid "name"
+msgstr "название"
+
+#: .\tasks\models.py:22
+msgid "tag"
+msgstr "тег"
+
+#: .\tasks\models.py:23 .\tasks\models.py:91
+msgid "tags"
+msgstr "теги"
+
+#: .\tasks\models.py:34 .\tasks\models.py:169
+msgid "author"
+msgstr "автор"
+
+#: .\tasks\models.py:40
+msgid "description"
+msgstr "описание"
+
+#: .\tasks\models.py:41
+msgid "Explain the idea of the task"
+msgstr "Опишите суть задачи"
+
+#: .\tasks\models.py:46
+msgid "input data format"
+msgstr "формат входных данных"
+
+#: .\tasks\models.py:47
+msgid "Input data format"
+msgstr "Формат входных данных"
+
+#: .\tasks\models.py:52
+msgid "output data format"
+msgstr "формат выходных данных"
+
+#: .\tasks\models.py:53
+msgid "Output data format"
+msgstr "Формат выходных данных"
+
+#: .\tasks\models.py:59
+msgid "is public"
+msgstr "опубликован"
+
+#: .\tasks\models.py:61
+msgid ""
+"If you open the task for public access, other users will be able to add it "
+"to their contests, and moderation will be able to evaluate it and add it to "
+"the general pool of tasks"
+msgstr "Если вы откроете задачу в общий доступ, то другие пользователи смогу добавлять её в свои соревнования и модераторы смогут проверить её и добавить в основной пул задач "
+
+#: .\tasks\models.py:69
+msgid "difficult"
+msgstr "сложность"
+
+#: .\tasks\models.py:70
+msgid "Assess the complexity of your task"
+msgstr "Укажите сложность вашей задачи"
+
+#: .\tasks\models.py:77
+msgid "author solution"
+msgstr "авторское решение"
+
+#: .\tasks\models.py:79
+msgid "The author's solution is to take a long time to pass all the tests"
+msgstr "Авторское решение долго проходить все тесты"
+
+#: .\tasks\models.py:85
+msgid "author language"
+msgstr "авторский язык"
+
+#: .\tasks\models.py:105 .\tasks\models.py:112 .\tasks\models.py:162
+msgid "task"
+msgstr "задача"
+
+#: .\tasks\models.py:106
+msgid "tasks"
+msgstr "задачи"
+
+#: .\tasks\models.py:118
+msgid "visible"
+msgstr "открытый"
+
+#: .\tasks\models.py:119
+msgid "If True, then this test will be shown as an example."
+msgstr "Если True, то этот тест будет показан в качестве примера"
+
+#: .\tasks\models.py:124
+msgid "input data"
+msgstr "входные данные"
+
+#: .\tasks\models.py:126
+msgid ""
+"Input data for the test. It will be passed to the program during execution "
+"via the standard stream"
+msgstr "Входные данные теста. Эти данные поступят программе во время выполнения"
+
+#: .\tasks\models.py:133
+msgid "output data"
+msgstr "выходные данные"
+
+#: .\tasks\models.py:135
+msgid "Test output. The program should output exactly this text in this format"
+msgstr "Выходные данные теста. Программа должна вернуть данные в точно таком же виде"
+
+#: .\tasks\models.py:144
+msgid "test case"
+msgstr "тест"
+
+#: .\tasks\models.py:145
+msgid "tests cases"
+msgstr "тесты"
+
+#: .\tasks\models.py:150
+msgid "Compilation error"
+msgstr "Ошибка компиляции"
+
+#: .\tasks\models.py:151
+msgid "Wrong answer"
+msgstr "Неверный ответ"
+
+#: .\tasks\models.py:152
+msgid "Time limit"
+msgstr "Превышен лимит времени"
+
+#: .\tasks\models.py:153
+msgid "Memory limit"
+msgstr "Превышен лимит памяти"
+
+#: .\tasks\models.py:154
+msgid "In queue"
+msgstr "В очереди"
+
+#: .\tasks\models.py:155
+msgid "In processing"
+msgstr "В процессе"
+
+#: .\tasks\models.py:170 .\tasks\models.py:205
+msgid "solutions"
+msgstr "решения"
+
+#: .\tasks\models.py:174
+msgid "code"
+msgstr "код"
+
+#: .\tasks\models.py:179
+msgid "programming language"
+msgstr "язык программирования"
+
+#: .\tasks\models.py:184
+msgid "status"
+msgstr "статус"
+
+#: .\tasks\models.py:196
+msgid "dispatch date"
+msgstr "дата отправки"
+
+#: .\tasks\models.py:204
+msgid "solution"
+msgstr "решение"

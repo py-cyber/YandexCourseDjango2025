@@ -15,6 +15,9 @@ class Tag(django.db.models.Model):
         max_length=75,
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = _('tag')
         verbose_name_plural = _('tags')
@@ -95,7 +98,7 @@ class Task(django.db.models.Model):
         # авторское решение перед сейвом и добавлением теста
         pass
 
-    def __str(self):
+    def __str__(self):
         return self.name[:20]
 
     class Meta:
@@ -158,7 +161,6 @@ class Solution(django.db.models.Model):
         on_delete=django.db.models.CASCADE,
         verbose_name=_('task'),
         related_name='solutions',
-        editable=False,
     )
 
     user = django.db.models.ForeignKey(
@@ -166,19 +168,16 @@ class Solution(django.db.models.Model):
         on_delete=django.db.models.CASCADE,
         verbose_name=_('author'),
         related_name=_('solutions'),
-        editable=False,
     )
 
     code = django.db.models.TextField(
         verbose_name=_('code'),
         max_length=8000,
-        editable=False,
     )
 
     lang = django.db.models.TextField(
         verbose_name=_('programming language'),
         choices=LanguageChoices,
-        editable=False,
     )
 
     status = django.db.models.TextField(
@@ -196,10 +195,9 @@ class Solution(django.db.models.Model):
     dispatch_date = django.db.models.DateTimeField(
         verbose_name=_('dispatch date'),
         auto_now_add=True,
-        editable=False,
     )
 
-    def __str(self):
+    def __str__(self):
         return f'{self.lang} {self.task.name[:20]}'
 
     class Meta:

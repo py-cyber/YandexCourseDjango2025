@@ -70,3 +70,24 @@ msgstr "Войти"
 
 msgid "Регистрация"
 msgstr "Регистрация"
+
+msgid "Таблица лидеров"
+msgstr "Leaderboard"
+
+msgid "Всего: %(counter)s участник"
+msgid_plural "Всего: %(counter)s участников"
+msgstr[0] "Total: %(counter)s participant"
+msgstr[1] "Total: %(counter)s participants"
+msgstr[2] "Total: %(counter)s participants"
+
+msgid "Топ-10"
+msgstr "Top-10"
+
+msgid "Игрок"
+msgstr "Player"
+
+msgid "Рейтинг"
+msgstr "Rating"
+
+msgid "Действия"
+msgstr "Actions"

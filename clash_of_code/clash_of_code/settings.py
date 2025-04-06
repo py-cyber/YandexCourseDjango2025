@@ -34,6 +34,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'clash_of_code.urls'
@@ -92,6 +93,10 @@ LANGUAGE_CODE = 'ru'
 LANGUAGES = [
     ('ru', _('Русский')),
     ('en', _('English')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
 ]
 
 TIME_ZONE = 'UTC'

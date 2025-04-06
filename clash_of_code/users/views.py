@@ -43,10 +43,14 @@ def activate(request, username):
 
 
 def user_list(request):
-    users = User.objects.filter(is_active=True).only(
-        'username',
-        'email',
-        'date_joined',
+    users = (
+        User.objects.filter(is_active=True)
+        .only(
+            'username',
+            'email',
+            'profile__score',
+        )
+        .order_by('profile__score')
     )
     return render(request, 'users/user_list.html', {'users': users})
 

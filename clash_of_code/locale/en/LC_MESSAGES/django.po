@@ -56,3 +56,24 @@ msgstr "Login"
 
 msgid "Регистрация"
 msgstr "Signup"
+
+msgid "Таблица лидеров"
+msgstr "Leaderboard"
+
+msgid "Всего"
+msgstr "Total"
+
+msgid "%(counter)s участник"
+msgid_plural "%(counter)s участников"
+msgstr[0] "%(counter)s participant"
+msgstr[1] "%(counter)s participants"msgid "Топ-10"
+msgstr "Top-10"
+
+msgid "Игрок"
+msgstr "Player"
+
+msgid "Рейтинг"
+msgstr "Rating"
+
+msgid "Действия"
+msgstr "Actions"

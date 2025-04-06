@@ -1,3 +1,4 @@
+import django.conf
 import django.core.validators
 import django.db.models
 from django.utils.translation import gettext_lazy as _
@@ -10,7 +11,7 @@ class LanguageChoices(django.db.models.TextChoices):
 
 class Tag(django.db.models.Model):
     name = django.db.models.CharField(
-        verbose_name=_('name', 'task'),
+        verbose_name=_('name'),
         max_length=75,
     )
 
@@ -21,8 +22,15 @@ class Tag(django.db.models.Model):
 
 class Task(django.db.models.Model):
     name = django.db.models.CharField(
-        verbose_name=_('name', 'task'),
+        verbose_name=_('name'),
         max_length=75,
+    )
+
+    author = django.db.models.ForeignKey(
+        django.conf.settings.AUTH_USER_MODEL,
+        verbose_name=_('author'),
+        on_delete=django.db.models.CASCADE,
+        related_name='tasks',
     )
 
     description = tinymce.models.HTMLField(
@@ -90,6 +98,7 @@ class TestCase(django.db.models.Model):
     visible = django.db.models.BooleanField(
         verbose_name=_('visible'),
         help_text=_('If True, then this test will be shown as an example.'),
+        default=False,
     )
 
     input_data = django.db.models.TextField(
@@ -112,3 +121,61 @@ class TestCase(django.db.models.Model):
     class Meta:
         verbose_name = _('test case')
         verbose_name_plural = _('tests cases')
+
+
+class StatusChoice(django.db.models.TextChoices):
+    OK = 'OK', 'OK'
+    Compilation_error = 'CE', _('Compilation error')
+    Wrong_answer = 'WA', _('Wrong answer')
+    Time_limit = 'TL', _('Time limit')
+    Memory_limit = 'ML', _('Memory limit')
+    In_queue = 'IQ', _('In queue')
+    In_processing = 'IP', _('In processing')
+
+
+class Solution(django.db.models.Model):
+    task = django.db.models.ForeignKey(
+        Task,
+        on_delete=django.db.models.CASCADE,
+        verbose_name=_('task'),
+        related_name='solutions',
+        editable=False,
+    )
+
+    user = django.db.models.ForeignKey(
+        django.conf.settings.AUTH_USER_MODEL,
+        on_delete=django.db.models.CASCADE,
+        verbose_name=_('author'),
+        related_name=_('solutions'),
+        editable=False,
+    )
+
+    code = django.db.models.TextField(
+        verbose_name=_('code'),
+        max_length=8000,
+        editable=False,
+    )
+
+    lang = django.db.models.TextField(
+        verbose_name=_('programming language'),
+        choices=LanguageChoices,
+        editable=False,
+    )
+
+    status = django.db.models.TextField(
+        verbose_name=_('status'),
+        choices=StatusChoice,
+    )
+
+    test_error = django.db.models.ForeignKey(
+        TestCase,
+        null=True,
+        on_delete=django.db.models.SET_NULL,
+        default=None,
+    )
+
+    dispatch_date = django.db.models.DateTimeField(
+        verbose_name=_('dispatch date'),
+        auto_now_add=True,
+        editable=False,
+    )

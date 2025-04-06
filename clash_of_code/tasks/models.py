@@ -52,7 +52,6 @@ class Task(django.db.models.Model):
         verbose_name=_('output data format'),
         help_text=_('Output data format'),
         max_length=1000,
-
     )
 
     is_public = django.db.models.BooleanField(

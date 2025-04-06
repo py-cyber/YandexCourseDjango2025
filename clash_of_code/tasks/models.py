@@ -39,6 +39,19 @@ class Task(django.db.models.Model):
         max_length=8000,
     )
 
+    input_format = tinymce.models.HTMLField(
+        verbose_name=_('input data format'),
+        help_text=_('Input data format'),
+        max_length=1000,
+    )
+
+    output_format = tinymce.models.HTMLField(
+        verbose_name=_('output data format'),
+        help_text=_('Output data format'),
+        max_length=1000,
+
+    )
+
     is_public = django.db.models.BooleanField(
         verbose_name=_('is public'),
         help_text=_(
@@ -82,6 +95,9 @@ class Task(django.db.models.Model):
         # авторское решение перед сейвом и добавлением теста
         pass
 
+    def __str(self):
+        return self.name[:20]
+
     class Meta:
         verbose_name = _('task')
         verbose_name_plural = _('tasks')
@@ -117,6 +133,9 @@ class TestCase(django.db.models.Model):
         ),
         max_length=10000000,
     )
+
+    def __str__(self):
+        return self.task.name[:20]
 
     class Meta:
         verbose_name = _('test case')
@@ -179,3 +198,10 @@ class Solution(django.db.models.Model):
         auto_now_add=True,
         editable=False,
     )
+
+    def __str(self):
+        return f'{self.lang} {self.task.name[:20]}'
+
+    class Meta:
+        verbose_name = _('solution')
+        verbose_name_plural = _('solutions')

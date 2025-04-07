@@ -29,6 +29,7 @@ class Contest(models.Model):
         now = timezone.now()
         if now < self.start_time:
             return 'upcoming'
+
         if self.start_time <= now <= self.end_time:
             return 'running'
 

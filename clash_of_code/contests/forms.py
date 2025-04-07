@@ -16,9 +16,9 @@ class ContestForm(django.forms.ModelForm):
         ]
         widgets = {
             Contest.start_time.field.name: django.forms.DateTimeInput(
-                attrs={'type': 'datetime-local'}
+                attrs={'type': 'datetime-local'},
             ),
             Contest.end_time.field.name: django.forms.DateTimeInput(
-                attrs={'type': 'datetime-local'}
+                attrs={'type': 'datetime-local'},
             ),
         }

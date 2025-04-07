@@ -46,14 +46,15 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
 
         if context['is_running'] or context['is_past']:
             if context['is_registered']:
+                query = contests.models.ContestSolution.objects
                 context['solved_problems'] = set(
-                    contests.models.ContestSolution.objects.filter(
+                    query.filter(
                         user=self.request.user,
                         contest_problem__contest=contest,
                     ).values_list(
                         'contest_problem__problem_id',
                         flat=True,
-                    )
+                    ),
                 )
 
         if self.request.user.is_staff:
@@ -70,7 +71,8 @@ class ContestRegisterView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['contest'] = get_object_or_404(
-            contests.models.Contest, pk=self.kwargs['pk']
+            contests.models.Contest,
+            pk=self.kwargs['pk'],
         )
         return context
 
@@ -96,7 +98,8 @@ class ContestStandingsView(TemplateView):
         for registration in contest.contestregistration_set.filter(is_approved=True):
             user = registration.user
             solutions = contests.models.ContestSolution.objects.filter(
-                user=user, contest_problem__contest=contest
+                user=user,
+                contest_problem__contest=contest,
             )
 
             total_points = sum(s.contest_problem.points for s in solutions)
@@ -108,16 +111,17 @@ class ContestStandingsView(TemplateView):
                     'total_points': total_points,
                     'total_penalty': total_penalty,
                     'solutions': solutions,
-                }
+                },
             )
 
         context.update(
             {
                 'contest': contest,
                 'standings': sorted(
-                    standings, key=lambda x: (-x['total_points'], x['total_penalty'])
+                    standings,
+                    key=lambda x: (-x['total_points'], x['total_penalty']),
                 ),
                 'problems': contest.contestproblem_set.all().order_by('order'),
-            }
+            },
         )
         return context

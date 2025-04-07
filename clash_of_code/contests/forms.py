@@ -1,8 +1,9 @@
-from django import forms
+import django.forms
+
 from contests.models import Contest
 
 
-class ContestForm(forms.ModelForm):
+class ContestForm(django.forms.ModelForm):
     class Meta:
         model = Contest
         fields = [
@@ -14,8 +15,10 @@ class ContestForm(forms.ModelForm):
             Contest.registration_open.field.name,
         ]
         widgets = {
-            Contest.start_time.field.name:
-                forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-            Contest.end_time.field.name:
-                forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            Contest.start_time.field.name: django.forms.DateTimeInput(
+                attrs={'type': 'datetime-local'}
+            ),
+            Contest.end_time.field.name: django.forms.DateTimeInput(
+                attrs={'type': 'datetime-local'}
+            ),
         }

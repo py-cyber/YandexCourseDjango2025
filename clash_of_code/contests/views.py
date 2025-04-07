@@ -1,8 +1,9 @@
-from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from contests.models import Contest
+from django.views.generic import CreateView
+
 from contests.forms import ContestForm
+from contests.models import Contest
 
 
 class ContestCreateView(LoginRequiredMixin, CreateView):

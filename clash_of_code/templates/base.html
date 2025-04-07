@@ -11,11 +11,11 @@
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image">
     </head>
-    <body>
+    <body class="d-flex flex-column h-100">
 
     {% include 'includes/header.html' %}
 
-    <main class="container">
+    <main class="container flex-shrink-0">
         {% block content %}
         {% endblock %}
     </main>

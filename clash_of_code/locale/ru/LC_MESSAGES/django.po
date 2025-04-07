@@ -21,16 +21,14 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: templates/includes/header.html:15 templates/includes/header.html:17
-msgid "На главную"
-msgstr "На главную"
+msgid "Главную"
+msgstr "Главную"
 
 #: templates/includes/header.html:22 templates/includes/header.html:24
 msgid "О проекте"
 msgstr "О проекте"
 
 #: templates/includes/header.html:29 templates/includes/header.html:31
-msgid "Список товаров"
-msgstr "Список товаров"
 
 msgid "Русский"
 msgstr "Русский"
@@ -72,7 +70,7 @@ msgid "Регистрация"
 msgstr "Регистрация"
 
 msgid "Таблица лидеров"
-msgstr "Leaderboard"
+msgstr "Таблица лидеров"
 
 msgid "Всего: %(counter)s участник"
 msgid_plural "Всего: %(counter)s участников"
@@ -81,13 +79,37 @@ msgstr[1] "Total: %(counter)s participants"
 msgstr[2] "Total: %(counter)s participants"
 
 msgid "Топ-10"
-msgstr "Top-10"
+msgstr "Топ-10"
 
 msgid "Игрок"
-msgstr "Player"
+msgstr "Игрок"
 
 msgid "Рейтинг"
-msgstr "Rating"
+msgstr "Рейтинг"
 
 msgid "Действия"
-msgstr "Actions"
+msgstr "Действия"
+
+msgid "Добро пожаловать,"
+msgstr "Добро пожаловать,"
+
+msgid "Добро пожаловать!"
+msgstr "Добро пожаловать!"
+
+msgid "Присоединяйтесь к нам!"
+msgstr "Присоединяйтесь к нам!"
+
+msgid "Зарегистрируйтесь и получите доступ ко всем возможностям"
+msgstr "Зарегистрируйтесь и получите доступ ко всем возможностям"
+
+msgid "Зарегистрироваться"
+msgstr "Зарегистрироваться"
+
+msgid "Новенький на сайте?"
+msgstr "Новенький на сайте?"
+
+msgid "Пройди быстрое обучение!"
+msgstr "Пройди быстрое обучение!"
+
+msgid "Начать"
+msgstr "Начать"

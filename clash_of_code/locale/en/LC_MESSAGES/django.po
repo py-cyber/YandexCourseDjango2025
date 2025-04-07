@@ -19,16 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: templates/includes/header.html:15 templates/includes/header.html:17
-msgid "На главную"
+msgid "Главная"
 msgstr "Home"
 
 #: templates/includes/header.html:22 templates/includes/header.html:24
 msgid "О проекте"
 msgstr "About"
-
-#: templates/includes/header.html:29 templates/includes/header.html:31
-msgid "Список товаров"
-msgstr "Product list"
 
 msgid "Новинки"
 msgstr "New"
@@ -77,3 +73,27 @@ msgstr "Rating"
 
 msgid "Действия"
 msgstr "Actions"
+
+msgid "Добро пожаловать,"
+msgstr "Welcome,"
+
+msgid "Добро пожаловать!"
+msgstr "Welcome!"
+
+msgid "Присоединяйтесь к нам!"
+msgstr "Join us!"
+
+msgid "Зарегистрируйтесь и получите доступ ко всем возможностям"
+msgstr "Register and get access to all features"
+
+msgid "Зарегистрироваться"
+msgstr "Sign up"
+
+msgid "Новенький на сайте?"
+msgstr "New to the site?"
+
+msgid "Пройди быстрое обучение!"
+msgstr "Complete our quick tutorial!"
+
+msgid "Начать"
+msgstr "Start"

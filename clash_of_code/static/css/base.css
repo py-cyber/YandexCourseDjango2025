@@ -9,13 +9,15 @@
 }
 
 main {
-    flex: 1;
+    flex: 1 0 auto;
 }
 
 body {
   background-color: var(--bs-dark) !important;
   color: var(--bs-body-color) !important;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar {
@@ -105,7 +107,8 @@ body {
 
 .btn-primary:hover {
   background-color: var(--bs-secondary);
-  color: #112837;
+  border-color: var(--bs-primary);
+  color: #fcffff;
 }
 
 .btn-outline-primary {
@@ -116,7 +119,7 @@ body {
 
 .btn-outline-primary:hover {
   background-color: var(--bs-primary);
-  color: #112837;
+  color: #fcffff;
 }
 
 .btn-danger {

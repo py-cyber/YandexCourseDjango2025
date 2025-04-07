@@ -2,14 +2,27 @@ import os
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
+import dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-ewd5vgkqvxe$rgay&(*g0kyxb8x_ctx8heaq_dj#xz-6$m&fi-'
+dotenv.load_dotenv()
 
-DEBUG = True
 
-ALLOWED_HOSTS = []
+def get_env_bool(key: str, default: str = 'True') -> bool:
+    return os.getenv(key, default) in (
+        'true',
+        'True',
+        'yes',
+        'YES',
+        '1',
+        'y',
+    )
+
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'YOUR_KEY')
+DEBUG = get_env_bool('DJANGO_DEBUG')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 DEFAULT_USER_IS_ACTIVE = os.getenv(
     'DJANGO_DEFAULT_USER_IS_ACTIVE',
@@ -23,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tinymce',
+    'tasks.apps.TasksConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -35,6 +50,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+]
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'clash_of_code.urls'
@@ -90,24 +113,23 @@ AUTHENTICATION_BACKENDS = [
 
 LANGUAGE_CODE = 'ru'
 
-LANGUAGES = [
-    ('ru', _('Русский')),
-    ('en', _('English')),
-]
-
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
-]
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = 'login'
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 STATIC_URL = 'static/'
 

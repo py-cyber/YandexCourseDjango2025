@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-ewd5vgkqvxe$rgay&(*g0kyxb8x_ctx8heaq_dj#xz-6$m&fi-'
+SECRET_KEY = 'fake'
 
 DEBUG = True
 
@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'contests.apps.ContestsConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,13 +74,13 @@ AUTH_PASSWORD_VALIDATORS = [
         ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.' 'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.' 'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.' 'NumericPasswordValidator',
     },
 ]
 

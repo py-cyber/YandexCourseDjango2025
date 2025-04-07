@@ -5,20 +5,20 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">{% translate "Таблица лидеров" %}</h2>
+        <h2 class="mb-0">{% translate "Leaderboard" %}</h2>
         <div class="d-flex">
             <span class="badge bg-primary me-2">
                 <i class="bi bi-people-fill me-1"></i>
-                {% translate "Всего" %}:
+                {% translate "Total" %}:
                 {% blocktranslate count counter=users|length trimmed %}
-                    {{ counter }} участник
+                    {{ counter }} participant
                 {% plural %}
-                    {{ counter }} участников
+                    {{ counter }} participants
                 {% endblocktranslate %}
             </span>
             <span class="badge bg-success">
                 <i class="bi bi-trophy-fill me-1"></i>
-                {% translate "Топ-10" %}
+                {% translate "Top 10" %}
             </span>
         </div>
     </div>
@@ -28,9 +28,9 @@
             <thead class="table-dark">
                 <tr>
                     <th scope="col" style="width: 50px;">#</th>
-                    <th scope="col">{% translate "Игрок" %}</th>
-                    <th scope="col" class="text-center">{% translate "Рейтинг" %}</th>
-                    <th scope="col" class="text-end">{% translate "Действия" %}</th>
+                    <th scope="col">{% translate "Player" %}</th>
+                    <th scope="col" class="text-center">{% translate "Rating" %}</th>
+                    <th scope="col" class="text-end">{% translate "Actions" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,7 +68,7 @@
                     <td class="text-end">
                         <a href="{% url 'user_detail' user.id %}"
                            class="btn btn-sm btn-primary">
-                            <i class="bi bi-person-lines-fill"></i> {% translate "Профиль" %}
+                            <i class="bi bi-person-lines-fill"></i> {% translate "Profile" %}
                         </a>
                     </td>
                 </tr>

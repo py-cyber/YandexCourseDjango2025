@@ -1,7 +1,8 @@
 {% load static %}
+{% load i18n %}
 <footer class="footer mt-auto py-4 bg-light js-only" style="background-color: #061721 !important;">
     <div class="container text-center">
-        <p class="mb-0">&copy; <span id="year" data-time="{% now 'Y-m-d H:i:s' %}"></span> Мой сайт. Все права защищены.</p>
+        <p class="mb-0">&copy; <span id="year" data-time="{% now 'Y-m-d H:i:s' %}"></span> {% translate "Clash of Code" %}. {% translate "All rights reserved" %}.</p>
     </div>
 </footer>
 
@@ -10,7 +11,7 @@
 <noscript>
     <footer class="footer mt-auto py-4 bg-light">
         <div class="container text-center">
-            <p class="mb-0">&copy; {% now "Y" %} Мой сайт. Все права защищены.</p>
+            <p class="mb-0">&copy; {% now "Y" %} {% translate "Clash of Code" %}. {% translate "All rights reserved" %}.</p>
         </div>
     </footer>
 </noscript>

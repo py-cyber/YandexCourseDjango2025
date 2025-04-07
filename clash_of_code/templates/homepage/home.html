@@ -7,9 +7,9 @@
     <div class="text-center mb-5">
         <h1 class="display-4">
             {% if user.is_authenticated %}
-                {% translate "Добро пожаловать," %} {{ user.username }}!
+                {% translate "Welcome," %} {{ user.username }}!
             {% else %}
-                {% translate "Добро пожаловать!" %}
+                {% translate "Welcome!" %}
             {% endif %}
         </h1>
     </div>
@@ -20,16 +20,16 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h2 class="fw-bold mb-3">
-                        {% translate "Присоединяйтесь к нам!" %}
+                        {% translate "Join us!" %}
                     </h2>
                     <p class="lead mb-4">
-                        {% translate "Зарегистрируйтесь и получите доступ ко всем возможностям" %}
+                        {% translate "Sign up to get access to all features" %}
                     </p>
                 </div>
                 <div class="col-lg-4 text-lg-end">
                     <a href="{% url 'signup' %}"
                        class="btn btn-primary btn-lg px-4 py-3">
-                        {% translate "Зарегистрироваться" %}
+                        {% translate "Sign Up" %}
                     </a>
                 </div>
             </div>
@@ -42,16 +42,16 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h2 class="fw-bold mb-3">
-                        {% translate "Новенький на сайте?" %}
+                        {% translate "New to the site?" %}
                     </h2>
                     <p class="lead mb-4">
-                        {% translate "Пройди быстрое обучение!" %}
+                        {% translate "Take a quick tutorial!" %}
                     </p>
                 </div>
                 <div class="col-lg-4 text-lg-end">
                     <a href="#"
                        class="btn btn-primary btn-lg px-4 py-3">
-                        {% translate "Начать" %}
+                        {% translate "Start" %}
                     </a>
                 </div>
             </div>

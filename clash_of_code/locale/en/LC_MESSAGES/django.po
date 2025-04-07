@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:19+0300\n"
+"POT-Creation-Date: 2025-04-07 18:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,82 +18,101 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/includes/header.html:15 templates/includes/header.html:17
-msgid "Главная"
-msgstr "Home"
+#: clash_of_code/settings.py:94
+msgid "Русский"
+msgstr "Русский"
 
-#: templates/includes/header.html:22 templates/includes/header.html:24
-msgid "О проекте"
-msgstr "About"
+#: clash_of_code/settings.py:95
+msgid "English"
+msgstr "English"
 
-msgid "Новинки"
-msgstr "New"
-
-msgid "Пятница"
-msgstr "Friday"
-
-msgid "Непроверенное"
-msgstr "Unverified"
-
-msgid "Обратная связь"
-msgstr "Callback"
-
-msgid "Админка"
-msgstr "Admin"
-
-msgid "Профиль"
-msgstr "Profile"
-
-msgid "Выйти из аккаунта"
-msgstr "Logout"
-
-msgid "Войти"
-msgstr "Login"
-
-msgid "Регистрация"
-msgstr "Signup"
-
-msgid "Таблица лидеров"
-msgstr "Leaderboard"
-
-msgid "Всего"
-msgstr "Total"
-
-msgid "%(counter)s участник"
-msgid_plural "%(counter)s участников"
-msgstr[0] "%(counter)s participant"
-msgstr[1] "%(counter)s participants"msgid "Топ-10"
-msgstr "Top-10"
-
-msgid "Игрок"
-msgstr "Player"
-
-msgid "Рейтинг"
-msgstr "Rating"
-
-msgid "Действия"
-msgstr "Actions"
-
-msgid "Добро пожаловать,"
+#: templates/homepage/home.html:10
+msgid "Welcome,"
 msgstr "Welcome,"
 
-msgid "Добро пожаловать!"
+#: templates/homepage/home.html:12
+msgid "Welcome!"
 msgstr "Welcome!"
 
-msgid "Присоединяйтесь к нам!"
+#: templates/homepage/home.html:23
+msgid "Join us!"
 msgstr "Join us!"
 
-msgid "Зарегистрируйтесь и получите доступ ко всем возможностям"
-msgstr "Register and get access to all features"
+#: templates/homepage/home.html:26
+msgid "Sign up to get access to all features"
+msgstr "Sign up to get access to all features"
 
-msgid "Зарегистрироваться"
-msgstr "Sign up"
+#: templates/homepage/home.html:32 templates/includes/header.html:90
+msgid "Sign Up"
+msgstr "Sign Up"
 
-msgid "Новенький на сайте?"
+#: templates/homepage/home.html:45
+msgid "New to the site?"
 msgstr "New to the site?"
 
-msgid "Пройди быстрое обучение!"
-msgstr "Complete our quick tutorial!"
+#: templates/homepage/home.html:48
+msgid "Take a quick tutorial!"
+msgstr "Take a quick tutorial!"
 
-msgid "Начать"
+#: templates/homepage/home.html:54
+msgid "Start"
 msgstr "Start"
+
+#: templates/includes/footer.html:4 templates/includes/footer.html:13
+msgid "Clash of Code"
+msgstr "Clash of Code"
+
+#: templates/includes/footer.html:4 templates/includes/footer.html:13
+msgid "All rights reserved"
+msgstr "All rights reserved"
+
+#: templates/includes/header.html:43
+msgid "Home"
+msgstr "Home"
+
+#: templates/includes/header.html:48 templates/users/user_list.html:8
+msgid "Leaderboard"
+msgstr "Leaderboard"
+
+#: templates/includes/header.html:54
+msgid "Admin"
+msgstr "Admin"
+
+#: templates/includes/header.html:71 templates/users/user_list.html:71
+msgid "Profile"
+msgstr "Profile"
+
+#: templates/includes/header.html:78
+msgid "Logout"
+msgstr "Logout"
+
+#: templates/includes/header.html:85
+msgid "Login"
+msgstr "Login"
+
+#: templates/users/user_list.html:12
+msgid "Total"
+msgstr "Total"
+
+#: templates/users/user_list.html:13
+#, python-format
+msgid "%(counter)s participant"
+msgid_plural "%(counter)s participants"
+msgstr[0] "%(counter)s participant"
+msgstr[1] "%(counter)s participants"
+
+#: templates/users/user_list.html:21
+msgid "Top 10"
+msgstr "Top 10"
+
+#: templates/users/user_list.html:31
+msgid "Player"
+msgstr "Player"
+
+#: templates/users/user_list.html:32
+msgid "Rating"
+msgstr "Rating"
+
+#: templates/users/user_list.html:33
+msgid "Actions"
+msgstr "Actions"

@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="">
-                <img src="{% static 'images/logo.png' %}" alt="Логотип" width="30" height="30">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" width="30" height="30">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -13,7 +13,7 @@
 
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    {% if LANGUAGE_CODE == 'ru' %} Русский {% else %} English {% endif %}
+                    {% if LANGUAGE_CODE == 'ru' %} Russian {% else %} English {% endif %}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                     <li>
@@ -21,7 +21,7 @@
                             {% csrf_token %}
                             <input name="next" type="hidden" value="{{ request.path }}">
                             <input type="hidden" name="language" value="ru">
-                            <button type="submit" class="dropdown-item">Русский</button>
+                            <button type="submit" class="dropdown-item">Russian</button>
                         </form>
                     </li>
                     <li>
@@ -40,18 +40,18 @@
 
                     <li>
                         <a class="nav-link {% if request.resolver_match.view_name == 'homepage:home' %}active{% endif %}" {% if not request.resolver_match.view_name == 'homepage:home' %} href="{% url 'homepage:home' %}" {% endif %}>
-                            {% translate "Главная" %}
+                            {% translate "Home" %}
                         </a>
                     </li>
                     <li>
                         <a class="nav-link {% if request.resolver_match.view_name == 'user_list' %}active{% endif %}" {% if not request.resolver_match.view_name == 'user_list' %} href="{% url 'user_list' %}" {% endif %}>
-                            {% translate "Таблица лидеров" %}
+                            {% translate "Leaderboard" %}
                         </a>
                     </li>
                     {% if user.is_superuser %}
                         <li>
                             <a class="nav-link {% if request.resolver_match.view_name == 'admin:index' %}active{% endif %}" {% if not request.resolver_match.view_name == 'admin:index' %} href="{% url 'admin:index' %}" {% endif %}>
-                                {% translate "Админка" %}
+                                {% translate "Admin" %}
                             </a>
                         </li>
                     {% endif %}
@@ -60,34 +60,34 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         {% if user.profile.image %}
-                            <img src="{{ user.profile.image.url }}" alt="Аватарка" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px;">
+                            <img src="{{ user.profile.image.url }}" alt="Avatar" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px;">
                         {% else %}
-                            <img src="" alt="Аватарка" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px; background: #ccc;">
+                            <img src="" alt="Avatar" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px; background: #ccc;">
                         {% endif %}
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             {% if user.is_authenticated %}
                                 <li>
                                     <a class="dropdown-item text-center" href="{% url 'profile' %}">
-                                        {% translate "Профиль" %}
+                                        {% translate "Profile" %}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item text-center">
                                         <form action="{% url 'logout' %}" method="post">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger">{% translate "Выйти из аккаунта" %}</button>
+                                        <button type="submit" class="btn btn-danger">{% translate "Logout" %}</button>
                                         </form>
                                     </a>
                                 </li>
                             {% else %}
                                 <li>
                                     <a class="dropdown-item" href="{% url 'login' %}">
-                                        {% translate "Войти" %}
+                                        {% translate "Login" %}
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{% url 'signup' %}">
-                                        {% translate "Регистрация" %}
+                                        {% translate "Sign Up" %}
                                     </a>
                                 </li>
                             {% endif %}

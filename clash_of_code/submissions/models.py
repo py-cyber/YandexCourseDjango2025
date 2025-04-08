@@ -1,22 +1,26 @@
 from django.contrib.auth import get_user_model
 import django.db.models
+from django.utils.translation import gettext_lazy as _
 
+import problems.models
 from problems.models import Problem
 
 
 User = get_user_model()
 
 
-class Submission(django.db.models.Model):
-    VERDICT_CHOICES = [
-        ('AC', 'Accepted'),
-        ('WA', 'Wrong Answer'),
-        ('TLE', 'Time Limit Exceeded'),
-        ('MLE', 'Memory Limit Exceeded'),
-        ('RE', 'Runtime Error'),
-        ('CE', 'Compilation Error'),
-    ]
+class VerdictChoice(django.db.models.TextChoices):
+    Accept = 'AC', _('Accept')
+    Compilation_error = 'CE', _('Compilation error')
+    Wrong_answer = 'WA', _('Wrong answer')
+    Time_limit = 'TL', _('Time limit')
+    Runtime_error = 'RE', _('Runtime error')
+    Memory_limit = 'ML', _('Memory limit')
+    In_queue = 'IQ', _('In queue')
+    In_processing = 'IP', _('In processing')
 
+
+class Submission(django.db.models.Model):
     user = django.db.models.ForeignKey(
         to=User,
         on_delete=django.db.models.CASCADE,
@@ -31,9 +35,17 @@ class Submission(django.db.models.Model):
     )
     verdict = django.db.models.CharField(
         max_length=3,
-        choices=VERDICT_CHOICES,
-        default='QU',
+        choices=VerdictChoice,
+        default='IQ',
     )
+
+    test_error = django.db.models.ForeignKey(
+        problems.models.TestCase,
+        null=True,
+        on_delete=django.db.models.SET_NULL,
+        default=None,
+    )
+
     time_taken = django.db.models.FloatField(
         null=True,
         blank=True,

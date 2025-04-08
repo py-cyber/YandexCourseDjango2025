@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',
-    'tasks.apps.TasksConfig',
     'users.apps.UsersConfig',
     'contests.apps.ContestsConfig',
     'problems.apps.ProblemsConfig',

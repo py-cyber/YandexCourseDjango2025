@@ -1,18 +1,19 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
-from django.shortcuts import render
+from django.utils import timezone
+from django.views.generic import TemplateView
 
 
-def home(request):
-    template = 'homepage/home.html'
+class HomeView(TemplateView):
+    template_name = 'homepage/home.html'
 
-    show_banner = False
-    if request.user.is_authenticated:
-        user_log_date = datetime.now().date() - request.user.date_joined.date()
-        show_banner = user_log_date < timedelta(days=3)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    context = {
-        'show_banner': show_banner,
-    }
+        show_banner = False
+        if self.request.user.is_authenticated:
+            user_log_date = timezone.now().date() - self.request.user.date_joined.date()
+            show_banner = user_log_date < timedelta(days=3)
 
-    return render(request, template, context)
+        context['show_banner'] = show_banner
+        return context

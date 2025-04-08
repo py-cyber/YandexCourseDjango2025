@@ -151,3 +151,5 @@ EMAIL_FILE_PATH = 'send_mail/'
 MAIL = os.getenv('DJANGO_MAIL', 'example@example.com')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'auth.User'

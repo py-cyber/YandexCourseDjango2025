@@ -1,6 +1,6 @@
 [flake8]
 max-line-length = 88
-application_import_names = contests, users, problems, contests, submissions
+application_import_names = contests, users, problems, contests, submissions, homepage
 black-config = .black
 import-order-style = google
 

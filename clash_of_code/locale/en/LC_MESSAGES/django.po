@@ -16,65 +16,63 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: clash_of_code/settings.py:128
 msgid "English"
-msgstr "Английский"
+msgstr ""
 
 #: clash_of_code/settings.py:129
 msgid "Russian"
-msgstr "Русский"
+msgstr ""
 
 #: problems/models.py:17
 msgid "name"
-msgstr "название"
+msgstr ""
 
 #: problems/models.py:25
 msgid "tag"
-msgstr "тег"
+msgstr ""
 
 #: problems/models.py:26 problems/models.py:93
 msgid "tags"
-msgstr "теги"
+msgstr ""
 
 #: problems/models.py:31
 msgid "title"
-msgstr "название"
+msgstr ""
 
 #: problems/models.py:37
 msgid "author"
-msgstr "автор"
+msgstr ""
 
 #: problems/models.py:43
 msgid "description"
-msgstr "описание"
+msgstr ""
 
 #: problems/models.py:44
 msgid "Explain the idea of the task"
-msgstr "Опишите суть задачи"
+msgstr ""
 
 #: problems/models.py:49
 msgid "input data format"
-msgstr "формат входных данных"
+msgstr ""
 
 #: problems/models.py:50
 msgid "Input data format"
-msgstr "Формат входных данных"
+msgstr ""
 
 #: problems/models.py:55
 msgid "output data format"
-msgstr "формат выходных данных"
+msgstr ""
 
 #: problems/models.py:56
 msgid "Output data format"
-msgstr "Формат выходных данных"
+msgstr ""
 
 #: problems/models.py:61
 msgid "is public"
-msgstr "опубликован"
+msgstr ""
 
 #: problems/models.py:63
 msgid ""
@@ -82,260 +80,225 @@ msgid ""
 "to their contests, and moderation will be able to evaluate it and add it to "
 "the general pool of tasks"
 msgstr ""
-"Если вы откроете задачу в общий доступ, то другие пользователи смогу "
-"добавлять её в свои соревнования и модераторы смогут проверить её и добавить "
-"в основной пул задач "
 
 #: problems/models.py:71
 msgid "difficult"
-msgstr "сложность"
+msgstr ""
 
 #: problems/models.py:72
 msgid "Assess the complexity of your task"
-msgstr "Укажите сложность вашей задачи"
+msgstr ""
 
 #: problems/models.py:79
 msgid "author solution"
-msgstr "авторское решение"
+msgstr ""
 
 #: problems/models.py:81
 msgid "The author's solution is to take a long time to pass all the tests"
-msgstr "Авторское решение долго проходить все тесты"
+msgstr ""
 
 #: problems/models.py:87
 msgid "author language"
-msgstr "авторский язык"
+msgstr ""
 
 #: problems/models.py:117 problems/models.py:124
 msgid "problem"
-msgstr "задача"
+msgstr ""
 
 #: problems/models.py:118
 msgid "problems"
-msgstr "задачи"
+msgstr ""
 
 #: problems/models.py:130
 msgid "is sample"
-msgstr "пример"
+msgstr ""
 
 #: problems/models.py:131
 msgid "If True, then this test will be shown as an example."
-msgstr "Если True, то этот тест будет показан в качестве примера"
+msgstr ""
 
 #: problems/models.py:136
 msgid "input data"
-msgstr "входные данные"
+msgstr ""
 
 #: problems/models.py:138
 msgid ""
 "Input data for the test. It will be passed to the program during execution "
 "via the standard stream"
 msgstr ""
-"Входные данные теста. Эти данные поступят программе во время выполнения"
 
 #: problems/models.py:145
 msgid "output data"
-msgstr "выходные данные"
+msgstr ""
 
 #: problems/models.py:147
 msgid "Test output. The program should output exactly this text in this format"
 msgstr ""
-"Выходные данные теста. Программа должна вернуть данные в точно таком же виде"
 
 #: problems/models.py:156
 msgid "test case"
-msgstr "тест"
+msgstr ""
 
 #: problems/models.py:157
 msgid "tests cases"
-msgstr "тесты"
+msgstr ""
 
 #: submissions/models.py:13
 msgid "Accept"
-msgstr "Принято"
+msgstr ""
 
 #: submissions/models.py:14
 msgid "Compilation error"
-msgstr "Ошибка компиляции"
+msgstr ""
 
 #: submissions/models.py:15
 msgid "Wrong answer"
-msgstr "Неверный ответ"
+msgstr ""
 
 #: submissions/models.py:16
 msgid "Time limit"
-msgstr "Превышен лимит времени"
+msgstr ""
 
 #: submissions/models.py:17
 msgid "Runtime error"
-msgstr "Ошибка во время исполнения"
+msgstr ""
 
 #: submissions/models.py:18
 msgid "Memory limit"
-msgstr "Превышен лимит памяти"
+msgstr ""
 
 #: submissions/models.py:19
 msgid "In queue"
-msgstr "В очереди"
+msgstr ""
 
 #: submissions/models.py:20
 msgid "In processing"
-msgstr "В процессе"
+msgstr ""
 
 #: templates/homepage/home.html:10
 msgid "Welcome,"
-msgstr "Добро пожаловать,"
+msgstr ""
 
 #: templates/homepage/home.html:12
 msgid "Welcome!"
-msgstr "Добро пожаловать!"
+msgstr ""
 
 #: templates/homepage/home.html:23
 msgid "Join us!"
-msgstr "Присоединитесь к нам"
+msgstr ""
 
 #: templates/homepage/home.html:26
 msgid "Sign up to get access to all features"
-msgstr "Зарегистрируйтесь, чтобы получить доступ ко всем функциям"
+msgstr ""
 
 #: templates/homepage/home.html:32 templates/includes/header.html:90
 msgid "Sign Up"
-msgstr "Зарегистрироваться"
+msgstr ""
 
 #: templates/homepage/home.html:45
 msgid "New to the site?"
-msgstr "Впервые на сайте?"
+msgstr ""
 
 #: templates/homepage/home.html:48
 msgid "Take a quick tutorial!"
-msgstr "Пройдите быстрое обучение"
+msgstr ""
 
 #: templates/homepage/home.html:54
 msgid "Start"
-msgstr "Начать"
+msgstr ""
 
 #: templates/includes/footer.html:5 templates/includes/footer.html:14
 msgid "Clash of Code"
-msgstr "Clash of Code"
+msgstr ""
 
 #: templates/includes/footer.html:5 templates/includes/footer.html:14
 msgid "All rights reserved"
-msgstr "Все права защищены"
+msgstr ""
 
 #: templates/includes/header.html:43
 msgid "Home"
-msgstr "Главная"
+msgstr ""
 
 #: templates/includes/header.html:48 templates/users/user_list.html:8
 msgid "Leaderboard"
-msgstr "Список лучших"
+msgstr ""
 
 #: templates/includes/header.html:54
 msgid "Admin"
-msgstr "Админ-панель"
+msgstr ""
 
 #: templates/includes/header.html:71 templates/users/user_list.html:71
 msgid "Profile"
-msgstr "Профиль"
+msgstr ""
 
 #: templates/includes/header.html:78
 msgid "Logout"
-msgstr "Выйти"
+msgstr ""
 
 #: templates/includes/header.html:85
 msgid "Login"
-msgstr "Войти"
+msgstr ""
 
 #: templates/users/user_detail.html:10
 msgid "User info"
-msgstr "Информация о пользователе"
+msgstr ""
 
 #: templates/users/user_detail.html:21 templates/users/user_list.html:32
 msgid "Rating"
-msgstr "Рейтинг"
+msgstr ""
 
 #: templates/users/user_detail.html:27
-#, fuzzy
-#| msgid "name"
 msgid "Username"
-msgstr "Логин"
+msgstr ""
 
 #: templates/users/user_detail.html:31
 msgid "Email"
-msgstr "Почта"
+msgstr ""
 
 #: templates/users/user_detail.html:35
 msgid "Name"
-msgstr "Имя"
+msgstr ""
 
 #: templates/users/user_detail.html:40 templates/users/user_detail.html:50
 #: templates/users/user_detail.html:60
 msgid "not specified"
-msgstr "не указано"
+msgstr ""
 
 #: templates/users/user_detail.html:45
-#, fuzzy
-#| msgid "name"
 msgid "Surname"
-msgstr "Фамилия"
+msgstr ""
 
 #: templates/users/user_detail.html:55
 msgid "Birthday"
-msgstr "День рождения"
+msgstr ""
 
 #: templates/users/user_list.html:12
 msgid "Total"
-msgstr "Всего"
+msgstr ""
 
 #: templates/users/user_list.html:13
 #, python-format
 msgid "%(counter)s participant"
 msgid_plural "%(counter)s participants"
-msgstr[0] "%(counter)s участник"
-msgstr[1] "%(counter)s участника"
-msgstr[2] "%(counter)s участников"
-msgstr[3] "%(counter)s участника"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/users/user_list.html:21
 msgid "Top 10"
-msgstr "Топ 10"
+msgstr ""
 
 #: templates/users/user_list.html:31
 msgid "Player"
-msgstr "Игроки"
+msgstr ""
 
 #: templates/users/user_list.html:33
 msgid "Actions"
-msgstr "Решения"
+msgstr ""
 
 #: users/views.py:30
 msgid "Account activate"
-msgstr "Активный аккаунт"
+msgstr ""
 
 #: users/views.py:31
 msgid "Follow to link for activate: %(link)"
-msgstr "Перейди по ссылке чтобы активировать"
-
-#~ msgid "task"
-#~ msgstr "задача"
-
-#~ msgid "tasks"
-#~ msgstr "задачи"
-
-#~ msgid "visible"
-#~ msgstr "открытый"
-
-#~ msgid "code"
-#~ msgstr "код"
-
-#~ msgid "programming language"
-#~ msgstr "язык программирования"
-
-#~ msgid "status"
-#~ msgstr "статус"
-
-#~ msgid "dispatch date"
-#~ msgstr "дата отправки"
-
-#~ msgid "solution"
-#~ msgstr "решение"
+msgstr ""

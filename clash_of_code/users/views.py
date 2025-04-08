@@ -1,15 +1,14 @@
 from datetime import timedelta
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views import View
-from django.views.generic import FormView, ListView, DetailView, UpdateView
 from django.utils.translation import gettext_lazy as _
+from django.views import View
+from django.views.generic import DetailView, FormView, ListView, UpdateView
 
 
 from users.forms import ProfileForm, SignUpForm
@@ -33,6 +32,7 @@ class SignUpView(FormView):
             [user.email],
             fail_silently=False,
         )
+        return super().form_valid(form)
 
 
 class ActivateView(View):
@@ -48,9 +48,25 @@ class ActivateView(View):
 
 class UserListView(ListView):
     model = User
-    queryset = User.objects.user_list()
-    template_name = 'users/user_list.htm'
+    template_name = 'users/user_list.html'
     context_object_name = 'users'
+
+    def get_queryset(self):
+        users = User.objects.user_list().order_by('profile__score')[::-1]
+
+        users_num = []
+        current_num = 1
+        prev_score = None
+
+        for index, user in enumerate(users, start=1):
+            if user.profile.score != prev_score:
+                current_num = index
+                prev_score = user.profile.score
+
+            user.num = current_num
+            users_num.append(user)
+
+        return users_num
 
 
 class UserDetailView(DetailView):

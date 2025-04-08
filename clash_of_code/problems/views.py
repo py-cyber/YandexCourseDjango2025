@@ -5,4 +5,3 @@ import problems.models
 
 class ProblemsListView(ListView):
     model = problems.models.Problem
-

@@ -40,7 +40,6 @@ class User(AuthUser):
         proxy = True
 
 
-
 class Profile(models.Model):
     user = models.OneToOneField(
         User,

@@ -7,6 +7,7 @@ urlpatterns = [
     django.urls.path('tinymce/', django.urls.include('tinymce.urls')),
     django.urls.path('users/', django.urls.include('users.urls')),
     django.urls.path('i18n/', django.urls.include('django.conf.urls.i18n')),
+    django.urls.path('contests/', django.urls.include('contests.urls', namespace='contests')),
 ]
 
 if django.conf.settings.DEBUG:

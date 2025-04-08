@@ -1,4 +1,4 @@
-{% load static %}
+{% comment %} {% load static %}
 <footer class="mt-5 py-4 bg-light js-only" style="background-color: #061721 !important; position: absolute; left: 0; bottom: 0; width: 100%; height: 80px;">
     <div class="container text-center">
         <p>&copy; <span id="year" data-time="{% now 'Y-m-d H:i:s' %}"></span> Мой сайт. Все права защищены.</p>
@@ -13,4 +13,4 @@
             <p>&copy; {% now "Y" %} Мой сайт. Все права защищены.</p>
         </div>
     </footer>
-</noscript>
+</noscript> {% endcomment %}

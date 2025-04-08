@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'tinymce',
     'tasks.apps.TasksConfig',
     'users.apps.UsersConfig',
+    'contests.apps.ContestsConfig',
+    'problems.apps.ProblemsConfig',
+    'submissions.apps.SubmissionsConfig',
 ]
 
 MIDDLEWARE = [

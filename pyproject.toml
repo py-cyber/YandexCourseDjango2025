@@ -12,6 +12,7 @@ exclude = '''
 (
   .vscode
   |venv
+  |.venv
   |migrations/
   |.git
   |__pycache__/

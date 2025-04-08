@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Contest - CFClone{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2>Create New Contest</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Create Contest</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

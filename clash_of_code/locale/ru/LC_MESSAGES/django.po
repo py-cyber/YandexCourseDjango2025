@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-08 12:16+0500\n"
+"POT-Creation-Date: 2025-04-08 12:36+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,124 +150,131 @@ msgstr "тест"
 msgid "tests cases"
 msgstr "тесты"
 
-#: .\submissions\models.py:12
+#: .\submissions\models.py:13
 msgid "Accept"
 msgstr "Принято"
 
-#: .\submissions\models.py:13
+#: .\submissions\models.py:14
 msgid "Compilation error"
 msgstr "Ошибка компиляции"
 
-#: .\submissions\models.py:14
+#: .\submissions\models.py:15
 msgid "Wrong answer"
 msgstr "Неверный ответ"
 
-#: .\submissions\models.py:15
+#: .\submissions\models.py:16
 msgid "Time limit"
 msgstr "Превышен лимит времени"
 
-#: .\submissions\models.py:16
+#: .\submissions\models.py:17
 msgid "Runtime error"
 msgstr "Ошибка во время исполнения"
 
-#: .\submissions\models.py:17
+#: .\submissions\models.py:18
 msgid "Memory limit"
 msgstr "Превышен лимит памяти"
 
-#: .\submissions\models.py:18
+#: .\submissions\models.py:19
 msgid "In queue"
 msgstr "В очереди"
 
-#: .\submissions\models.py:19
+#: .\submissions\models.py:20
 msgid "In processing"
 msgstr "В процессе"
 
-#: .\templates\includes\header.html:43
-msgid "Админка"
-msgstr "Админка"
+#: .\templates\homepage\home.html:10
+msgid "Welcome,"
+msgstr "Добро пожаловать,"
 
-#: .\templates\includes\header.html:60 .\templates\users\user_list.html:71
-msgid "Профиль"
+#: .\templates\homepage\home.html:12
+msgid "Welcome!"
+msgstr "Добро пожаловать!"
+
+#: .\templates\homepage\home.html:23
+msgid "Join us!"
+msgstr "Присоединитесь к нам"
+
+#: .\templates\homepage\home.html:26
+msgid "Sign up to get access to all features"
+msgstr "Зарегистрируйтесь, чтобы получить доступ ко всем функциям"
+
+#: .\templates\homepage\home.html:32 .\templates\includes\header.html:90
+msgid "Sign Up"
+msgstr "Зарегистрироваться"
+
+#: .\templates\homepage\home.html:45
+msgid "New to the site?"
+msgstr "Впервые на сайте?"
+
+#: .\templates\homepage\home.html:48
+msgid "Take a quick tutorial!"
+msgstr "Пройдите быстрое обучение"
+
+#: .\templates\homepage\home.html:54
+msgid "Start"
+msgstr "Начать"
+
+#: .\templates\includes\footer.html:5 .\templates\includes\footer.html:14
+msgid "Clash of Code"
+msgstr "Clash of Code"
+
+#: .\templates\includes\footer.html:5 .\templates\includes\footer.html:14
+msgid "All rights reserved"
+msgstr "Все права защищены"
+
+#: .\templates\includes\header.html:43
+msgid "Home"
+msgstr "Главная"
+
+#: .\templates\includes\header.html:48 .\templates\users\user_list.html:8
+msgid "Leaderboard"
+msgstr "Список лучших"
+
+#: .\templates\includes\header.html:54
+msgid "Admin"
+msgstr "Админ-панель"
+
+#: .\templates\includes\header.html:71 .\templates\users\user_list.html:71
+msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\includes\header.html:67
-msgid "Выйти из аккаунта"
-msgstr "Выйти из аккаунта"
+#: .\templates\includes\header.html:78
+msgid "Logout"
+msgstr "Выйти"
 
-#: .\templates\includes\header.html:74
-msgid "Войти"
+#: .\templates\includes\header.html:85
+msgid "Login"
 msgstr "Войти"
 
-#: .\templates\includes\header.html:79
-msgid "Регистрация"
-msgstr "Регистрация"
-
-#: .\templates\users\user_list.html:8
-msgid "Таблица лидеров"
-msgstr "Leaderboard"
-
 #: .\templates\users\user_list.html:12
-msgid "Всего"
+msgid "Total"
 msgstr "Всего"
 
 #: .\templates\users\user_list.html:13
-#, fuzzy, python-format
-#| msgid "Всего: %(counter)s участник"
-#| msgid_plural "Всего: %(counter)s участников"
-msgid "%(counter)s участник"
-msgid_plural "%(counter)s участников"
-msgstr[0] "Total: %(counter)s participant"
-msgstr[1] "Total: %(counter)s participants"
-msgstr[2] "Total: %(counter)s participants"
+#, python-format
+msgid "%(counter)s participant"
+msgid_plural "%(counter)s participants"
+msgstr[0] "%(counter)s участник"
+msgstr[1] "%(counter)s участника"
+msgstr[2] "%(counter)s участников"
+msgstr[3] "%(counter)s участника"
+
 
 #: .\templates\users\user_list.html:21
-msgid "Топ-10"
-msgstr "Top-10"
+msgid "Top 10"
+msgstr "Топ 10"
 
 #: .\templates\users\user_list.html:31
-msgid "Игрок"
-msgstr "Player"
+msgid "Player"
+msgstr "Игроки"
 
 #: .\templates\users\user_list.html:32
-msgid "Рейтинг"
-msgstr "Rating"
+msgid "Rating"
+msgstr "Рейтинг"
 
 #: .\templates\users\user_list.html:33
-msgid "Действия"
-msgstr "Actions"
-
-#~ msgid "На главную"
-#~ msgstr "На главную"
-
-#~ msgid "О проекте"
-#~ msgstr "О проекте"
-
-#~ msgid "Список товаров"
-#~ msgstr "Список товаров"
-
-#~ msgid "Русский"
-#~ msgstr "Русский"
-
-#~ msgid "Главная"
-#~ msgstr "Главная"
-
-#~ msgid "Английский"
-#~ msgstr "Английский"
-
-#~ msgid "Tasks"
-#~ msgstr "Задачи"
-
-#~ msgid "Новинки"
-#~ msgstr "Новинки"
-
-#~ msgid "Пятница"
-#~ msgstr "Пятница"
-
-#~ msgid "Непроверенное"
-#~ msgstr "Непроверенное"
-
-#~ msgid "Обратная связь"
-#~ msgstr "Обратная связь"
+msgid "Actions"
+msgstr "Решения"
 
 #~ msgid "task"
 #~ msgstr "задача"
@@ -277,9 +284,6 @@ msgstr "Actions"
 
 #~ msgid "visible"
 #~ msgstr "открытый"
-
-#~ msgid "solutions"
-#~ msgstr "решения"
 
 #~ msgid "code"
 #~ msgstr "код"

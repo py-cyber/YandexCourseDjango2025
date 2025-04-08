@@ -10,6 +10,7 @@ urlpatterns = [
     django.urls.path(
         'contests/', django.urls.include('contests.urls', namespace='contests'),
     ),
+    django.urls.path('', django.urls.include('homepage.urls')),
 ]
 
 if django.conf.settings.DEBUG:

@@ -1,16 +1,17 @@
-{% comment %} {% load static %}
-<footer class="mt-5 py-4 bg-light js-only" style="background-color: #061721 !important; position: absolute; left: 0; bottom: 0; width: 100%; height: 80px;">
+{% load static %}
+{% load i18n %}
+<footer class="footer mt-auto py-4 bg-light js-only" style="background-color: #061721 !important;">
     <div class="container text-center">
-        <p>&copy; <span id="year" data-time="{% now 'Y-m-d H:i:s' %}"></span> Мой сайт. Все права защищены.</p>
+        <p class="mb-0">&copy; <span id="year" data-time="{% now 'Y-m-d H:i:s' %}"></span> {% translate "Clash of Code" %}. {% translate "All rights reserved" %}.</p>
     </div>
 </footer>
 
 <script src="{% static 'js/footer.js' %}"></script>
 
 <noscript>
-    <footer class="mt-5 py-4 bg-light">
+    <footer class="footer mt-auto py-4 bg-light">
         <div class="container text-center">
-            <p>&copy; {% now "Y" %} Мой сайт. Все права защищены.</p>
+            <p class="mb-0">&copy; {% now "Y" %} {% translate "Clash of Code" %}. {% translate "All rights reserved" %}.</p>
         </div>
     </footer>
-</noscript> {% endcomment %}
+</noscript>

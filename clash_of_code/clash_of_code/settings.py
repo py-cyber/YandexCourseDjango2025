@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Installed applications
     'tinymce',
+    # Project applications
     'users.apps.UsersConfig',
     'contests.apps.ContestsConfig',
     'problems.apps.ProblemsConfig',
@@ -51,7 +53,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Installed middleware
     'django.middleware.locale.LocaleMiddleware',
+    # Project middleware
 ]
 
 if DEBUG:

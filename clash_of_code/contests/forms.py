@@ -36,7 +36,7 @@ class ContestForm(django.forms.ModelForm):
 
 class AddProblemToContestForm(django.forms.ModelForm):
     problem = django.forms.ModelChoiceField(
-        queryset=problems.models.Problems.objects.all(),
+        queryset=problems.models.Problem.objects.all(),
         required=False,
         widget=django.forms.Select(attrs={'class': 'form-select'}),
     )

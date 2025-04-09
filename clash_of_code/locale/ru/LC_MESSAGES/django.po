@@ -274,7 +274,7 @@ msgstr "Рейтинг"
 
 #: .\templates\users\user_list.html:33
 msgid "Actions"
-msgstr "Решения"
+msgstr "Действия"
 
 #~ msgid "task"
 #~ msgstr "задача"

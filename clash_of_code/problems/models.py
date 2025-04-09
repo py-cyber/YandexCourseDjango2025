@@ -26,7 +26,27 @@ class Tag(django.db.models.Model):
         verbose_name_plural = _('tags')
 
 
+class ProblemManager(django.db.models.Manager):
+    def is_public(self):
+        return self.filter(
+            is_public=True,
+        )
+
+    def all_problem_list(self):
+        return (
+            self.is_public()
+            .only(
+                'title',
+                'author__username',
+                'difficult',
+                'tags__name',
+            )
+        )
+
+
 class Problem(django.db.models.Model):
+    objects = ProblemManager()
+
     title = django.db.models.CharField(
         verbose_name=_('title'),
         max_length=75,

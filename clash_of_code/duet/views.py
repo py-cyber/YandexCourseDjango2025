@@ -32,7 +32,7 @@ class CodeRoomCreateView(LoginRequiredMixin, CreateView):
         return response
 
     def get_success_url(self):
-        return reverse_lazy('room_detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('duet:room_detail', kwargs={'pk': self.object.pk})
 
 
 class CodeRoomDetailView(LoginRequiredMixin, DetailView):

@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',
+    'channels',
     'users.apps.UsersConfig',
     'contests.apps.ContestsConfig',
+    'duet.apps.DuetConfig',
     'problems.apps.ProblemsConfig',
     'submissions.apps.SubmissionsConfig',
 ]
@@ -74,12 +76,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'duet.context_processors.invitations_count',
             ],
         },
     },
 ]
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 8000)],
+        },
+    },
+}
+
 WSGI_APPLICATION = 'clash_of_code.wsgi.application'
+
+ASGI_APPLICATION = 'clash_of_code.routing.application'
 
 
 DATABASES = {

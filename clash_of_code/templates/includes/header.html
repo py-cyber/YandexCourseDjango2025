@@ -37,7 +37,6 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-
                     <li>
                         <a class="nav-link {% if request.resolver_match.view_name == 'homepage:home' %}active{% endif %}" {% if not request.resolver_match.view_name == 'homepage:home' %} href="{% url 'homepage:home' %}" {% endif %}>
                             {% translate "Home" %}
@@ -46,6 +45,11 @@
                     <li>
                         <a class="nav-link {% if request.resolver_match.view_name == 'user_list' %}active{% endif %}" {% if not request.resolver_match.view_name == 'user_list' %} href="{% url 'user_list' %}" {% endif %}>
                             {% translate "Leaderboard" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link {% if request.resolver_match.view_name == 'duet:user_rooms' %}active{% endif %}" {% if not request.resolver_match.view_name == 'duet:user_rooms' %} href="{% url 'duet:user_rooms' %}" {% endif %}>
+                            {% translate "My code rooms" %}
                         </a>
                     </li>
                     {% if user.is_superuser %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-08 16:51+0300\n"
+"POT-Creation-Date: 2025-04-09 14:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: clash_of_code/settings.py:128
+#: clash_of_code/settings.py:142
 msgid "English"
 msgstr ""
 
-#: clash_of_code/settings.py:129
+#: clash_of_code/settings.py:143
 msgid "Russian"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "tests cases"
 msgstr ""
 
-#: submissions/models.py:13
+#: submissions/models.py:13 templates/duet/invitations_list.html:17
 msgid "Accept"
 msgstr ""
 
@@ -175,6 +175,106 @@ msgstr ""
 msgid "In processing"
 msgstr ""
 
+#: templates/duet/create_room.html:10
+msgid "Create new code room"
+msgstr ""
+
+#: templates/duet/create_room.html:16
+msgid "Room name"
+msgstr ""
+
+#: templates/duet/create_room.html:20
+msgid "Programming language"
+msgstr ""
+
+#: templates/duet/create_room.html:28 templates/duet/invite_user.html:24
+msgid "Cancel"
+msgstr ""
+
+#: templates/duet/create_room.html:29
+msgid "Create room"
+msgstr ""
+
+#: templates/duet/invitations_list.html:6 templates/duet/user_rooms.html:12
+msgid "My invitations"
+msgstr ""
+
+#: templates/duet/invitations_list.html:14
+msgid "Invited by"
+msgstr ""
+
+#: templates/duet/invitations_list.html:23
+msgid "You have no pending invitations"
+msgstr ""
+
+#: templates/duet/invite_user.html:10
+msgid "Invite user to"
+msgstr ""
+
+#: templates/duet/invite_user.html:16
+msgid "Select user"
+msgstr ""
+
+#: templates/duet/invite_user.html:25
+msgid "Send invitation"
+msgstr ""
+
+#: templates/duet/room.html:30
+msgid "Invite user"
+msgstr ""
+
+#: templates/duet/room.html:33 templates/users/profile.html:54
+msgid "Save"
+msgstr ""
+
+#: templates/duet/room.html:38
+msgid "My rooms"
+msgstr ""
+
+#: templates/duet/room.html:66
+msgid "Success"
+msgstr ""
+
+#: templates/duet/room.html:70
+msgid "Code saved successfully!"
+msgstr ""
+
+#: templates/duet/user_rooms.html:7 templates/includes/header.html:52
+msgid "My code rooms"
+msgstr ""
+
+#: templates/duet/user_rooms.html:9
+msgid "Create new room"
+msgstr ""
+
+#: templates/duet/user_rooms.html:27
+msgid "Owner"
+msgstr ""
+
+#: templates/duet/user_rooms.html:28
+msgid "Participants"
+msgstr ""
+
+#: templates/duet/user_rooms.html:31
+msgid "Last updated"
+msgstr ""
+
+#: templates/duet/user_rooms.html:31
+msgid "ago"
+msgstr ""
+
+#: templates/duet/user_rooms.html:36
+msgid "Open room"
+msgstr ""
+
+#: templates/duet/user_rooms.html:40
+msgid "Invite"
+msgstr ""
+
+#: templates/duet/user_rooms.html:50
+msgid "You don't have any code rooms yet. Create one to start collaborating!"
+msgstr ""
+
 #: templates/homepage/home.html:10
 msgid "Welcome,"
 msgstr ""
@@ -191,7 +291,7 @@ msgstr ""
 msgid "Sign up to get access to all features"
 msgstr ""
 
-#: templates/homepage/home.html:32 templates/includes/header.html:90
+#: templates/homepage/home.html:32 templates/includes/header.html:94
 msgid "Sign Up"
 msgstr ""
 
@@ -215,57 +315,66 @@ msgstr ""
 msgid "All rights reserved"
 msgstr ""
 
-#: templates/includes/header.html:43
+#: templates/includes/header.html:42
 msgid "Home"
 msgstr ""
 
-#: templates/includes/header.html:48 templates/users/user_list.html:8
+#: templates/includes/header.html:47 templates/users/user_list.html:8
 msgid "Leaderboard"
 msgstr ""
 
-#: templates/includes/header.html:54
+#: templates/includes/header.html:58
 msgid "Admin"
 msgstr ""
 
-#: templates/includes/header.html:71 templates/users/user_list.html:71
+#: templates/includes/header.html:75 templates/users/user_list.html:71
 msgid "Profile"
 msgstr ""
 
-#: templates/includes/header.html:78
+#: templates/includes/header.html:82 templates/users/profile.html:63
 msgid "Logout"
 msgstr ""
 
-#: templates/includes/header.html:85
+#: templates/includes/header.html:89
 msgid "Login"
+msgstr ""
+
+#: templates/users/profile.html:10
+msgid "My profile"
+msgstr ""
+
+#: templates/users/profile.html:21 templates/users/user_detail.html:21
+#: templates/users/user_list.html:32
+msgid "Rating"
+msgstr ""
+
+#: templates/users/profile.html:35 templates/users/user_detail.html:27
+msgid "Username"
+msgstr ""
+
+#: templates/users/profile.html:39 templates/users/user_detail.html:31
+msgid "Email"
+msgstr ""
+
+#: templates/users/profile.html:43 templates/users/user_detail.html:35
+msgid "Name"
+msgstr ""
+
+#: templates/users/profile.html:47 templates/users/user_detail.html:45
+msgid "Surname"
+msgstr ""
+
+#: templates/users/profile.html:51
+msgid "Avatar"
 msgstr ""
 
 #: templates/users/user_detail.html:10
 msgid "User info"
 msgstr ""
 
-#: templates/users/user_detail.html:21 templates/users/user_list.html:32
-msgid "Rating"
-msgstr ""
-
-#: templates/users/user_detail.html:27
-msgid "Username"
-msgstr ""
-
-#: templates/users/user_detail.html:31
-msgid "Email"
-msgstr ""
-
-#: templates/users/user_detail.html:35
-msgid "Name"
-msgstr ""
-
 #: templates/users/user_detail.html:40 templates/users/user_detail.html:50
 #: templates/users/user_detail.html:60
 msgid "not specified"
-msgstr ""
-
-#: templates/users/user_detail.html:45
-msgid "Surname"
 msgstr ""
 
 #: templates/users/user_detail.html:55
@@ -295,10 +404,10 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: users/views.py:30
+#: users/views.py:29
 msgid "Account activate"
 msgstr ""
 
-#: users/views.py:31
+#: users/views.py:30
 msgid "Follow to link for activate: %(link)"
 msgstr ""

@@ -23,9 +23,9 @@
                 
                 <div id="existing-problem" {% if form.new_problem.value %}style="display:none;"{% endif %}>
                     <div class="mb-3">
-                        <label for="{{ form.problem.id_for_label }}" class="form-label">Выберите существующую задачу</label>
-                        {{ form.problem }}
-                        {{ form.problem.errors }}
+                        <label for="problem-search" class="form-label">Поиск задачи:</label>
+                        <input type="text" id="problem-search" class="form-control" 
+                               placeholder="Начните вводить название...">
                     </div>
                 </div>
                 
@@ -87,14 +87,15 @@
         <a href="{% url 'contests:detail' pk=contest.pk %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>
+{% endblock %}
 
+{% block extra_js %}
 <script>
 document.getElementById('{{ form.new_problem.id_for_label }}').addEventListener('change', function() {
     const newProblem = this.checked;
     document.getElementById('existing-problem').style.display = newProblem ? 'none' : 'block';
     document.getElementById('new-problem').style.display = newProblem ? 'block' : 'none';
     
-    // Делаем поле problem необязательным при создании новой задачи
     document.getElementById('{{ form.problem.id_for_label }}').required = !newProblem;
 });
 </script>

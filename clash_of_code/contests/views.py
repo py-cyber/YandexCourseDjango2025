@@ -1,16 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+import django.db.models
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, TemplateView
 
-from contests.forms import ContestForm
+import contests.forms
 import contests.models
+import problems.forms
+import problems.models
 
 
 class ContestCreateView(LoginRequiredMixin, CreateView):
     model = contests.models.Contest
-    form_class = ContestForm
+    form_class = contests.forms.ContestForm
     template_name = 'contests/create.html'
 
     def form_valid(self, form):
@@ -125,3 +128,49 @@ class ContestStandingsView(TemplateView):
             },
         )
         return context
+
+
+class AddProblemToContestView(LoginRequiredMixin, CreateView):
+    form_class = contests.forms.AddProblemToContestForm
+    template_name = 'contests/add_problem.html'
+    contest = 0
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.contest = get_object_or_404(
+            contests.models.Contest,
+            pk=self.kwargs['contest_id'],
+        )
+        context['contest'] = self.contest
+        return context
+
+    def form_valid(self, form):
+        if not form.instance.order:
+            query = contests.models.ContestProblem
+            last_order = (
+                query.objects.filter(
+                    contest=self.contest,
+                ).aggregate(
+                    django.db.models.Max('order'),
+                )['order__max']
+                or 0
+            )
+            form.instance.order = last_order + 1
+
+        if form.cleaned_data['new_problem']:
+            problem_form = problems.forms.ProblemForm(self.request.POST)
+            if problem_form.is_valid():
+                problem = problem_form.save(commit=False)
+                problem.author = self.request.user
+                problem.save()
+                form.instance.problem = problem
+            else:
+                return self.form_invalid(form)
+        else:
+            form.instance.problem = form.cleaned_data['problem']
+
+        form.instance.contest = self.contest
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('contests:detail', kwargs={'pk': self.kwargs['contest_id']})

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить задачу в {{ contest.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Добавить задачу в {{ contest.name }}</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4>Выберите способ добавления</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-3 form-check">
+                    {{ form.new_problem }}
+                    <label class="form-check-label" for="{{ form.new_problem.id_for_label }}">
+                        {{ form.new_problem.label }}
+                    </label>
+                </div>
+                
+                <div id="existing-problem" {% if form.new_problem.value %}style="display:none;"{% endif %}>
+                    <div class="mb-3">
+                        <label for="{{ form.problem.id_for_label }}" class="form-label">Выберите существующую задачу</label>
+                        {{ form.problem }}
+                        {{ form.problem.errors }}
+                    </div>
+                </div>
+                
+                <div id="new-problem" {% if not form.new_problem.value %}style="display:none;"{% endif %}>
+                    <h5>Создать новую задачу</h5>
+                    <div class="mb-3">
+                        <label for="id_title" class="form-label">Название</label>
+                        <input type="text" name="title" class="form-control" id="id_title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_description" class="form-label">Описание</label>
+                        <textarea name="description" class="form-control" id="id_description" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_difficulty" class="form-label">Сложность</label>
+                        <select name="difficulty" class="form-select" id="id_difficulty" required>
+                            <option value="E">Легкая</option>
+                            <option value="M">Средняя</option>
+                            <option value="H">Сложная</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_time_limit" class="form-label">Лимит времени (сек)</label>
+                        <input type="number" name="time_limit" class="form-control" id="id_time_limit" 
+                               min="1" max="10" value="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_memory_limit" class="form-label">Лимит памяти (MB)</label>
+                        <input type="number" name="memory_limit" class="form-control" id="id_memory_limit" 
+                               min="64" max="1024" value="256" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" name="is_public" class="form-check-input" id="id_is_public">
+                        <label class="form-check-label" for="id_is_public">Публичная задача</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4>Параметры задачи в контесте</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="{{ form.points.id_for_label }}" class="form-label">Баллы</label>
+                    {{ form.points }}
+                    {{ form.points.errors }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.order.id_for_label }}" class="form-label">Порядковый номер</label>
+                    {{ form.order }}
+                    {{ form.order.errors }}
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Добавить</button>
+        <a href="{% url 'contests:detail' pk=contest.pk %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+
+<script>
+document.getElementById('{{ form.new_problem.id_for_label }}').addEventListener('change', function() {
+    const newProblem = this.checked;
+    document.getElementById('existing-problem').style.display = newProblem ? 'none' : 'block';
+    document.getElementById('new-problem').style.display = newProblem ? 'block' : 'none';
+    
+    // Делаем поле problem необязательным при создании новой задачи
+    document.getElementById('{{ form.problem.id_for_label }}').required = !newProblem;
+});
+</script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title text-center">{% trans 'Create problem' %}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for field, errors in form.errors.items %}
+                                            {% for error in errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="mb-3">
+                                    <label for="id_title" class="form-label">{% trans 'Title' %}</label>
+                                    {{ form.title }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_description" class="form-label">{% trans 'Description' %}</label>
+                                    {{ form.description }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_difficult" class="form-label">{% trans 'Difficult' %}</label>
+                                    {{ form.difficult }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_is_public" class="form-label">{% trans 'Is public' %}</label>
+                                    {{ form.is_public }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_auther_solution" class="form-label">{% trans 'Auther solution' %}</label>
+                                    {{ form.auther_solution }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_auther_language" class="form-label">{% trans 'Auther language' %}</label>
+                                    {{ form.auther_language }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_input_format" class="form-label">{% trans 'Input data format' %}</label>
+                                    {{ form.input_format }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_output_format" class="form-label">{% trans 'Output data format' %}</label>
+                                    {{ form.output_format }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_time_limit" class="form-label">{% trans 'Time limit' %}</label>
+                                    {{ form.time_limit }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_memory_limit" class="form-label">{% trans 'Memory limit' %}</label>
+                                    {{ form.memory_limit }}
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">{% trans 'Change modifier' %}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Выйти из аккаунта</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

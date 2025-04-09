@@ -33,14 +33,11 @@ class ProblemManager(django.db.models.Manager):
         )
 
     def all_problem_list(self):
-        return (
-            self.is_public()
-            .only(
-                'title',
-                'author__username',
-                'difficult',
-                'tags__name',
-            )
+        return self.is_public().only(
+            'title',
+            'author__username',
+            'difficult',
+            'tags__name',
         )
 
 
@@ -117,9 +114,17 @@ class Problem(django.db.models.Model):
 
     time_limit = django.db.models.IntegerField(
         default=1,
+        validators=(
+            django.core.validators.MaxValueValidator(5),
+            django.core.validators.MinValueValidator(1),
+        ),
     )
     memory_limit = django.db.models.IntegerField(
         default=256,
+        validators=(
+            django.core.validators.MaxValueValidator(512),
+            django.core.validators.MinValueValidator(64),
+        ),
     )
     created_at = django.db.models.DateTimeField(
         auto_now_add=True,

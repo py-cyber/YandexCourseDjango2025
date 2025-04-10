@@ -45,6 +45,14 @@ class AddProblemToContestForm(django.forms.ModelForm):
         initial=False,
         label='Создать новую задачу',
     )
+    show_only_mine = django.forms.BooleanField(
+        required=False,
+        initial=False,
+        label='Мои задачи',
+        widget=django.forms.CheckboxInput(attrs={
+            'onchange': 'filterProblems(this)'
+        })
+    )
 
     class Meta:
         model = contests.models.ContestProblem
@@ -64,7 +72,13 @@ class AddProblemToContestForm(django.forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+
+        if self.user:
+            self.fields['problem'].queryset = problems.models.Problem.objects.filter(
+                django.db.models.Q(author=self.user) | django.db.models.Q(is_public=True)
+            ).order_by('title')
         for field in self.visible_fields():
             if not isinstance(field.field.widget, django.forms.CheckboxInput):
                 field.field.widget.attrs['class'] = 'form-control'

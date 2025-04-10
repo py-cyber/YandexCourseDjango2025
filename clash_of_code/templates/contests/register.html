@@ -14,7 +14,7 @@
                     {% csrf_token %}
                     <p>Are you sure you want to register for this contest?</p>
                     <button type="submit" class="btn btn-primary">Confirm Registration</button>
-                    <a href="{% url 'contest_detail' pk=contest.pk %}" class="btn btn-secondary">Cancel</a>
+                    <a href="{% url 'contests:detail' pk=contest.pk %}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

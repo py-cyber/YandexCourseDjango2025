@@ -74,10 +74,13 @@ class AddProblemToContestForm(django.forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if self.user:
-            self.fields['problem'].queryset = problems.models.Problem.objects.filter(
-                django.db.models.Q(author=self.user)
-                | django.db.models.Q(is_public=True)
-            ).order_by('title')
+            query = problems.models.Problem
+            condition = django.db.models.Q(author=self.user) | django.db.models.Q(
+                is_public=True,
+            )
+            query = query.objects.filter(condition).order_by('title')
+            self.fields['problem'].queryset = query
+
         for field in self.visible_fields():
             if not isinstance(field.field.widget, django.forms.CheckboxInput):
                 field.field.widget.attrs['class'] = 'form-control'

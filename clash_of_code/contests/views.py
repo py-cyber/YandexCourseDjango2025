@@ -1,5 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 import django.db.models
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
@@ -170,6 +170,7 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
                     for field, errors in problem_form.errors.items():
                         for error in errors:
                             form.add_error(None, f'{field}: {error}')
+
                     return self.form_invalid(form)
             else:
                 form.instance.problem = form.cleaned_data['problem']

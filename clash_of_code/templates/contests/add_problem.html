@@ -44,21 +44,21 @@
                 <h4>Выберите способ добавления</h4>
             </div>
             <div class="card-body">
-                <div class="btn-group w-100 mb-4" role="group">
-                    <input type="radio" class="btn-check" name="new_problem" id="existing_problem_btn" 
+                <div class="btn-group w-100 mb-4" role="group" id="problem-type-selector">
+                    <input type="radio" class="btn-check" name="new_problem" id="existing_problem_btn" value="false"
                            autocomplete="off" {% if not form.new_problem.value %}checked{% endif %}>
                     <label class="btn btn-outline-primary" for="existing_problem_btn">
                         <i class="bi bi-search me-2"></i>Выбрать существующую
                     </label>
                     
-                    <input type="radio" class="btn-check" name="new_problem" id="new_problem_btn" 
+                    <input type="radio" class="btn-check" name="new_problem" id="new_problem_btn" value="true"
                            autocomplete="off" {% if form.new_problem.value %}checked{% endif %}>
                     <label class="btn btn-outline-primary" for="new_problem_btn">
                         <i class="bi bi-plus-circle me-2"></i>Создать новую
                     </label>
                 </div>
                 
-                <div id="existing-problem" {% if form.new_problem.value %}style="display:none;"{% endif %}>
+                <div id="existing-problem-section" {% if form.new_problem.value %}style="display:none;"{% endif %}>
                     <div class="mb-3">
                         <label for="problem-search" class="form-label">Поиск задачи:</label>
                         <input type="text" id="problem-search" class="form-control" 
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <div id="new-problem" {% if not form.new_problem.value %}style="display:none;"{% endif %}>
+                <div id="new-problem-section" {% if not form.new_problem.value %}style="display:none;"{% endif %}>
                     <div class="mb-3">
                         <label for="id_title" class="form-label">Название</label>
                         <input type="text" name="title" class="form-control" id="id_title" required>
@@ -143,23 +143,41 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const existingProblemBtn = document.getElementById('existing_problem_btn');
+        const newProblemBtn = document.getElementById('new_problem_btn');
+        const existingSection = document.getElementById('existing-problem-section');
+        const newSection = document.getElementById('new-problem-section');
+
+        function toggleSections() {
+            if (existingProblemBtn.checked) {
+                existingSection.style.display = 'block';
+                newSection.style.display = 'none';
+            } else {
+                existingSection.style.display = 'none';
+                newSection.style.display = 'block';
+            }
+        }
+
+        existingProblemBtn.addEventListener('change', toggleSections);
+        newProblemBtn.addEventListener('change', toggleSections);
+
+        toggleSections();
+
         const searchInput = document.getElementById('problem-search');
         const resultsContainer = document.getElementById('problem-results');
         const showOnlyMine = document.getElementById('id_show_only_mine');
         const problemSelect = document.getElementById('id_problem');
         const currentUserId = {{ request.user.id }};
     
-        // Получаем данные задач с улучшенным парсингом
         const problemsData = Array.from(problemSelect.options).map(option => {
             try {
-                // Более надежный способ извлечения данных
                 const textParts = option.text.split('(Автор:');
                 const title = textParts[0].trim();
                 const authorPart = textParts[1] ? textParts[1].replace(')', '').trim() : '';
                 
                 return {
                     id: option.value,
-                    title: title || `Задача #${option.value}`, // Fallback если title пустой
+                    title: title || `Задача #${option.value}`,
                     author: authorPart,
                     authorId: option.dataset.author || '',
                     originalText: option.text
@@ -176,8 +194,6 @@
             }
         }).filter(Boolean);
 
-        console.log('Загруженные задачи:', problemsData);
-    
         function normalizeString(str) {
             return str.normalize('NFKC').trim().toLowerCase();
         }
@@ -242,7 +258,6 @@
             }
         }
     
-        // Обработчики событий
         searchInput.addEventListener('input', showResults);
         searchInput.addEventListener('focus', showResults);
         showOnlyMine.addEventListener('change', showResults);
@@ -252,16 +267,11 @@
                 resultsContainer.style.display = 'none';
             }
         });
-
-        // Логирование для отладки
-        console.log('Raw select options:', Array.from(problemSelect.options).map(opt => ({
-            value: opt.value,
-            text: opt.text,
-            dataset: opt.dataset
-        })));
     });
 </script>
+{% endblock %}
 
+{% block extra_css %}
 <style>
     .btn-group .btn {
         flex: 1;

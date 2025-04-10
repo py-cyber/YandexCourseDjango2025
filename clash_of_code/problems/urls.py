@@ -9,7 +9,11 @@ urlpatterns = [
         'create/', problems.views.ProblemsCreateView.as_view(), name='create_task'
     ),
     django.urls.path(
-        'update/<int:pk>', problems.views.ProblemsUpdateView.as_view(), name='update'
+        'update/<int:pk>/', problems.views.ProblemsUpdateView.as_view(), name='update'
     ),
-    django.urls.path('/<int:pk>', problems.views.problem_view, name='problem'),
+    django.urls.path(
+        'tests/<int:pk>/', problems.views.ProblemsTestView.as_view(), name='tests'
+    ),
+    django.urls.path('<int:pk>/', problems.views.problem_view, name='problem'),
+    django.urls.path('tests/<int:pk>/update-task-order/', problems.views.update_test_order, name='update_task_order'),
 ]

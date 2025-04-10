@@ -31,4 +31,5 @@ class ProblemsForm(FormControlMixin, django.forms.ModelForm):
             problems.models.Problem.output_format.field.name,
             problems.models.Problem.time_limit.field.name,
             problems.models.Problem.memory_limit.field.name,
+            problems.models.Problem.tags.field.name,
         )

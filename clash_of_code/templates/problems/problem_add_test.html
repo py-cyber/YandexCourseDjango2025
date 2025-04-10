@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          {% if request.resolver_match.view_name == 'problems:update' or request.resolver_match.view_name == 'problems:tests' %}
+            <div class="navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto text-center">
+                <li>
+                  <a class="nav-link {% if request.resolver_match.view_name == 'problems:update' %}active{% endif %}" {% if not request.resolver_match.view_name == 'problems:update' %} href="{% url 'problems:update' pk=object.pk %}" {% endif %}>
+                    {% translate "General" %}
+                  </a>
+                </li>
+                <li>
+                  <a class="nav-link {% if request.resolver_match.view_name == 'problems:tests' %}active{% endif %}" {% if not request.resolver_match.view_name == 'problems:tests' %} href="{% url 'problems:tests' pk=object.pk %}" {% endif %}>
+                    {% translate "Tests" %}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+          <h2 class="card-title text-center">{% trans 'Create/Update problem' %}</h2>
+        </div>
+        <div class="card-body">
+          <div class="row justify-content-center">
+            <div class="col-md-8 tasks">
+              {% for test in tests.all %}
+              <div class="task" data-index="{{ forloop.counter0 }}">
+                <div class="container mt-4">
+                  <div class="card">
+                      <div class="card-body">
+                          <form method="post" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <input type="hidden" name="number" value="{{ test.number }}">
+                              <input type="hidden" name="pk" value="{{ test.pk }}">
+
+                              <div class="row">
+                                  <div class="col-11">
+                                      <div class="mb-3">
+                                          <label for="id_input_data" class="form-label">{% trans 'Input data' %}</label>
+                                          <input type="text" id="id_input_data" name="input_data" class="form-control" value="{{ test.input_data }}">
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="id_output_data" class="form-label">{% trans 'Output data' %}</label>
+                                          <input type="text" id="id_output_data" name="output_data" class="form-control" value="{{ test.output_data }}">
+                                      </div>
+                                  </div>
+                                  <div class="col-1 d-flex flex-column justify-content-center">
+                                      <button type="button" class="btn btn-danger">
+                                        <i class="bi bi-trash"></i> X
+                                      </button>
+                                      <button type="button" class="btn btn-primary mb-2 move-up-button">↑</button>
+                                      <button type="button" class="btn btn-primary move-down-button">↓</button>
+                                  </div>
+                              </div>
+                              <button type="submit" class="btn btn-primary w-100">{% trans 'Save' %}</button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+
+              </div>
+              {% empty %}
+                <h2>{% trans 'The problem does not have any tests yet, please add them as soon as possible.' %}</h2>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    const URL = "{% url 'problems:update_task_order' pk=object.pk %}";
+</script>
+<script src="{% static 'js/problem_test_manager.js' %}"></script>
+{% endblock %}

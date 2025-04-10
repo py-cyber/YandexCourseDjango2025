@@ -1,4 +1,5 @@
 import django.conf
+from PIL.ImImagePlugin import number
 from django.contrib.auth import get_user_model
 import django.core.validators
 import django.db.models
@@ -174,9 +175,16 @@ class TestCase(django.db.models.Model):
         max_length=10000000,
     )
 
+    number = django.db.models.PositiveIntegerField(
+        verbose_name=_('number of test'),
+        default=1,
+    )
+
     def __str__(self):
-        return self.problem.title[:20]
+        return self.problem.title[:20] + ' ' + str(self.number)
 
     class Meta:
         verbose_name = _('test case')
         verbose_name_plural = _('tests cases')
+        unique_together = ['problem', 'number']
+        ordering = ['number']

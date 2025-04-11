@@ -168,14 +168,13 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
         kwargs['contest'] = self.contest
 
         query = problems.models.Problem
-        # conditions = (
-        #     django.db.models.Q(author=self.request.user) |
-        #     django.db.models.Q(is_public=True),
-        # )
+        conditions = (
+            django.db.models.Q(author=self.request.user) |
+            django.db.models.Q(is_public=True)
+        )
         kwargs['problem_queryset'] = (
             query.objects.filter(
-                django.db.models.Q(author=self.request.user) |
-                django.db.models.Q(is_public=True),
+                conditions,
             )
             .select_related('author')
             .only('id', 'title', 'author__username', 'is_public')
@@ -197,12 +196,6 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
                     or 0
                 )
                 form.instance.order = last_order + 1
-
-            problem_data = self.request.POST.copy()
-            problem_data['author'] = self.request.user.id
-            problem_data['is_public'] = False
-            if 'difficult' not in problem_data or not problem_data['difficult']:
-                problem_data['difficult'] = 50
 
             if form.cleaned_data['new_problem']:
                 problem_form = problems.forms.ProblemForm(self.request.POST)

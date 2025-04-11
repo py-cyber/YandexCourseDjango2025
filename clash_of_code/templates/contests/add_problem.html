@@ -69,8 +69,10 @@
                                 Мои задачи
                             </label>
                         </div>
+                        <input type="hidden" id="selected_problem_id" name="problem" value="">
                         <div id="problem-results" class="mt-2 border rounded" style="display:none; max-height: 300px; overflow-y: auto;">
-                            <select id="id_problem" name="problem" class="form-select" size="8" style="border: none;">
+                            <select name="problem" id="id_problem" class="form-select mt-2">
+                                <option value="">-- Выберите задачу --</option>
                                 {% for problem in form.problem.field.queryset %}
                                     <option value="{{ problem.id }}" data-author="{{ problem.author.id }}">
                                         {{ problem.title }} (Автор: {{ problem.author.username }})
@@ -84,16 +86,16 @@
                 <div id="new-problem-section" {% if not form.new_problem.value %}style="display:none;"{% endif %}>
                     <div class="mb-3">
                         <label for="id_title" class="form-label">Название</label>
-                        <input type="text" name="title" class="form-control" id="id_title" required>
+                        <input type="text" name="title" class="form-control" id="id_title">
                     </div>
                     <div class="mb-3">
                         <label for="id_description" class="form-label">Описание</label>
-                        <textarea name="description" class="form-control" id="id_description" rows="5" required></textarea>
+                        <textarea name="description" class="form-control" id="id_description" rows="5"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="id_difficult" class="form-label">Сложность (0-100)</label>
                         <input type="number" name="difficult" class="form-control" id="id_difficult" 
-                               min="0" max="100" required
+                               min="0" max="100"
                                placeholder="Введите число от 0 до 100">
                         <div class="form-text">20 - легкая, 50 - средняя, 80 - сложная</div>
                     </div>
@@ -123,12 +125,12 @@
                 <div class="mb-3">
                     <label for="id_points" class="form-label">Баллы</label>
                     <input type="number" name="points" class="form-control" id="id_points" 
-                           value="{{ form.points.value|default:'100' }}" required>
+                           value="{{ form.points.value|default:'50' }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="id_order" class="form-label">Порядковый номер</label>
                     <input type="number" name="order" class="form-control" id="id_order" 
-                           value="{{ form.order.value }}" required>
+                           value="{{ form.order.value }}">
                 </div>
             </div>
         </div>
@@ -147,15 +149,13 @@
         const existingSection = document.getElementById('existing-problem-section');
         const newSection = document.getElementById('new-problem-section');
 
-        function toggleSections() {
-            if (existingProblemBtn.checked) {
-                existingSection.style.display = 'block';
-                newSection.style.display = 'none';
-            } else {
-                existingSection.style.display = 'none';
-                newSection.style.display = 'block';
-            }
-        }
+        const toggleSections = () => {
+            const showExisting = document.getElementById('existing_problem_btn').checked;
+            document.getElementById('existing-problem-section').style.display = 
+                showExisting ? 'block' : 'none';
+            document.getElementById('new-problem-section').style.display = 
+                showExisting ? 'none' : 'block';
+        };
 
         existingProblemBtn.addEventListener('change', toggleSections);
         newProblemBtn.addEventListener('change', toggleSections);
@@ -166,32 +166,19 @@
         const resultsContainer = document.getElementById('problem-results');
         const showOnlyMine = document.getElementById('id_show_only_mine');
         const problemSelect = document.getElementById('id_problem');
+        const selectedProblemInput = document.getElementById('selected_problem_id');
         const currentUserId = {{ request.user.id }};
     
-        const problemsData = Array.from(problemSelect.options).map(option => {
-            try {
-                const textParts = option.text.split('(Автор:');
-                const title = textParts[0].trim();
-                const authorPart = textParts[1] ? textParts[1].replace(')', '').trim() : '';
-                
-                return {
-                    id: option.value,
-                    title: title || `Задача #${option.value}`,
-                    author: authorPart,
-                    authorId: option.dataset.author || '',
-                    originalText: option.text
-                };
-            } catch (e) {
-                console.error('Ошибка парсинга задачи:', option.text, e);
-                return {
-                    id: option.value,
-                    title: `Задача #${option.value}`,
-                    author: 'Неизвестен',
-                    authorId: '',
-                    originalText: option.text
-                };
-            }
-        }).filter(Boolean);
+        const problemsData = [
+            {% for problem in form.problem.field.queryset %}
+            {
+                id: "{{ problem.id }}",
+                title: "{{ problem.title|escapejs }}",
+                author: "{{ problem.author.username|escapejs }}",
+                authorId: "{{ problem.author.id }}"
+            },
+            {% endfor %}
+        ];
 
         function normalizeString(str) {
             return str.normalize('NFKC').trim().toLowerCase();
@@ -234,6 +221,7 @@
                         searchInput.value = problem.title;
                         problemSelect.value = problem.id;
                         resultsContainer.style.display = 'none';
+                        selectedProblemInput.value = problem.id;
                     });
                     resultsContainer.appendChild(item);
                 });
@@ -261,10 +249,25 @@
         searchInput.addEventListener('focus', showResults);
         showOnlyMine.addEventListener('change', showResults);
         
+
         document.addEventListener('click', function(e) {
             if (!resultsContainer.contains(e.target) && e.target !== searchInput) {
                 resultsContainer.style.display = 'none';
             }
+        });
+
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const isNewProblem = document.getElementById('new_problem_btn').checked;
+            const problemSelected = document.getElementById('id_problem').value !== '';
+            
+            if (!isNewProblem && !problemSelected) {
+                e.preventDefault();
+                alert('Пожалуйста, выберите задачу из списка');
+                return false;
+            }
+            
+            return true;
         });
     });
 </script>

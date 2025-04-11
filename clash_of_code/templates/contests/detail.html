@@ -77,9 +77,10 @@
                             <td>{{ problem.order }}</td>
                             <td>
                                 {% if is_running and is_registered or is_past %}
-                                    <a href="{% url 'contests:problem_detail' contest_id=contest.pk problem_id=problem.pk %}">
+                                    {{ problem.problem.title }}
+                                    {% comment %} <a href="{% url 'contests:problem_detail' contest_id=contest.pk problem_id=problem.pk %}">
                                         {{ problem.problem.title }}
-                                    </a>
+                                    </a> {% endcomment %}
                                 {% else %}
                                     {{ problem.problem.title }}
                                 {% endif %}

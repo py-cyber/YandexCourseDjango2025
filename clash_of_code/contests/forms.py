@@ -45,12 +45,6 @@ class AddProblemToContestForm(django.forms.ModelForm):
         initial=False,
         label='Создать новую задачу',
     )
-    show_only_mine = django.forms.BooleanField(
-        required=False,
-        initial=False,
-        label='Мои задачи',
-        widget=django.forms.CheckboxInput(attrs={'onchange': 'filterProblems(this)'}),
-    )
 
     class Meta:
         model = contests.models.ContestProblem
@@ -70,12 +64,17 @@ class AddProblemToContestForm(django.forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
+        self.contest = kwargs.pop('contest', None)
+        user = kwargs.pop('user', None)
+        problem_queryset = kwargs.pop('problem_queryset', None)
         super().__init__(*args, **kwargs)
 
-        if self.user:
+        if problem_queryset is not None:
+            self.fields['problem'].queryset = problem_queryset
+
+        if user:
             query = problems.models.Problem
-            condition = django.db.models.Q(author=self.user) | django.db.models.Q(
+            condition = django.db.models.Q(author=user) | django.db.models.Q(
                 is_public=True,
             )
             query = query.objects.filter(condition).order_by('title')
@@ -91,6 +90,9 @@ class AddProblemToContestForm(django.forms.ModelForm):
         cleaned_data = super().clean()
         new_problem = cleaned_data.get('new_problem')
         problem = cleaned_data.get('problem')
+
+        if not self.contest:
+            raise ValidationError('Контест не указан')
 
         if not hasattr(self, 'contest') or not self.contest:
             raise ValidationError('Контест не указан')

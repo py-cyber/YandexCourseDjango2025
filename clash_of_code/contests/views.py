@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 import django.db.models
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
@@ -134,7 +135,23 @@ class ContestStandingsView(TemplateView):
 class AddProblemToContestView(LoginRequiredMixin, CreateView):
     form_class = contests.forms.AddProblemToContestForm
     template_name = 'contests/add_problem.html'
-    contest = 0
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.contest = get_object_or_404(
+            contests.models.Contest,
+            pk=self.kwargs['contest_id'],
+        )
+
+    def dispatch(self, request, *args, **kwargs):
+        if not (
+            request.user.is_staff
+            or request.user == self.contest.created_by
+            or request.user.is_superuser
+        ):
+            raise PermissionDenied('Недостаточно прав')
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -145,8 +162,27 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
         context['contest'] = self.contest
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        kwargs['contest'] = self.contest
+
+        query = problems.models.Problem
+        conditions = (
+            django.db.models.Q(author=self.request.user) |
+            django.db.models.Q(is_public=True),
+        )
+        kwargs['problem_queryset'] = (
+            query.objects.filter(conditions)
+            .select_related('author')
+            .only('id', 'title', 'author__username', 'is_public')
+        )
+        return kwargs
+
     def form_valid(self, form):
         try:
+            form.instance.contest = self.contest
+
             if not form.instance.order:
                 query = contests.models.ContestProblem
                 last_order = (
@@ -158,6 +194,12 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
                     or 0
                 )
                 form.instance.order = last_order + 1
+
+            problem_data = self.request.POST.copy()
+            problem_data['author'] = self.request.user.id
+            problem_data['is_public'] = False
+            if 'difficult' not in problem_data or not problem_data['difficult']:
+                problem_data['difficult'] = 50
 
             if form.cleaned_data['new_problem']:
                 problem_form = problems.forms.ProblemForm(self.request.POST)
@@ -180,11 +222,6 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
         except Exception as e:
             messages.error(self.request, f'Ошибка при отправке письма: {str(e)}')
             return self.form_invalid(form)
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
     def get_success_url(self):
         messages.success(self.request, 'Задача успешно добавлена в контест!')

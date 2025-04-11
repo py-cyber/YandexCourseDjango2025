@@ -66,7 +66,7 @@
                         <div class="form-check mt-2">
                             <input type="checkbox" name="show_only_mine" class="form-check-input" id="id_show_only_mine">
                             <label class="form-check-label" for="id_show_only_mine">
-                                {{ form.show_only_mine.label }}
+                                Мои задачи
                             </label>
                         </div>
                         <div id="problem-results" class="mt-2 border rounded" style="display:none; max-height: 300px; overflow-y: auto;">
@@ -91,12 +91,11 @@
                         <textarea name="description" class="form-control" id="id_description" rows="5" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="id_difficulty" class="form-label">Сложность</label>
-                        <select name="difficulty" class="form-select" id="id_difficulty" required>
-                            <option value="E">Легкая</option>
-                            <option value="M">Средняя</option>
-                            <option value="H">Сложная</option>
-                        </select>
+                        <label for="id_difficult" class="form-label">Сложность (0-100)</label>
+                        <input type="number" name="difficult" class="form-control" id="id_difficult" 
+                               min="0" max="100" required
+                               placeholder="Введите число от 0 до 100">
+                        <div class="form-text">20 - легкая, 50 - средняя, 80 - сложная</div>
                     </div>
                     <div class="mb-3">
                         <label for="id_time_limit" class="form-label">Лимит времени (сек)</label>
@@ -129,7 +128,7 @@
                 <div class="mb-3">
                     <label for="id_order" class="form-label">Порядковый номер</label>
                     <input type="number" name="order" class="form-control" id="id_order" 
-                           value="{{ form.order.value|default:'1' }}" required>
+                           value="{{ form.order.value }}" required>
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ urlpatterns = [
     path('<int:pk>/', views.CodeRoomDetailView.as_view(), name='room_detail'),
     path('my-rooms/', views.UserRoomsListView.as_view(), name='user_rooms'),
     path('<int:pk>/save/', views.CodeRoomSaveView.as_view(), name='save_room_content'),
+    path('<int:pk>/delete/', views.CodeRoomDeleteView.as_view(), name='room_delete'),
     path(
         '<int:room_id>/invite/',
         views.RoomInviteCreateView.as_view(),

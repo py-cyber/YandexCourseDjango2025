@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-09 14:32+0300\n"
+"POT-Creation-Date: 2025-04-11 17:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,6 +195,7 @@ msgid "Programming language"
 msgstr "Язык программирования"
 
 #: templates/duet/create_room.html:28 templates/duet/invite_user.html:24
+#: templates/duet/room_confirm_delete.html:18
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -230,21 +231,34 @@ msgstr "Отправить приглашение"
 msgid "Invite user"
 msgstr "Пригласить пользователя"
 
-#: templates/duet/room.html:33 templates/users/profile.html:54
+#: templates/duet/room.html:33 templates/users/profile.html:66
 msgid "Save"
 msgstr "Сохранить"
 
-#: templates/duet/room.html:38
+#: templates/duet/room.html:37 templates/duet/room_confirm_delete.html:17
+#: templates/duet/user_rooms.html:42
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/duet/room.html:43
 msgid "My rooms"
 msgstr "Мои комнаты"
 
-#: templates/duet/room.html:66
+#: templates/duet/room.html:71
 msgid "Success"
 msgstr "Успешно"
 
-#: templates/duet/room.html:70
+#: templates/duet/room.html:75
 msgid "Code saved successfully!"
 msgstr "Код успешно сохранен"
+
+#: templates/duet/room_confirm_delete.html:11
+msgid "Are you sure you want to delete the room"
+msgstr "Вы уверены, что хотите удалить комнату"
+
+#: templates/duet/room_confirm_delete.html:12
+msgid "This action cannot be undone"
+msgstr "Это действие не может быть отменено"
 
 #: templates/duet/user_rooms.html:7 templates/includes/header.html:52
 msgid "My code rooms"
@@ -280,7 +294,7 @@ msgstr "Открыть комнату"
 msgid "Invite"
 msgstr "Пригласить"
 
-#: templates/duet/user_rooms.html:50
+#: templates/duet/user_rooms.html:51
 msgid "You don't have any code rooms yet. Create one to start collaborating!"
 msgstr ""
 "У вас пока нет комнат для кода. Создайте одну, чтобы начать совместную "
@@ -342,7 +356,7 @@ msgstr "Админ-панель"
 msgid "Profile"
 msgstr "Профиль"
 
-#: templates/includes/header.html:82 templates/users/profile.html:63
+#: templates/includes/header.html:82 templates/users/profile.html:75
 msgid "Logout"
 msgstr "Выйти"
 
@@ -350,40 +364,46 @@ msgstr "Выйти"
 msgid "Login"
 msgstr "Войти"
 
-#: templates/users/profile.html:10
-#, fuzzy
-#| msgid "Profile"
+#: templates/users/profile.html:11
 msgid "My profile"
 msgstr "Профиль"
 
-#: templates/users/profile.html:21 templates/users/user_detail.html:21
+#: templates/users/profile.html:27 templates/users/user_detail.html:21
 #: templates/users/user_list.html:32
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: templates/users/profile.html:35 templates/users/user_detail.html:27
+#: templates/users/profile.html:41 templates/users/user_detail.html:27
 #, fuzzy
 #| msgid "name"
 msgid "Username"
 msgstr "Логин"
 
-#: templates/users/profile.html:39 templates/users/user_detail.html:31
+#: templates/users/profile.html:45 templates/users/user_detail.html:31
 msgid "Email"
 msgstr "Почта"
 
-#: templates/users/profile.html:43 templates/users/user_detail.html:35
+#: templates/users/profile.html:49 templates/users/user_detail.html:35
 msgid "Name"
 msgstr "Имя"
 
-#: templates/users/profile.html:47 templates/users/user_detail.html:45
+#: templates/users/profile.html:53 templates/users/user_detail.html:45
 #, fuzzy
 #| msgid "name"
 msgid "Surname"
 msgstr "Фамилия"
 
-#: templates/users/profile.html:51
+#: templates/users/profile.html:57
 msgid "Avatar"
 msgstr "Аватарка"
+
+#: templates/users/profile.html:62 templates/users/profile.html:63
+msgid "Choose file"
+msgstr "Выбирите файл"
+
+#: templates/users/profile.html:64
+msgid "No file chosen"
+msgstr "Файл не выбран"
 
 #: templates/users/user_detail.html:10
 msgid "User info"

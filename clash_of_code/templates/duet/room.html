@@ -32,6 +32,11 @@
                             <button id="save-btn" class="btn btn-sm btn-success">
                                 <i class="bi bi-save"></i> {% translate "Save" %}
                             </button>
+                            {% if object.owner == request.user %}
+                                <a href="{% url 'duet:room_delete' object.id %}" class="btn btn-sm btn-outline-danger me-2">
+                                    <i class="bi bi-trash"></i> {% translate "Delete" %}
+                                </a>
+                            {% endif %}
                         </div>
                         <div>
                             <a href="{% url 'duet:user_rooms' %}" class="btn btn-sm btn-outline-secondary">

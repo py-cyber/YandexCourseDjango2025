@@ -13,11 +13,16 @@
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
-                            <div class="mb-4 text-center">
+                            <div class="mb-4 text-center justify-content-center">
                                 {% if user.profile.image %}
                                     <img src="{{ user.profile.image.url }}" alt="Аватарка" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
                                 {% else %}
-                                    <img src="" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; background-color: #ccc;">
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <div class="rounded-circle bg-light text-dark d-flex align-items-center justify-content-center"
+                                             style="width: 150px; height: 150px;">
+                                            <span class="display-4">{{ user.username|first|upper }}</span>
+                                        </div>
+                                    </div>
                                 {% endif %}
                                 <p class="text-muted">{% translate "Rating" %}: {{ score }}</p>
                             </div>
@@ -50,7 +55,13 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="id_image" class="form-label">{% translate "Avatar" %}</label>
-                                    <input type="file" class="form-control" id="id_image" name="image">
+                                    <input type="file"
+                                           class="form-control"
+                                           id="id_image"
+                                           name="image"
+                                           title="{% translate 'Choose file' %}"
+                                           data-browse-text="{% translate 'Choose file' %}"
+                                           data-placeholder="{% translate 'No file chosen' %}">
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">{% translate "Save" %}</button>
                             </form>

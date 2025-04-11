@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card text-center">
+        <div class="card-header bg-danger text-white">
+            <h4>Delete Room</h4>
+        </div>
+        <div class="card-body">
+            <p>{% translate "Are you sure you want to delete the room" %} "{{ room.name }}"?</p>
+            <p>{% translate "This action cannot be undone" %}.</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-danger">{% translate "Delete" %}</button>
+                    <a href="{% url 'duet:room_detail' room.pk %}" class="btn btn-secondary">{% translate "Cancel" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

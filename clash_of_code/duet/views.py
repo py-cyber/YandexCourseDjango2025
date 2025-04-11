@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, View
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, View
 
 from duet.models import CodeRoom, ProgrammingLanguage, RoomInvitation
 
@@ -50,6 +50,18 @@ class CodeRoomDetailView(LoginRequiredMixin, DetailView):
             self.get_object().participants.exclude(id=self.request.user.id).first()
         )
         return context
+
+
+class CodeRoomDeleteView(LoginRequiredMixin, DeleteView):
+    model = CodeRoom
+    template_name = 'duet/room_confirm_delete.html'
+    context_object_name = 'room'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user)
+
+    def get_success_url(self):
+        return reverse_lazy('duet:user_rooms')
 
 
 class UserRoomsListView(LoginRequiredMixin, ListView):

@@ -39,6 +39,7 @@
                     <a href="{% url 'duet:invite_user' room.id %}" class="btn btn-sm btn-outline-success ms-2">
                         <i class="bi bi-person-plus"></i> {% translate "Invite" %}
                     </a>
+                    <a href="{% url 'duet:room_delete' room.pk %}" class="btn btn-sm btn-danger ms-2">{% translate "Delete" %}</a>
                     {% endif %}
                 </div>
             </div>

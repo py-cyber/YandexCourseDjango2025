@@ -41,6 +41,7 @@ class ProblemsForm(FormControlMixin, django.forms.ModelForm):
             problems.models.Problem.output_format.field.name: TinyMCE(),
         }
 
+
 class TestForm(django.forms.ModelForm):
     pk = django.forms.IntegerField(min_value=0, required=False)
 

@@ -1,15 +1,13 @@
 import json
 
-from PIL.ImImagePlugin import number
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import django.db.transaction
 import django.http
 from django.http import HttpResponse
 import django.shortcuts
-from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 import problems.forms
 import problems.models
@@ -71,7 +69,9 @@ class ProblemsTestView(LoginRequiredMixin, View):
 
         form = problems.forms.TestForm(request.POST)
         if not form.is_valid():
-            return django.shortcuts.redirect(django.shortcuts.reverse('problems:tests', args=[pk]))
+            return django.shortcuts.redirect(
+                django.shortcuts.reverse('problems:tests', args=[pk]),
+            )
 
         input_data = form.cleaned_data['input_data']
         output_data = form.cleaned_data['output_data']
@@ -84,10 +84,13 @@ class ProblemsTestView(LoginRequiredMixin, View):
                 output_data=output_data,
                 is_sample=is_sample,
                 problem=problem,
-                number=number
+                number=number,
             )
         else:
-            test = django.shortcuts.get_object_or_404(problems.models.TestCase, pk=pk_test)
+            test = django.shortcuts.get_object_or_404(
+                problems.models.TestCase,
+                pk=pk_test,
+            )
             test.input_data = input_data
             test.output_data = output_data
             test.is_sample = is_sample
@@ -95,9 +98,12 @@ class ProblemsTestView(LoginRequiredMixin, View):
             test.full_clean()
             test.save()
 
-        # TODO когда будет готова тест систему, здесь надо запускать проверку авторского решения
+        # TODO когда будет готова тест систему
+        # TODO здесь надо запускать проверку авторского решения
 
-        return django.shortcuts.redirect(django.shortcuts.reverse('problems:tests', args=[pk]))
+        return django.shortcuts.redirect(
+            django.shortcuts.reverse('problems:tests', args=[pk]),
+        )
 
 
 class UpdateTestOrderView(django.views.View):
@@ -136,6 +142,7 @@ class DeleteTestView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         test = self.get_object()
         return self.request.user == test.problem.author
+
 
 def problem_view(request, pk):
     return django.http.HttpResponse('бла бла бла')

@@ -21,7 +21,11 @@ urlpatterns = [
         name='tests',
     ),
     django.urls.path('<int:pk>/', problems.views.problem_view, name='problem'),
-    django.urls.path('delete_test/<int:pk>/', problems.views.DeleteTestView.as_view(), name='delete_test'),
+    django.urls.path(
+        'delete_test/<int:pk>/',
+        problems.views.DeleteTestView.as_view(),
+        name='delete_test',
+    ),
     django.urls.path(
         'tests/<int:pk>/update-task-order/',
         problems.views.UpdateTestOrderView.as_view(),

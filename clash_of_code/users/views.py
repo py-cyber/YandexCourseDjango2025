@@ -1,10 +1,9 @@
 from datetime import timedelta
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import View
@@ -28,11 +27,12 @@ class SignUpView(FormView):
         activation_link = f'http://{self.request.get_host()}/activate/{user.username}/'
         send_mail(
             _('Account activate'),
-            _('Follow to link for activate: %(link)') % {'link': activation_link},
+            _('Follow to link for activate: %(link)s') % {'link': activation_link},
             settings.DEFAULT_FROM_EMAIL,
             [user.email],
             fail_silently=False,
         )
+        return redirect(self.success_url)
 
 
 class ActivateView(View):

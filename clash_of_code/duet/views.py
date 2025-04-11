@@ -113,7 +113,7 @@ class RoomInviteCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('room_detail', kwargs={'pk': self.room.pk})
+        return reverse_lazy('duet:room_detail', kwargs={'pk': self.room.pk})
 
 
 class InvitationsListView(LoginRequiredMixin, ListView):
@@ -142,7 +142,7 @@ class AcceptInvitationView(LoginRequiredMixin, View):
         invitation.is_accepted = True
         invitation.save()
 
-        return redirect('room_detail', pk=invitation.room.id)
+        return redirect('duet:room_detail', pk=invitation.room.id)
 
 
 class CodeRoomSaveView(LoginRequiredMixin, View):

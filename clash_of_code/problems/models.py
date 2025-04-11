@@ -1,5 +1,4 @@
 import django.conf
-from PIL.ImImagePlugin import number
 from django.contrib.auth import get_user_model
 import django.core.validators
 import django.db.models

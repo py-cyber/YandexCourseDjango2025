@@ -144,5 +144,14 @@ class DeleteTestView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == test.problem.author
 
 
+class AllMyTaskView(LoginRequiredMixin, ListView):
+    model = problems.models.Problem
+    template_name = 'problems/my_tasks.html'
+    context_object_name = 'tasks'
+    paginate_by = 20
+
+    def get_queryset(self):
+        return problems.models.Problem.objects.filter(author=self.request.user)
+
 def problem_view(request, pk):
     return django.http.HttpResponse('бла бла бла')

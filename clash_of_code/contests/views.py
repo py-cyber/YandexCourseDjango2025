@@ -168,12 +168,15 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
         kwargs['contest'] = self.contest
 
         query = problems.models.Problem
-        conditions = (
-            django.db.models.Q(author=self.request.user) |
-            django.db.models.Q(is_public=True),
-        )
+        # conditions = (
+        #     django.db.models.Q(author=self.request.user) |
+        #     django.db.models.Q(is_public=True),
+        # )
         kwargs['problem_queryset'] = (
-            query.objects.filter(conditions)
+            query.objects.filter(
+                django.db.models.Q(author=self.request.user) |
+                django.db.models.Q(is_public=True),
+            )
             .select_related('author')
             .only('id', 'title', 'author__username', 'is_public')
         )

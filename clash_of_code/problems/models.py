@@ -117,6 +117,7 @@ class Problem(django.db.models.Model):
         to=Tag,
         verbose_name=_('tags'),
         related_name='tasks',
+        blank=True,
     )
 
     time_limit = django.db.models.IntegerField(

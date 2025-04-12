@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-5">
@@ -6,7 +7,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title text-center">Информация о пользователе</h2>
+                    <h2 class="card-title text-center">{% translate "User info" %}</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -14,47 +15,51 @@
                             {% if user.profile.image %}
                                 <img src="{{ user.profile.image.url }}" alt="Аватарка" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
                             {% else %}
-                                <div class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; background-color: #ccc;"></div>
+                                <div class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; background-color: #ccc; margin: auto;"></div>
                             {% endif %}
+                            <div class="mb-3">
+                                <label class="form-label">{% translate "Rating" %}:</label>
+                                <p>{{ user.profile.score }}</p>
+                            </div>
                         </div>
                         <div class="col-md-8">
                             <div class="mb-3">
-                                <label class="form-label">Почта</label>
+                                <label class="form-label">{% translate "Username" %}</label>
+                                <p>{{ user.username }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">{% translate "Email" %}</label>
                                 <p>{{ user.email }}</p>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Имя</label>
+                                <label class="form-label">{% translate "Name" %}</label>
                                 <p>
                                     {% if user.first_name %}
                                         {{ user.first_name }}
                                     {% else %}
-                                        <span style="font-style: italic; color: #888;">не указано</span>
+                                        <span style="font-style: italic; color: #888;">{% translate "not specified" %}</span>
                                     {% endif %}
                                 </p>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Фамилия</label>
+                                <label class="form-label">{% translate "Surname" %}</label>
                                 <p>
                                     {% if user.last_name %}
                                         {{ user.last_name }}
                                     {% else %}
-                                        <span style="font-style: italic; color: #888;">не указано</span>
+                                        <span style="font-style: italic; color: #888;">{% translate "not specified" %}</span>
                                     {% endif %}
                                 </p>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">День рождения</label>
+                                <label class="form-label">{% translate "Birthday" %}</label>
                                 <p>
                                     {% if user.profile.birthday %}
                                         {{ user.profile.birthday|date:"d.m.Y" }}
                                     {% else %}
-                                        <span style="font-style: italic; color: #888;">не указано</span>
+                                        <span style="font-style: italic; color: #888;">{% translate "not specified" %}</span>
                                     {% endif %}
                                 </p>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">выпито кофе</label>
-                                <p>{{ user.profile.coffee_count }}</p>
                             </div>
                         </div>
                     </div>

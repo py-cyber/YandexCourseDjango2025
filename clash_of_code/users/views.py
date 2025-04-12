@@ -32,7 +32,7 @@ class SignUpView(FormView):
             [user.email],
             fail_silently=False,
         )
-        return redirect(self.success_url)
+        return super().form_valid(form)
 
 
 class ActivateView(View):
@@ -48,9 +48,25 @@ class ActivateView(View):
 
 class UserListView(ListView):
     model = User
-    queryset = User.objects.user_list()
-    template_name = 'users/user_list.htm'
+    template_name = 'users/user_list.html'
     context_object_name = 'users'
+
+    def get_queryset(self):
+        users = User.objects.user_list().order_by('profile__score')[::-1]
+
+        users_num = []
+        current_num = 1
+        prev_score = None
+
+        for index, user in enumerate(users, start=1):
+            if user.profile.score != prev_score:
+                current_num = index
+                prev_score = user.profile.score
+
+            user.num = current_num
+            users_num.append(user)
+
+        return users_num
 
 
 class UserDetailView(DetailView):

@@ -35,8 +35,8 @@
             </thead>
             <tbody>
                 {% for user in users %}
-                <tr class="{% if forloop.first %}table-warning{% elif forloop.counter <= 3 %}table-info{% endif %}">
-                    <th scope="row" class="fw-bold">{{ forloop.counter }}</th>
+                <tr class="{% if user.num == 1 %}table-warning{% else %}table-info{% endif %}">
+                    <th scope="row" class="fw-bold">{{ user.num }}</th>
                     <td>
                         <div class="d-flex align-items-center">
                             {% if user.profile.image %}

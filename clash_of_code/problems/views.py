@@ -153,5 +153,6 @@ class AllMyTaskView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return problems.models.Problem.objects.filter(author=self.request.user)
 
+
 def problem_view(request, pk):
     return django.http.HttpResponse('бла бла бла')

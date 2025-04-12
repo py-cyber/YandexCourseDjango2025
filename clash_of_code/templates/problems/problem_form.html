@@ -55,12 +55,12 @@
                   {{ form.is_public }}
                 </div>
                 <div class="mb-3">
-                  <label for="id_auther_solution" class="form-label">{% trans 'Auther solution' %}</label>
-                  {{ form.auther_solution }}
+                  <label for="id_author_solution" class="form-label">{% trans 'Author solution' %}</label>
+                  {{ form.author_solution }}
                 </div>
                 <div class="mb-3">
-                  <label for="id_auther_language" class="form-label">{% trans 'Auther language' %}</label>
-                  {{ form.auther_language }}
+                  <label for="id_author_language" class="form-label">{% trans 'Author language' %}</label>
+                  {{ form.author_language }}
                 </div>
                 <div class="mb-3">
                   <label for="id_input_format" class="form-label">{% trans 'Input data format' %}</label>
@@ -79,20 +79,12 @@
                   {{ form.memory_limit }}
                 </div>
                 <div class="mb-3">
-                  <label for="id_tags" class="form-label">{% trans 'Memory limit' %}</label>
+                  <label for="id_tags" class="form-label">{% trans 'Tags' %}</label>
                   {{ form.tags }}
                 </div>
                 <button type="submit" class="btn btn-primary w-100">{% trans 'Change modifier' %}</button>
               </form>
             </div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <div class="d-flex justify-content-between">
-            <form action="{% url 'logout' %}" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger">Выйти из аккаунта</button>
-            </form>
           </div>
         </div>
       </div>

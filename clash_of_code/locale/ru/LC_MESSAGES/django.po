@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-08 12:36+0500\n"
+"POT-Creation-Date: 2025-04-12 11:39+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,47 +36,47 @@ msgstr "название"
 msgid "tag"
 msgstr "тег"
 
-#: .\problems\models.py:26 .\problems\models.py:93
+#: .\problems\models.py:26 .\problems\models.py:110
 msgid "tags"
 msgstr "теги"
 
-#: .\problems\models.py:31
+#: .\problems\models.py:48
 msgid "title"
 msgstr "название"
 
-#: .\problems\models.py:37
+#: .\problems\models.py:54
 msgid "author"
 msgstr "автор"
 
-#: .\problems\models.py:43
+#: .\problems\models.py:60
 msgid "description"
 msgstr "описание"
 
-#: .\problems\models.py:44
+#: .\problems\models.py:61
 msgid "Explain the idea of the task"
 msgstr "Опишите суть задачи"
 
-#: .\problems\models.py:49
+#: .\problems\models.py:66
 msgid "input data format"
 msgstr "формат входных данных"
 
-#: .\problems\models.py:50
+#: .\problems\models.py:67 .\templates\problems\problem_form.html:66
 msgid "Input data format"
 msgstr "Формат входных данных"
 
-#: .\problems\models.py:55
+#: .\problems\models.py:72
 msgid "output data format"
 msgstr "формат выходных данных"
 
-#: .\problems\models.py:56
+#: .\problems\models.py:73 .\templates\problems\problem_form.html:70
 msgid "Output data format"
 msgstr "Формат выходных данных"
 
-#: .\problems\models.py:61
+#: .\problems\models.py:78
 msgid "is public"
 msgstr "опубликован"
 
-#: .\problems\models.py:63
+#: .\problems\models.py:80
 msgid ""
 "If you open the task for public access, other users will be able to add it "
 "to their contests, and moderation will be able to evaluate it and add it to "
@@ -86,67 +86,71 @@ msgstr ""
 "добавлять её в свои соревнования и модераторы смогут проверить её и добавить "
 "в основной пул задач "
 
-#: .\problems\models.py:71
+#: .\problems\models.py:88
 msgid "difficult"
 msgstr "сложность"
 
-#: .\problems\models.py:72
+#: .\problems\models.py:89
 msgid "Assess the complexity of your task"
 msgstr "Укажите сложность вашей задачи"
 
-#: .\problems\models.py:79
+#: .\problems\models.py:96
 msgid "author solution"
 msgstr "авторское решение"
 
-#: .\problems\models.py:81
+#: .\problems\models.py:98
 msgid "The author's solution is to take a long time to pass all the tests"
 msgstr "Авторское решение долго проходить все тесты"
 
-#: .\problems\models.py:87
+#: .\problems\models.py:104
 msgid "author language"
 msgstr "авторский язык"
 
-#: .\problems\models.py:117 .\problems\models.py:124
+#: .\problems\models.py:142 .\problems\models.py:149
 msgid "problem"
 msgstr "задача"
 
-#: .\problems\models.py:118
+#: .\problems\models.py:143
 msgid "problems"
 msgstr "задачи"
 
-#: .\problems\models.py:130
+#: .\problems\models.py:155
 msgid "is sample"
 msgstr "пример"
 
-#: .\problems\models.py:131
+#: .\problems\models.py:156
 msgid "If True, then this test will be shown as an example."
 msgstr "Если True, то этот тест будет показан в качестве примера"
 
-#: .\problems\models.py:136
+#: .\problems\models.py:161
 msgid "input data"
 msgstr "входные данные"
 
-#: .\problems\models.py:138
+#: .\problems\models.py:163
 msgid ""
 "Input data for the test. It will be passed to the program during execution "
 "via the standard stream"
 msgstr ""
 "Входные данные теста. Эти данные поступят программе во время выполнения"
 
-#: .\problems\models.py:145
+#: .\problems\models.py:170
 msgid "output data"
 msgstr "выходные данные"
 
-#: .\problems\models.py:147
+#: .\problems\models.py:172
 msgid "Test output. The program should output exactly this text in this format"
 msgstr ""
 "Выходные данные теста. Программа должна вернуть данные в точно таком же виде"
 
-#: .\problems\models.py:156
+#: .\problems\models.py:178
+msgid "number of test"
+msgstr "номер теста"
+
+#: .\problems\models.py:186
 msgid "test case"
 msgstr "тест"
 
-#: .\problems\models.py:157
+#: .\problems\models.py:187
 msgid "tests cases"
 msgstr "тесты"
 
@@ -162,7 +166,7 @@ msgstr "Ошибка компиляции"
 msgid "Wrong answer"
 msgstr "Неверный ответ"
 
-#: .\submissions\models.py:16
+#: .\submissions\models.py:16 .\templates\problems\problem_form.html:74
 msgid "Time limit"
 msgstr "Превышен лимит времени"
 
@@ -170,7 +174,7 @@ msgstr "Превышен лимит времени"
 msgid "Runtime error"
 msgstr "Ошибка во время исполнения"
 
-#: .\submissions\models.py:18
+#: .\submissions\models.py:18 .\templates\problems\problem_form.html:78
 msgid "Memory limit"
 msgstr "Превышен лимит памяти"
 
@@ -198,7 +202,7 @@ msgstr "Присоединитесь к нам"
 msgid "Sign up to get access to all features"
 msgstr "Зарегистрируйтесь, чтобы получить доступ ко всем функциям"
 
-#: .\templates\homepage\home.html:32 .\templates\includes\header.html:90
+#: .\templates\homepage\home.html:32 .\templates\includes\header.html:100
 msgid "Sign Up"
 msgstr "Зарегистрироваться"
 
@@ -230,21 +234,143 @@ msgstr "Главная"
 msgid "Leaderboard"
 msgstr "Список лучших"
 
-#: .\templates\includes\header.html:54
+#: .\templates\includes\header.html:53
+msgid "Problems"
+msgstr "Задачи"
+
+#: .\templates\includes\header.html:59
 msgid "Admin"
 msgstr "Админ-панель"
 
-#: .\templates\includes\header.html:71 .\templates\users\user_list.html:71
+#: .\templates\includes\header.html:76 .\templates\users\user_list.html:71
 msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\includes\header.html:78
+#: .\templates\includes\header.html:81 .\templates\problems\my_tasks.html:7
+msgid "My tasks"
+msgstr "Мои задачи"
+
+#: .\templates\includes\header.html:88
 msgid "Logout"
 msgstr "Выйти"
 
-#: .\templates\includes\header.html:85
+#: .\templates\includes\header.html:95
 msgid "Login"
 msgstr "Войти"
+
+#: .\templates\problems\all_problems.html:10
+msgid "Title problem"
+msgstr "Название задачи"
+
+#: .\templates\problems\all_problems.html:11
+msgid "Author"
+msgstr "Автор"
+
+#: .\templates\problems\all_problems.html:12
+#: .\templates\problems\problem_form.html:50
+msgid "Difficult"
+msgstr "Сложность"
+
+#: .\templates\problems\all_problems.html:13
+#: .\templates\problems\problem_form.html:82
+msgid "Tags"
+msgstr "Теги"
+
+#: .\templates\problems\all_problems.html:44
+msgid "tags not found"
+msgstr "теги не найдены"
+
+#: .\templates\problems\all_problems.html:50
+msgid ""
+"Oh, it looks like there were no tasks with the specified filters, try "
+"changing them"
+msgstr ""
+"Похоже, что не нашлась задача с такими фильтрами, попробуйте изменить их"
+
+#: .\templates\problems\check_delete_test.html:8
+msgid "Are you sure you want to delete"
+msgstr "Вы точно хотите удалить"
+
+#: .\templates\problems\check_delete_test.html:10
+msgid "Confirm"
+msgstr "Подтвердить"
+
+#: .\templates\problems\my_tasks.html:9
+msgid "Create new task"
+msgstr "Создать новую задачу"
+
+#: .\templates\problems\my_tasks.html:36
+msgid "You don't have any tasks yet. Create one to see!"
+msgstr "У вас нет никаких задач. Создайте одну, чтобы увидить их"
+
+#: .\templates\problems\problem_add_test.html:17
+#: .\templates\problems\problem_form.html:15
+msgid "General"
+msgstr "Основное"
+
+#: .\templates\problems\problem_add_test.html:22
+#: .\templates\problems\problem_form.html:19
+msgid "Tests"
+msgstr "Тесты"
+
+#: .\templates\problems\problem_add_test.html:28
+#: .\templates\problems\problem_form.html:25
+msgid "Create/Update problem"
+msgstr "Создать/Изменить задачу"
+
+#: .\templates\problems\problem_add_test.html:29
+msgid "Add test"
+msgstr "Добавить задачу"
+
+#: .\templates\problems\problem_add_test.html:47
+#: .\templates\problems\problem_add_test.html:96
+msgid "Input data"
+msgstr "Входные данные"
+
+#: .\templates\problems\problem_add_test.html:51
+#: .\templates\problems\problem_add_test.html:97
+msgid "Output data"
+msgstr "Выходные данные"
+
+#: .\templates\problems\problem_add_test.html:55
+#: .\templates\problems\problem_add_test.html:98
+msgid "Is sample"
+msgstr "Пример"
+
+#: .\templates\problems\problem_add_test.html:77
+#: .\templates\problems\problem_add_test.html:99
+msgid "Save"
+msgstr "Сохранить"
+
+#: .\templates\problems\problem_add_test.html:85
+msgid ""
+"The problem does not have any tests yet, please add them as soon as possible."
+msgstr ""
+"Задача ещё не имеет никаких тестов, пожалуйста добавьте их как можно скорее"
+
+#: .\templates\problems\problem_form.html:42
+msgid "Title"
+msgstr "Название"
+
+#: .\templates\problems\problem_form.html:46
+msgid "Description"
+msgstr "Описание"
+
+#: .\templates\problems\problem_form.html:54
+msgid "Is public"
+msgstr "Опубликован"
+
+#: .\templates\problems\problem_form.html:58
+msgid "Author solution"
+msgstr "Авторское решение"
+
+#: .\templates\problems\problem_form.html:62
+msgid "Author language"
+msgstr "авторский язык"
+
+#: .\templates\problems\problem_form.html:85
+msgid "Change modifier"
+msgstr "Сохранить изменения"
 
 #: .\templates\users\user_list.html:12
 msgid "Total"
@@ -258,7 +384,6 @@ msgstr[0] "%(counter)s участник"
 msgstr[1] "%(counter)s участника"
 msgstr[2] "%(counter)s участников"
 msgstr[3] "%(counter)s участника"
-
 
 #: .\templates\users\user_list.html:21
 msgid "Top 10"
@@ -276,14 +401,19 @@ msgstr "Рейтинг"
 msgid "Actions"
 msgstr "Действия"
 
-#~ msgid "task"
-#~ msgstr "задача"
+#: .\users\views.py:29
+msgid "Account activate"
+msgstr "Активация аккаунта"
 
-#~ msgid "tasks"
-#~ msgstr "задачи"
+#: .\users\views.py:30
+msgid "Follow to link for activate: %(link)"
+msgstr "Перейдите по ссылке для активации: %(link)s"
 
-#~ msgid "visible"
-#~ msgstr "открытый"
+#~ msgid "Auther solution"
+#~ msgstr "Авторское решение"
+
+#~ msgid "Auther language"
+#~ msgstr "Авторский язык"
 
 #~ msgid "code"
 #~ msgstr "код"

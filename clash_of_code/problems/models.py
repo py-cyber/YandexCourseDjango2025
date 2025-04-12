@@ -92,7 +92,7 @@ class Problem(django.db.models.Model):
         ],
     )
 
-    auther_solution = django.db.models.TextField(
+    author_solution = django.db.models.TextField(
         verbose_name=_('author solution'),
         help_text=_(
             "The author's solution is to take a long time to pass all the tests",
@@ -100,7 +100,7 @@ class Problem(django.db.models.Model):
         max_length=8000,
     )
 
-    auther_language = django.db.models.TextField(
+    author_language = django.db.models.TextField(
         verbose_name=_('author language'),
         choices=LanguageChoices,
     )

@@ -18,8 +18,8 @@
         <div class="card h-100">
           <div class="card-header bg-light d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">{{ task.title }}</h5>
-            <span class="badge bg-primary">{{ task.is_public }}</span>
-            <span class="badge bg-primary">{{ task.difficult }}</span>
+            <span class="badge bg-primary">{% trans 'Is public' %} {{ task.is_public }}</span>
+            <span class="badge bg-primary">{% trans 'Difficult' %} {{ task.difficult }}</span>
           </div>
           <div class="card-body">
             {{ task.description|safe|truncatewords_html:10 }}

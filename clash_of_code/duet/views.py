@@ -27,6 +27,7 @@ class CodeRoomCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        super().form_valid(form)
         self.object.participants.add(self.request.user.id)
         return super().form_valid(form)
 

@@ -23,14 +23,14 @@ class Migration(migrations.Migration):
             name='number',
             field=models.PositiveIntegerField(default=1, verbose_name='number of test'),
         ),
-        migrations.RenameField(
-            model_name='problem',
-            old_name='auther_language',
-            new_name='author_language',
-        ),
-        migrations.RenameField(
-            model_name='problem',
-            old_name='auther_solution',
-            new_name='author_solution',
-        ),
+        # migrations.RenameField(
+        #     model_name='problem',
+        #     old_name='auther_language',
+        #     new_name='author_language',
+        # ),
+        # migrations.RenameField(
+        #     model_name='problem',
+        #     old_name='auther_solution',
+        #     new_name='author_solution',
+        # ),
     ]

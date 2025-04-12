@@ -27,4 +27,9 @@ urlpatterns = [
         views.ContestStandingsView.as_view(),
         name='standings',
     ),
+    path(
+        '<int:contest_id>/problems/add/',
+        views.AddProblemToContestView.as_view(),
+        name='add_problem',
+    ),
 ]

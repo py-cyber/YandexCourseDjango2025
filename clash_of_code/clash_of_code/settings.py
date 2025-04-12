@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Installed applications
     'tinymce',
     'channels',
+    # Project applications
     'users.apps.UsersConfig',
     'contests.apps.ContestsConfig',
     'duet.apps.DuetConfig',
@@ -53,7 +55,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Installed middleware
     'django.middleware.locale.LocaleMiddleware',
+    # Project middleware
 ]
 
 if DEBUG:

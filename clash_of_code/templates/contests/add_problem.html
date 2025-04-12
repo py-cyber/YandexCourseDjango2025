@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить задачу в {{ contest.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Добавить задачу в {{ contest.name }}</h2>
+
+    {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h5 class="alert-heading">Ошибки в форме:</h5>
+            <ul class="mb-0">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>
+                            {% if field != '__all__' %}
+                                <strong>{{ field }}:</strong>
+                            {% endif %}
+                            {{ error }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4>Выберите способ добавления</h4>
+            </div>
+            <div class="card-body">
+                <div class="btn-group w-100 mb-4" role="group" id="problem-type-selector">
+                    <input type="radio" class="btn-check" name="new_problem" id="existing_problem_btn" value="false"
+                           autocomplete="off" {% if not form.new_problem.value %}checked{% endif %}>
+                    <label class="btn btn-outline-primary" for="existing_problem_btn">
+                        <i class="bi bi-search me-2"></i>Выбрать существующую
+                    </label>
+                    
+                    <input type="radio" class="btn-check" name="new_problem" id="new_problem_btn" value="true"
+                           autocomplete="off" {% if form.new_problem.value %}checked{% endif %}>
+                    <label class="btn btn-outline-primary" for="new_problem_btn">
+                        <i class="bi bi-plus-circle me-2"></i>Создать новую
+                    </label>
+                </div>
+                
+                <div id="existing-problem-section" {% if form.new_problem.value %}style="display:none;"{% endif %}>
+                    <div class="mb-3">
+                        <label for="problem-search" class="form-label">Поиск задачи:</label>
+                        <input type="text" id="problem-search" class="form-control" 
+                               placeholder="Начните вводить название...">
+                        <div class="form-check mt-2">
+                            <input type="checkbox" name="show_only_mine" class="form-check-input" id="id_show_only_mine">
+                            <label class="form-check-label" for="id_show_only_mine">
+                                Мои задачи
+                            </label>
+                        </div>
+                        <input type="hidden" id="selected_problem_id" name="problem" value="">
+                        <div id="problem-results" class="mt-2 border rounded" style="display:none; max-height: 300px; overflow-y: auto;">
+                            <select name="problem" id="id_problem" class="form-select mt-2">
+                                <option value="">-- Выберите задачу --</option>
+                                {% for problem in form.problem.field.queryset %}
+                                    <option value="{{ problem.id }}" data-author="{{ problem.author.id }}">
+                                        {{ problem.title }} (Автор: {{ problem.author.username }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="new-problem-section" {% if not form.new_problem.value %}style="display:none;"{% endif %}>
+                    <div class="mb-3">
+                        <label for="id_title" class="form-label">Название</label>
+                        <input type="text" name="title" class="form-control" id="id_title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_description" class="form-label">Описание</label>
+                        <textarea name="description" class="form-control" id="id_description" rows="5"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_difficult" class="form-label">Сложность (0-100)</label>
+                        <input type="number" name="difficult" class="form-control" id="id_difficult" 
+                               min="0" max="100"
+                               placeholder="Введите число от 0 до 100">
+                        <div class="form-text">20 - легкая, 50 - средняя, 80 - сложная</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_time_limit" class="form-label">Лимит времени (сек)</label>
+                        <input type="number" name="time_limit" class="form-control" id="id_time_limit" 
+                               min="1" max="10" value="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_memory_limit" class="form-label">Лимит памяти (MB)</label>
+                        <input type="number" name="memory_limit" class="form-control" id="id_memory_limit" 
+                               min="64" max="1024" value="256" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" name="is_public" class="form-check-input" id="id_is_public">
+                        <label class="form-check-label" for="id_is_public">Публичная задача</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4>Параметры задачи в контесте</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="id_points" class="form-label">Баллы</label>
+                    <input type="number" name="points" class="form-control" id="id_points" 
+                           value="{{ form.points.value|default:'50' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_order" class="form-label">Порядковый номер</label>
+                    <input type="number" name="order" class="form-control" id="id_order" 
+                           value="{{ form.order.value }}">
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Добавить</button>
+        <a href="{% url 'contests:detail' pk=contest.pk %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const existingProblemBtn = document.getElementById('existing_problem_btn');
+        const newProblemBtn = document.getElementById('new_problem_btn');
+        const existingSection = document.getElementById('existing-problem-section');
+        const newSection = document.getElementById('new-problem-section');
+
+        const toggleSections = () => {
+            const showExisting = document.getElementById('existing_problem_btn').checked;
+            document.getElementById('existing-problem-section').style.display = 
+                showExisting ? 'block' : 'none';
+            document.getElementById('new-problem-section').style.display = 
+                showExisting ? 'none' : 'block';
+        };
+
+        existingProblemBtn.addEventListener('change', toggleSections);
+        newProblemBtn.addEventListener('change', toggleSections);
+
+        toggleSections();
+
+        const searchInput = document.getElementById('problem-search');
+        const resultsContainer = document.getElementById('problem-results');
+        const showOnlyMine = document.getElementById('id_show_only_mine');
+        const problemSelect = document.getElementById('id_problem');
+        const selectedProblemInput = document.getElementById('selected_problem_id');
+        const currentUserId = {{ request.user.id }};
+    
+        const problemsData = [
+            {% for problem in form.problem.field.queryset %}
+            {
+                id: "{{ problem.id }}",
+                title: "{{ problem.title|escapejs }}",
+                author: "{{ problem.author.username|escapejs }}",
+                authorId: "{{ problem.author.id }}"
+            },
+            {% endfor %}
+        ];
+
+        function normalizeString(str) {
+            return str.normalize('NFKC').trim().toLowerCase();
+        }
+    
+        function showResults() {
+            const searchText = normalizeString(searchInput.value);
+            const onlyMine = showOnlyMine.checked;
+            
+            resultsContainer.innerHTML = '';
+            
+            if (!searchText) {
+                resultsContainer.style.display = 'none';
+                return;
+            }
+            
+            const filtered = problemsData.filter(problem => {
+                const normalizedTitle = normalizeString(problem.title);
+                const matchesSearch = normalizedTitle.includes(searchText);
+                const matchesAuthor = !onlyMine || (problem.authorId && problem.authorId == currentUserId);
+                
+                return matchesSearch && matchesAuthor;
+            });
+            
+            if (filtered.length > 0) {
+                filtered.forEach(problem => {
+                    const item = document.createElement('button');
+                    item.type = 'button';
+                    item.className = 'list-group-item list-group-item-action';
+                    item.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>${problem.title}</span>
+                            <small class="badge bg-primary rounded-pill">ID: ${problem.id}</small>
+                        </div>
+                        <small class="text-muted d-block mt-1">
+                            Автор: ${problem.author || 'Неизвестен'}${problem.authorId ? ` (ID: ${problem.authorId})` : ''}
+                        </small>
+                    `;
+                    item.addEventListener('click', function() {
+                        searchInput.value = problem.title;
+                        problemSelect.value = problem.id;
+                        resultsContainer.style.display = 'none';
+                        selectedProblemInput.value = problem.id;
+                    });
+                    resultsContainer.appendChild(item);
+                });
+                resultsContainer.style.display = 'block';
+            } else {
+                resultsContainer.innerHTML = `
+                    <div class="list-group-item text-danger">
+                        <div class="fw-bold">Почему задачи не найдены?</div>
+                        <ul class="mt-2">
+                            <li>Проверьте написание названия</li>
+                            <li>Отключите фильтр "Мои задачи"</li>
+                            <li>Проверьте консоль для диагностики</li>
+                        </ul>
+                        <div class="mt-2 small">
+                            <div>Поиск: "${searchInput.value}"</div>
+                            <div>Всего задач: ${problemsData.length}</div>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.style.display = 'block';
+            }
+        }
+    
+        searchInput.addEventListener('input', showResults);
+        searchInput.addEventListener('focus', showResults);
+        showOnlyMine.addEventListener('change', showResults);
+        
+
+        document.addEventListener('click', function(e) {
+            if (!resultsContainer.contains(e.target) && e.target !== searchInput) {
+                resultsContainer.style.display = 'none';
+            }
+        });
+
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const isNewProblem = document.getElementById('new_problem_btn').checked;
+            const problemSelected = document.getElementById('id_problem').value !== '';
+            
+            if (!isNewProblem && !problemSelected) {
+                e.preventDefault();
+                alert('Пожалуйста, выберите задачу из списка');
+                return false;
+            }
+            
+            return true;
+        });
+    });
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .btn-group .btn {
+        flex: 1;
+        transition: all 0.3s ease;
+    }
+    .btn-group .btn.active {
+        background-color: #0d6efd;
+        color: white;
+        border-color: #0d6efd;
+    }
+    .btn-group .btn:not(.active):hover {
+        background-color: #f8f9fa;
+    }
+    .btn-group .btn i {
+        pointer-events: none;
+    }
+    
+    .form-switch .form-check-input {
+        width: 2.5em;
+        height: 1.5em;
+        cursor: pointer;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+
+    #problem-results {
+        display: none;
+    }
+    #problem-results button {
+        text-align: left;
+        width: 100%;
+    }
+    #problem-results button:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+{% endblock %}

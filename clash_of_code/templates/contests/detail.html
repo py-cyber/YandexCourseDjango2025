@@ -49,7 +49,7 @@
                 
                 {% if is_creator or user.is_staff %}
                     {% comment %} <a href="{% url 'contests:update' pk=contest.pk %}" class="btn btn-warning">Edit Contest</a> {% endcomment %}
-                    {% comment %} <a href="{% url 'contests:add_problem' contest_id=contest.pk %}" class="btn btn-primary">Add Problem</a> {% endcomment %}
+                    <a href="{% url 'contests:add_problem' contest_id=contest.pk %}" class="btn btn-primary">Add Problem</a>
                 {% endif %}
             </div>
         </div>
@@ -77,9 +77,10 @@
                             <td>{{ problem.order }}</td>
                             <td>
                                 {% if is_running and is_registered or is_past %}
-                                    <a href="{% url 'contests:problem_detail' contest_id=contest.pk problem_id=problem.pk %}">
+                                    {{ problem.problem.title }}
+                                    {% comment %} <a href="{% url 'contests:problem_detail' contest_id=contest.pk problem_id=problem.pk %}">
                                         {{ problem.problem.title }}
-                                    </a>
+                                    </a> {% endcomment %}
                                 {% else %}
                                     {{ problem.problem.title }}
                                 {% endif %}

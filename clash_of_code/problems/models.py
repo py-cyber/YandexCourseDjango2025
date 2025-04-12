@@ -66,12 +66,16 @@ class Problem(django.db.models.Model):
         verbose_name=_('input data format'),
         help_text=_('Input data format'),
         max_length=1000,
+        null=True,
+        blank=True,
     )
 
     output_format = tinymce.models.HTMLField(
         verbose_name=_('output data format'),
         help_text=_('Output data format'),
         max_length=1000,
+        null=True,
+        blank=True,
     )
 
     is_public = django.db.models.BooleanField(
@@ -98,17 +102,20 @@ class Problem(django.db.models.Model):
             "The author's solution is to take a long time to pass all the tests",
         ),
         max_length=8000,
+        null=True,
+        blank=True,
     )
 
     author_language = django.db.models.TextField(
         verbose_name=_('author language'),
         choices=LanguageChoices,
+        null=True,
+        blank=True,
     )
 
     tags = django.db.models.ManyToManyField(
-        Tag,
+        to=Tag,
         verbose_name=_('tags'),
-        blank=True,
         related_name='tasks',
     )
 

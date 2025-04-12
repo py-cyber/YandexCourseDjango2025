@@ -6,9 +6,9 @@ from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views import View
-from django.views.generic import FormView, ListView, DetailView, UpdateView
 from django.utils.translation import gettext_lazy as _
+from django.views import View
+from django.views.generic import DetailView, FormView, ListView, UpdateView
 
 
 from users.forms import ProfileForm, SignUpForm

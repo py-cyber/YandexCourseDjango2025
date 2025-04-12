@@ -48,6 +48,11 @@
                             {% translate "Leaderboard" %}
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link {% if request.resolver_match.view_name == 'problems:all' %}active{% endif %}" {% if not request.resolver_match.view_name == 'problems:all' %} href="{% url 'problems:all' %}" {% endif %}>
+                            {% translate "Problems" %}
+                        </a>
+                    </li>
                     {% if user.is_superuser %}
                         <li>
                             <a class="nav-link {% if request.resolver_match.view_name == 'admin:index' %}active{% endif %}" {% if not request.resolver_match.view_name == 'admin:index' %} href="{% url 'admin:index' %}" {% endif %}>
@@ -69,6 +74,11 @@
                                 <li>
                                     <a class="dropdown-item text-center" href="{% url 'profile' %}">
                                         {% translate "Profile" %}
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a class="dropdown-item text-center" href="{% url 'problems:my_tasks' %}">
+                                        {% translate "My tasks" %}
                                     </a>
                                 </li>
                                 <li>

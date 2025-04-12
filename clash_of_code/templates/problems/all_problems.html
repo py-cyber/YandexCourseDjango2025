@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div class="container mt-5">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-dark">
+      <tr>
+        <th scope="col">{% trans 'Title problem'%}</th>
+        <th scope="col">{% trans "Author" %}</th>
+        <th scope="col" class="text-center">{% trans "Difficult" %}</th>
+        <th scope="col" class="text-end">{% trans "Tags" %}</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for task in page_obj %}
+        <tr>
+          <td>
+            <a href="{% url 'problems:problem' pk=task.id %}">
+              <p class="text-start">{{ task.title }}</p>
+            </a>
+          </td>
+
+          <td>
+            <a href="{% url 'user_detail' pk=task.author.id %}">
+              <p class="text-start">{{ task.author.username }}</p>
+            </a>
+          </td>
+
+          <td>
+            <p class="text-center">{{ task.difficult }}</p>
+          </td>
+
+          <td>
+            <p class="text-end">
+            {% for tag in task.tags.all %}
+              {% if forloop.last %}
+                <span>{{ tag.name }}</span>
+              {% else %}
+                <span>{{ tag.name }}, </span>
+              {% endif %}
+            {% empty %}
+              {% trans 'tags not found' %}
+            {% endfor %}
+            </p>
+          </td>
+        </tr>
+      {% empty %}
+      <span>{% trans "Oh, it looks like there were no tasks with the specified filters, try changing them" %}</span>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
+{% endblock %}

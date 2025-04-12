@@ -26,7 +26,24 @@ class Tag(django.db.models.Model):
         verbose_name_plural = _('tags')
 
 
+class ProblemManager(django.db.models.Manager):
+    def is_public(self):
+        return self.filter(
+            is_public=True,
+        )
+
+    def all_problem_list(self):
+        return self.is_public().only(
+            'title',
+            'author__username',
+            'difficult',
+            'tags__name',
+        )
+
+
 class Problem(django.db.models.Model):
+    objects = ProblemManager()
+
     title = django.db.models.CharField(
         verbose_name=_('title'),
         max_length=75,
@@ -75,7 +92,7 @@ class Problem(django.db.models.Model):
         ],
     )
 
-    auther_solution = django.db.models.TextField(
+    author_solution = django.db.models.TextField(
         verbose_name=_('author solution'),
         help_text=_(
             "The author's solution is to take a long time to pass all the tests",
@@ -83,7 +100,7 @@ class Problem(django.db.models.Model):
         max_length=8000,
     )
 
-    auther_language = django.db.models.TextField(
+    author_language = django.db.models.TextField(
         verbose_name=_('author language'),
         choices=LanguageChoices,
     )
@@ -97,9 +114,17 @@ class Problem(django.db.models.Model):
 
     time_limit = django.db.models.IntegerField(
         default=1,
+        validators=(
+            django.core.validators.MaxValueValidator(5),
+            django.core.validators.MinValueValidator(1),
+        ),
     )
     memory_limit = django.db.models.IntegerField(
         default=256,
+        validators=(
+            django.core.validators.MaxValueValidator(512),
+            django.core.validators.MinValueValidator(64),
+        ),
     )
     created_at = django.db.models.DateTimeField(
         auto_now_add=True,
@@ -149,9 +174,16 @@ class TestCase(django.db.models.Model):
         max_length=10000000,
     )
 
+    number = django.db.models.PositiveIntegerField(
+        verbose_name=_('number of test'),
+        default=1,
+    )
+
     def __str__(self):
-        return self.problem.title[:20]
+        return self.problem.title[:20] + ' ' + str(self.number)
 
     class Meta:
         verbose_name = _('test case')
         verbose_name_plural = _('tests cases')
+        unique_together = ['problem', 'number']
+        ordering = ['number']

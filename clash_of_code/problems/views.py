@@ -35,6 +35,7 @@ class ProblemsCreateView(LoginRequiredMixin, CreateView):
 
 class ProblemsUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = problems.models.Problem
+    queryset = problems.models.Problem.objects.add_authors()
     form_class = problems.forms.ProblemsForm
     template_name = 'problems/problem_form.html'
 

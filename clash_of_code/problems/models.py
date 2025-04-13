@@ -32,12 +32,18 @@ class ProblemManager(django.db.models.Manager):
             is_public=True,
         )
 
+    def add_authors(self):
+        return self.is_public().select_related('author')
+
     def all_problem_list(self):
-        return self.is_public().only(
-            'title',
-            'author__username',
-            'difficult',
-            'tags__name',
+        return (
+            self.add_authors()
+            .only(
+                'title',
+                'author',
+                'difficult',
+                'tags__name',
+            )
         )
 
 

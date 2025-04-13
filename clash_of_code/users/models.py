@@ -19,13 +19,14 @@ class UserManager(django.contrib.auth.models.UserManager):
         return self.filter(email=email)
 
     def with_profile(self):
-        return self.select_related('profile')
+        return self.active().select_related('profile')
 
     def user_list(self):
         return (
-            self.active()
+            self.with_profile()
             .only(
                 'username',
+                'profile',
                 'email',
                 'profile__score',
             )

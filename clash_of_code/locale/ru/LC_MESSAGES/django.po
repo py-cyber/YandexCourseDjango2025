@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-12 12:24+0500\n"
+"POT-Creation-Date: 2025-04-13 17:59+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,6 +28,22 @@ msgstr "Английский"
 msgid "Russian"
 msgstr "Русский"
 
+#: .\contests\apps.py:8
+msgid "Contests"
+msgstr "Соревнования"
+
+#: .\duet\apps.py:8
+msgid "Duet"
+msgstr "Дуэли"
+
+#: .\homepage\apps.py:8
+msgid "Homepage"
+msgstr "Главная"
+
+#: .\problems\apps.py:8 .\templates\includes\header.html:52
+msgid "Problems"
+msgstr "Задачи"
+
 #: .\problems\models.py:17
 msgid "name"
 msgstr "название"
@@ -36,47 +52,47 @@ msgstr "название"
 msgid "tag"
 msgstr "тег"
 
-#: .\problems\models.py:26 .\problems\models.py:118
+#: .\problems\models.py:26 .\problems\models.py:124
 msgid "tags"
 msgstr "теги"
 
-#: .\problems\models.py:48
+#: .\problems\models.py:54
 msgid "title"
 msgstr "название"
 
-#: .\problems\models.py:54
+#: .\problems\models.py:60
 msgid "author"
 msgstr "автор"
 
-#: .\problems\models.py:60
+#: .\problems\models.py:66
 msgid "description"
 msgstr "описание"
 
-#: .\problems\models.py:61
+#: .\problems\models.py:67
 msgid "Explain the idea of the task"
 msgstr "Опишите суть задачи"
 
-#: .\problems\models.py:66
+#: .\problems\models.py:72
 msgid "input data format"
 msgstr "формат входных данных"
 
-#: .\problems\models.py:67 .\templates\problems\problem_form.html:66
+#: .\problems\models.py:73 .\templates\problems\problem_form.html:66
 msgid "Input data format"
 msgstr "Формат входных данных"
 
-#: .\problems\models.py:74
+#: .\problems\models.py:80
 msgid "output data format"
 msgstr "формат выходных данных"
 
-#: .\problems\models.py:75 .\templates\problems\problem_form.html:70
+#: .\problems\models.py:81 .\templates\problems\problem_form.html:70
 msgid "Output data format"
 msgstr "Формат выходных данных"
 
-#: .\problems\models.py:82
+#: .\problems\models.py:88
 msgid "is public"
 msgstr "опубликован"
 
-#: .\problems\models.py:84
+#: .\problems\models.py:90
 msgid ""
 "If you open the task for public access, other users will be able to add it "
 "to their contests, and moderation will be able to evaluate it and add it to "
@@ -86,73 +102,77 @@ msgstr ""
 "добавлять её в свои соревнования и модераторы смогут проверить её и добавить "
 "в основной пул задач "
 
-#: .\problems\models.py:92
+#: .\problems\models.py:98
 msgid "difficult"
 msgstr "сложность"
 
-#: .\problems\models.py:93
+#: .\problems\models.py:99
 msgid "Assess the complexity of your task"
 msgstr "Укажите сложность вашей задачи"
 
-#: .\problems\models.py:100
+#: .\problems\models.py:106
 msgid "author solution"
 msgstr "авторское решение"
 
-#: .\problems\models.py:102
+#: .\problems\models.py:108
 msgid "The author's solution is to take a long time to pass all the tests"
 msgstr "Авторское решение долго проходить все тесты"
 
-#: .\problems\models.py:110
+#: .\problems\models.py:116
 msgid "author language"
 msgstr "авторский язык"
 
-#: .\problems\models.py:149 .\problems\models.py:156
+#: .\problems\models.py:156 .\problems\models.py:163
 msgid "problem"
 msgstr "задача"
 
-#: .\problems\models.py:150
+#: .\problems\models.py:157
 msgid "problems"
 msgstr "задачи"
 
-#: .\problems\models.py:162
+#: .\problems\models.py:169
 msgid "is sample"
 msgstr "пример"
 
-#: .\problems\models.py:163
+#: .\problems\models.py:170
 msgid "If True, then this test will be shown as an example."
 msgstr "Если True, то этот тест будет показан в качестве примера"
 
-#: .\problems\models.py:168
+#: .\problems\models.py:175
 msgid "input data"
 msgstr "входные данные"
 
-#: .\problems\models.py:170
+#: .\problems\models.py:177
 msgid ""
 "Input data for the test. It will be passed to the program during execution "
 "via the standard stream"
 msgstr ""
 "Входные данные теста. Эти данные поступят программе во время выполнения"
 
-#: .\problems\models.py:177
+#: .\problems\models.py:183
 msgid "output data"
 msgstr "выходные данные"
 
-#: .\problems\models.py:179
+#: .\problems\models.py:185
 msgid "Test output. The program should output exactly this text in this format"
 msgstr ""
 "Выходные данные теста. Программа должна вернуть данные в точно таком же виде"
 
-#: .\problems\models.py:185
+#: .\problems\models.py:190
 msgid "number of test"
 msgstr "номер теста"
 
-#: .\problems\models.py:193
+#: .\problems\models.py:198
 msgid "test case"
 msgstr "тест"
 
-#: .\problems\models.py:194
+#: .\problems\models.py:199
 msgid "tests cases"
 msgstr "тесты"
+
+#: .\submissions\apps.py:8
+msgid "Submissions"
+msgstr "Посылки"
 
 #: .\submissions\models.py:13 .\templates\duet\invitations_list.html:17
 msgid "Accept"
@@ -287,8 +307,6 @@ msgid "Last updated"
 msgstr "Последнее обновление"
 
 #: .\templates\duet\user_rooms.html:31
-#, fuzzy
-#| msgid "tag"
 msgid "ago"
 msgstr "назад"
 
@@ -353,10 +371,6 @@ msgstr "Главная"
 #: .\templates\includes\header.html:47 .\templates\users\user_list.html:8
 msgid "Leaderboard"
 msgstr "Список лучших"
-
-#: .\templates\includes\header.html:52
-msgid "Problems"
-msgstr "Задачи"
 
 #: .\templates\includes\header.html:63
 msgid "Admin"
@@ -427,7 +441,7 @@ msgstr "Опубликован"
 
 #: .\templates\problems\my_tasks.html:36
 msgid "You don't have any tasks yet. Create one to see!"
-msgstr "У вас нет никаких задач. Создайте одну, чтобы увидить их"
+msgstr "У вас нет никаких задач. Создайте одну, чтобы увидеть их"
 
 #: .\templates\problems\problem_add_test.html:17
 #: .\templates\problems\problem_form.html:15
@@ -490,60 +504,54 @@ msgid "Change modifier"
 msgstr "Сохранить изменения"
 
 #: .\templates\users\profile.html:11
-#, fuzzy
-#| msgid "Profile"
 msgid "My profile"
-msgstr "Профиль"
+msgstr "Мой профиль"
 
 #: .\templates\users\profile.html:27 .\templates\users\user_detail.html:21
 #: .\templates\users\user_list.html:32
 msgid "Rating"
-msgstr ""
+msgstr "Рейтинг"
 
 #: .\templates\users\profile.html:41 .\templates\users\user_detail.html:27
-#, fuzzy
-#| msgid "name"
 msgid "Username"
-msgstr "название"
+msgstr "Логин"
 
 #: .\templates\users\profile.html:45 .\templates\users\user_detail.html:31
 msgid "Email"
-msgstr ""
+msgstr "Почта"
 
 #: .\templates\users\profile.html:49 .\templates\users\user_detail.html:35
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: .\templates\users\profile.html:53 .\templates\users\user_detail.html:45
-#, fuzzy
-#| msgid "name"
 msgid "Surname"
-msgstr "название"
+msgstr "Фамилия"
 
 #: .\templates\users\profile.html:57
 msgid "Avatar"
-msgstr ""
+msgstr "Аватарка"
 
 #: .\templates\users\profile.html:62 .\templates\users\profile.html:63
 msgid "Choose file"
-msgstr ""
+msgstr "Выберете файл"
 
 #: .\templates\users\profile.html:64
 msgid "No file chosen"
-msgstr ""
+msgstr "Файл не выбран"
 
 #: .\templates\users\user_detail.html:10
 msgid "User info"
-msgstr ""
+msgstr "Информация о пользователе"
 
 #: .\templates\users\user_detail.html:40 .\templates\users\user_detail.html:50
 #: .\templates\users\user_detail.html:60
 msgid "not specified"
-msgstr ""
+msgstr "не указано"
 
 #: .\templates\users\user_detail.html:55
 msgid "Birthday"
-msgstr ""
+msgstr "День рождения"
 
 #: .\templates\users\user_list.html:12
 msgid "Total"
@@ -569,6 +577,10 @@ msgstr "Игроки"
 #: .\templates\users\user_list.html:33
 msgid "Actions"
 msgstr "Действия"
+
+#: .\users\apps.py:8
+msgid "Users"
+msgstr "Пользователи"
 
 #: .\users\views.py:29
 msgid "Account activate"

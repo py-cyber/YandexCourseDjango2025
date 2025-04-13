@@ -33,7 +33,7 @@ class ProblemsCreateView(LoginRequiredMixin, CreateView):
         return reverse('problems:update', kwargs={'pk': self.object.pk})
 
 
-class ProblemsUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ProblemsUpdateView(LoginRequiredMixin, UpdateView, UserPassesTestMixin):
     model = problems.models.Problem
     queryset = problems.models.Problem.objects.add_authors()
     form_class = problems.forms.ProblemsForm
@@ -133,7 +133,7 @@ class UpdateTestOrderView(django.views.View):
         return HttpResponse('Ok')
 
 
-class DeleteTestView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class DeleteTestView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
     model = problems.models.TestCase
     template_name = 'problems/check_delete_test.html'
 

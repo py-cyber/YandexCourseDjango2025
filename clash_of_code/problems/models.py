@@ -141,7 +141,7 @@ class Problem(django.db.models.Model):
     def clean(self):
         # TODO когда будет тест система нужно проверить
         # авторское решение перед сейвом и добавлением теста
-        pass
+        return super().clean()
 
     def __str__(self):
         return self.title[:20]
@@ -171,7 +171,6 @@ class TestCase(django.db.models.Model):
             'Input data for the test. It will be passed '
             'to the program during execution via the standard stream',
         ),
-        max_length=10000000,
     )
 
     output_data = django.db.models.TextField(
@@ -179,7 +178,6 @@ class TestCase(django.db.models.Model):
         help_text=_(
             'Test output. The program should output exactly this text in this format',
         ),
-        max_length=10000000,
     )
 
     number = django.db.models.PositiveIntegerField(

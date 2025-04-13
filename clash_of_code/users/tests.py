@@ -1,3 +1,5 @@
+import http
+
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -22,7 +24,7 @@ class LoginTests(TestCase):
                 'password': 'testpassword123',
             },
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, http.HTTPStatus.FOUND)
 
     def test_login_with_username(self):
         response = self.client.post(
@@ -32,7 +34,7 @@ class LoginTests(TestCase):
                 'password': 'testpassword123',
             },
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, http.HTTPStatus.FOUND)
 
     def test_invalid_login(self):
         response = self.client.post(
@@ -42,7 +44,7 @@ class LoginTests(TestCase):
                 'password': 'wrongpassword',
             },
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertContains(
             response,
             'Пожалуйста, введите правильные имя пользователя и пароль.'
@@ -65,7 +67,7 @@ class SignUpTests(TestCase):
                 'password2': 'complexpassword123',
             },
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, http.HTTPStatus.FOUND)
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
     def test_signup_with_existing_username(self):
@@ -84,7 +86,7 @@ class SignUpTests(TestCase):
                 'password2': 'complexpassword123',
             },
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertContains(
             response,
             'Пользователь с таким именем уже существует.',
@@ -100,7 +102,7 @@ class SignUpTests(TestCase):
                 'password2': 'differentpassword',
             },
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertContains(response, 'Введенные пароли не совпадают.')
 
 

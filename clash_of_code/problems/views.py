@@ -114,8 +114,8 @@ class UpdateTestOrderView(django.views.View):
             return django.http.HttpResponseForbidden
 
         data = json.loads(request.body)
-        pk1 = data['moved_pk']
-        pk2 = data['reference_pk']
+        pk1 = int(data['moved_pk'])
+        pk2 = int(data['reference_pk'])
 
         test1 = django.shortcuts.get_object_or_404(problems.models.TestCase, pk=pk1)
         test2 = django.shortcuts.get_object_or_404(problems.models.TestCase, pk=pk2)
@@ -123,7 +123,7 @@ class UpdateTestOrderView(django.views.View):
         number1 = test1.number
         number2 = test2.number
         with django.db.transaction.atomic():
-            test1.number = 0
+            test1.number = 999999999
             test1.save()
             test2.number = number1
             test2.save()

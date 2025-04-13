@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const task = event.target.closest('.task');
             const previousTask = task.previousElementSibling;
 
-            if (previousTask) {
+            const movedPk = task.querySelector('input[name="pk"]').value;
+            const referencePk = previousTask ? previousTask.querySelector('input[name="pk"]').value : null;
+
+            if (previousTask && movedPk && referencePk) {
                 tasksContainer.insertBefore(task, previousTask);
                 updateIndices();
                 sendUpdateRequest(task, previousTask);
@@ -17,7 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const task = event.target.closest('.task');
             const nextTask = task.nextElementSibling;
 
-            if (nextTask) {
+            const movedPk = task.querySelector('input[name="pk"]').value;
+            const referencePk = nextTask ? nextTask.querySelector('input[name="pk"]').value : null;
+
+            if (nextTask && movedPk && referencePk) {
                 tasksContainer.insertBefore(nextTask, task);
                 updateIndices();
                 sendUpdateRequest(nextTask, task);
@@ -40,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const movedPk = movedTask.querySelector('input[name="pk"]').value;
         const referencePk = referenceTask.querySelector('input[name="pk"]').value;
 
-        fetch(URL, { // при изменении url заменить его тут
+        fetch(URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +94,7 @@ const taskTemplate = (testNumber, INPUT_DATA_TRANS, OUTPUT_DATA_TRANS, IS_SAMPLE
                               <input type="hidden" name="pk">
 
                               <div class="row">
-                                  <div class="col-10">
+                                  <div class="col-11">
                                       <div class="mb-3">
                                           <label for="id_input_data" class="form-label">${INPUT_DATA_TRANS}</label>
                                           <input type="text" id="id_input_data" name="input_data" class="form-control">
@@ -102,12 +108,7 @@ const taskTemplate = (testNumber, INPUT_DATA_TRANS, OUTPUT_DATA_TRANS, IS_SAMPLE
                                           <input type="checkbox" id="id_is_sample" name="is_sample" class="form-check-input" checked>
                                       </div>
                                   </div>
-                                  <div class="col-2 d-flex flex-column justify-content-center">
-                                      <button type="button" class="btn btn-danger">
-                                        <i class="bi bi-trash"></i> X
-                                      </button>
-                                      <button type="button" class="btn btn-primary mb-2 move-up-button">↑</button>
-                                      <button type="button" class="btn btn-primary move-down-button">↓</button>
+                                  <div class="col-1 d-flex flex-column justify-content-center">
                                   </div>
                               </div>
                               <button type="submit" class="btn btn-primary w-100">${ SAVE_TRANS }</button>

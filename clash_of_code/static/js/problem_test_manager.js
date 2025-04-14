@@ -97,11 +97,11 @@ const taskTemplate = (testNumber, INPUT_DATA_TRANS, OUTPUT_DATA_TRANS, IS_SAMPLE
                                   <div class="col-11">
                                       <div class="mb-3">
                                           <label for="id_input_data" class="form-label">${INPUT_DATA_TRANS}</label>
-                                          <input type="text" id="id_input_data" name="input_data" class="form-control">
+                                          <textarea name="input_data" cols="40" rows="10" maxlength="8000" class="form-control" aria-describedby="id_input_data_helptext" id="id_input_data"></textarea>
                                       </div>
                                       <div class="mb-3">
                                           <label for="id_output_data" class="form-label">${OUTPUT_DATA_TRANS}</label>
-                                          <input type="text" id="id_output_data" name="output_data" class="form-control">
+                                          <textarea name="output_data" cols="40" rows="10" maxlength="8000" class="form-control" aria-describedby="id_input_data_helptext" id="id_output_data"></textarea>
                                       </div>
                                       <div class="mb-3">
                                           <label for="id_is_sample" class="form-label">${IS_SAMPLE_TRANS}</label>

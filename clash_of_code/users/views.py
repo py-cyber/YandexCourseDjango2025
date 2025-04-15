@@ -52,21 +52,7 @@ class UserListView(ListView):
     context_object_name = 'users'
 
     def get_queryset(self):
-        users = User.objects.user_list().order_by('profile__score')[::-1]
-
-        users_num = []
-        current_num = 1
-        prev_score = None
-
-        for index, user in enumerate(users, start=1):
-            if user.profile.score != prev_score:
-                current_num = index
-                prev_score = user.profile.score
-
-            user.num = current_num
-            users_num.append(user)
-
-        return users_num
+        return User.objects.user_list().order_by('profile__score')[::-1]
 
 
 class UserDetailView(DetailView):
@@ -86,5 +72,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['score'] = self.get_object().score
+        profile = self.get_object()
+
+        context['score'] = profile.score
         return context

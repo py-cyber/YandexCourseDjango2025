@@ -1,4 +1,4 @@
-![Статус последнего коммита](https://gitlab.crja72.ru/django/2025/spring/course/team-1/badges/main/pipeline.svg)
+![Статус последнего коммита](https://gitlab.crja72.ru/django/2025/spring/course/projects/team-1/badges/main/pipeline.svg)
 
 # Это учебный проект специализации Django
 ### Дисклеймер: все команды написаны для операционной системы linux, при их вызове проверьте, что на вашей OS они будут работать также, в ином случае поменяйте их в соответствие с синтаксисом терминала вашей OS  
@@ -43,7 +43,7 @@ pip install -r requirements/test.txt
 ## Подготовка к запуску
 * Скопируйте все параметры из файла template.env в .env с помощью команды:
 ```bash
-cp template.env .env
+cp -r template.env .env
 ```
 * Установите нужные вам настройки в файле .env:
 ```bash 

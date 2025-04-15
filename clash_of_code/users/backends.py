@@ -15,6 +15,3 @@ class UsernameOrEmailBackend(ModelBackend):
             return None
         except User.MultipleObjectsReturned:
             return None
-
-
-__all__ = []

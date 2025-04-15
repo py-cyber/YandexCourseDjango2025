@@ -104,6 +104,3 @@ class SignUpTests(TestCase):
         )
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertContains(response, 'Введенные пароли не совпадают.')
-
-
-__all__ = []

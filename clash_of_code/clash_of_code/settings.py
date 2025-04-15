@@ -37,14 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Installed applications
-    'tinymce',
     'channels',
+    'tinymce',
     # Project applications
-    'users.apps.UsersConfig',
     'contests.apps.ContestsConfig',
     'duet.apps.DuetConfig',
     'problems.apps.ProblemsConfig',
     'submissions.apps.SubmissionsConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [

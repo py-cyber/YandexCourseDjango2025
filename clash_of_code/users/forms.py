@@ -81,6 +81,3 @@ class ProfileForm(forms.ModelForm):
         ]
 
         verbose_name = 'Форма профиля'
-
-
-__all__ = []

@@ -41,7 +41,12 @@ class CodeRoomDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'room'
 
     def get_queryset(self):
-        return super().get_queryset().filter(participants=self.request.user).select_related('owner')
+        return (
+            super()
+            .get_queryset()
+            .filter(participants=self.request.user)
+            .select_related('owner')
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -70,7 +75,12 @@ class UserRoomsListView(LoginRequiredMixin, ListView):
     context_object_name = 'rooms'
 
     def get_queryset(self):
-        return super().get_queryset().select_related('owner').filter(participants=self.request.user)
+        return (
+            super()
+            .get_queryset()
+            .select_related('owner')
+            .filter(participants=self.request.user)
+        )
 
 
 class RoomInviteCreateView(LoginRequiredMixin, CreateView):

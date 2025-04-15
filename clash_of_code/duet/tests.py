@@ -73,7 +73,10 @@ class ViewTests(BaseDuetTest):
             {'name': 'New Room', 'language': self.language.id},
         )
 
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response,
+            reverse('duet:room_detail', kwargs={'pk': 2}),
+        )
         self.assertTrue(CodeRoom.objects.filter(name='New Room').exists())
 
     def test_room_detail_view(self):

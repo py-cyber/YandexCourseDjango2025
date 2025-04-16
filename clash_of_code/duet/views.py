@@ -1,8 +1,8 @@
 import json
 
-from django.core.cache import cache
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 import django.db.models
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -44,21 +44,27 @@ class CodeRoomDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return (
-            CodeRoom.objects
-            .filter(participants=self.request.user)
+            CodeRoom.objects.filter(participants=self.request.user)
             .select_related('owner', 'language')
             .prefetch_related(
                 django.db.models.Prefetch(
                     'participants',
                     queryset=get_user_model().objects.only('id', 'username', 'email'),
-                    to_attr='prefetched_participants'
-                )
+                    to_attr='prefetched_participants',
+                ),
             )
             .only(
-                'id', 'name', 'language_id', 'content',
-                'created_at', 'updated_at', 'owner_id',
-                'owner__username', 'owner__email',
-                'language__name', 'language__ace_mode'
+                'id',
+                'name',
+                'language_id',
+                'content',
+                'created_at',
+                'updated_at',
+                'owner_id',
+                'owner__username',
+                'owner__email',
+                'language__name',
+                'language__ace_mode',
             )
         )
 
@@ -68,14 +74,13 @@ class CodeRoomDetailView(LoginRequiredMixin, DetailView):
 
         participants = getattr(room, 'prefetched_participants', [])
         context['other_user'] = next(
-            (p for p in participants if p.id != self.request.user.id),
-            None
+            (p for p in participants if p.id != self.request.user.id), None,
         )
 
         context['languages'] = cache.get_or_set(
             'all_programming_languages',
             lambda: list(ProgrammingLanguage.objects.only('id', 'name', 'ace_mode')),
-            timeout=3600
+            timeout=3600,
         )
 
         return context

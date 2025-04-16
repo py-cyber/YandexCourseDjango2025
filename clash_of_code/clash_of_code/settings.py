@@ -58,6 +58,7 @@ MIDDLEWARE = [
     # Installed middleware
     'django.middleware.locale.LocaleMiddleware',
     # Project middleware
+    'clash_of_code.middleware.OptimizedUserMiddleware',
 ]
 
 if DEBUG:

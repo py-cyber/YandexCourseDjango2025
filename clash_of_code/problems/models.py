@@ -53,7 +53,7 @@ class Problem(django.db.models.Model):
     )
 
     author = django.db.models.ForeignKey(
-        django.conf.settings.AUTH_USER_MODEL,
+        to=User,
         verbose_name=_('author'),
         on_delete=django.db.models.CASCADE,
         related_name='tasks',

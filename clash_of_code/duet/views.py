@@ -74,7 +74,8 @@ class CodeRoomDetailView(LoginRequiredMixin, DetailView):
 
         participants = getattr(room, 'prefetched_participants', [])
         context['other_user'] = next(
-            (p for p in participants if p.id != self.request.user.id), None,
+            (p for p in participants if p.id != self.request.user.id),
+            None,
         )
 
         context['languages'] = cache.get_or_set(

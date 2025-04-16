@@ -74,8 +74,8 @@
                             <select name="problem" id="id_problem" class="form-select mt-2">
                                 <option value="">-- Выберите задачу --</option>
                                 {% for problem in form.problem.field.queryset %}
-                                    <option value="{{ problem.id }}" data-author="{{ problem.author.id }}">
-                                        {{ problem.title }} (Автор: {{ problem.author.username }})
+                                    <option value="{{ problem.id }}" data-author="{{ author.id }}">
+                                        {{ problem.title }} (Автор: {{ author.username }})
                                     </option>
                                 {% endfor %}
                             </select>
@@ -174,8 +174,8 @@
             {
                 id: "{{ problem.id }}",
                 title: "{{ problem.title|escapejs }}",
-                author: "{{ problem.author.username|escapejs }}",
-                authorId: "{{ problem.author.id }}"
+                author: "{{ author.username|escapejs }}",
+                authorId: "{{ author.id }}"
             },
             {% endfor %}
         ];

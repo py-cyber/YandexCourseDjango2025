@@ -58,7 +58,7 @@ class UserListView(ListView):
 class UserDetailView(DetailView):
     model = User
     template_name = 'users/user_detail.html'
-    context_object_name = 'user'
+    context_object_name = 'profile_user'
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):

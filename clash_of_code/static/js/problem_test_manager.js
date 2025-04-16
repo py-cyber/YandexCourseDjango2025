@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const tasksContainer = document.querySelector('.tasks');
+    const tasksContainer = document.getElementById('tasksContainer');
 
     tasksContainer.addEventListener('click', function (event) {
         if (event.target.classList.contains('move-up-button')) {
-            const task = event.target.closest('.task');
+            const task = event.target.closest('.test-case');
             const previousTask = task.previousElementSibling;
 
             const movedPk = task.querySelector('input[name="pk"]').value;
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (event.target.classList.contains('move-down-button')) {
-            const task = event.target.closest('.task');
+            const task = event.target.closest('.test-case');
             const nextTask = task.nextElementSibling;
 
             const movedPk = task.querySelector('input[name="pk"]').value;
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function updateIndices() {
-        const tasks = document.querySelectorAll('.task');
+        const tasks = document.querySelectorAll('.test-case');
         tasks.forEach((task, index) => {
             task.setAttribute('data-index', index);
             const numberInput = task.querySelector('input[name="number"]');
@@ -82,52 +82,52 @@ function getCookie(name) {
     return cookieValue;
 }
 
+const taskTemplate = (testNumber, INPUT_DATA_TRANS, OUTPUT_DATA_TRANS, IS_SAMPLE_TRANS, SAVE_TRANS) => `
+<div class="test-case mb-4 border rounded-3 p-3" data-index="${testNumber}">
+    <form method="post" enctype="multipart/form-data" class="test-form">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${getCookie("csrftoken")}">
+        <input type="hidden" name="number" value="${testNumber + 1}">
+        <input type="hidden" name="pk">
 
-const taskTemplate = (testNumber, INPUT_DATA_TRANS, OUTPUT_DATA_TRANS, IS_SAMPLE_TRANS, SAVE_TRANS) =>
-    `<div class="task" data-index="${testNumber}">
-        <div class="container mt-4">
-            <div class="card">
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="csrfmiddlewaretoken" value="${getCookie("csrftoken")}">
-                              <input type="hidden" name="number" value="${ testNumber + 1 }">
-                              <input type="hidden" name="pk">
-
-                              <div class="row">
-                                  <div class="col-11">
-                                      <div class="mb-3">
-                                          <label for="id_input_data" class="form-label">${INPUT_DATA_TRANS}</label>
-                                          <textarea name="input_data" cols="40" rows="10" maxlength="8000" class="form-control" aria-describedby="id_input_data_helptext" id="id_input_data"></textarea>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="id_output_data" class="form-label">${OUTPUT_DATA_TRANS}</label>
-                                          <textarea name="output_data" cols="40" rows="10" maxlength="8000" class="form-control" aria-describedby="id_input_data_helptext" id="id_output_data"></textarea>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="id_is_sample" class="form-label">${IS_SAMPLE_TRANS}</label>
-                                          <input type="checkbox" id="id_is_sample" name="is_sample" class="form-check-input" checked>
-                                      </div>
-                                  </div>
-                                  <div class="col-1 d-flex flex-column justify-content-center">
-                                  </div>
-                              </div>
-                              <button type="submit" class="btn btn-primary w-100">${ SAVE_TRANS }</button>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-    </div>
-    `
-;
-
+        <div class="row g-3">
+            <div class="col-md-11">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">${INPUT_DATA_TRANS}</label>
+                    <textarea name="input_data" class="form-control code-editor" rows="5"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">${OUTPUT_DATA_TRANS}</label>
+                    <textarea name="output_data" class="form-control code-editor" rows="5"></textarea>
+                </div>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="id_is_sample" name="is_sample" checked>
+                    <label class="form-check-label" for="id_is_sample">${IS_SAMPLE_TRANS}</label>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid mt-2">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-2"></i>${SAVE_TRANS}
+            </button>
+        </div>
+    </form>
+</div>
+`;
 
 function addTask() {
     const tasksContainer = document.getElementById('tasksContainer');
-    const childDivs = Array.from(tasksContainer.children).filter(child => child.tagName === 'DIV');
-    numberOfElements = childDivs.length;
-    tasksContainer.insertAdjacentHTML('beforeend', taskTemplate(numberOfElements, INPUT_DATA_TRANS, OUTPUT_DATA_TRANS, IS_SAMPLE_TRANS, SAVE_TRANS));
+    const testCases = tasksContainer.querySelectorAll('.test-case');
+    const testNumber = testCases.length;
+
+    tasksContainer.insertAdjacentHTML('beforeend', taskTemplate(testNumber, INPUT_DATA_TRANS, OUTPUT_DATA_TRANS, IS_SAMPLE_TRANS, SAVE_TRANS));
+
+    const newTest = tasksContainer.lastElementChild;
+    newTest.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+    newTest.style.animation = 'highlight 1.5s';
+    setTimeout(() => {
+        newTest.style.animation = '';
+    }, 1500);
 }
 
 document.getElementById('addTaskButton').addEventListener('click', addTask);
-
-

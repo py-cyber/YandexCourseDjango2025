@@ -13,7 +13,12 @@
 
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    {% if LANGUAGE_CODE == 'ru' %} Russian {% else %} English {% endif %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% if LANGUAGE_CODE == 'ru' %}
+                        Русский
+                    {% else %}
+                        English
+                    {% endif %}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                     <li>

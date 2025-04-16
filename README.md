@@ -9,6 +9,7 @@
 ```bash
 apt install gettext
 ```
+4. [Docker](https://docs.docker.com/engine/install/) нужен для поднятия брокера сообщений в лице redis
 ## Установка проекта:
 Для установки проекта вы можете прописать следующую команду в терминал:
 ```bash
@@ -45,7 +46,8 @@ pip install -r requirements/test.txt
 ```bash
 cp -r template.env .env
 ```
-* Установите нужные вам настройки в файле .env:
+* Установите нужные вам настройки в файле .env
+* После этого перейдите в основную директорию проекта
 ```bash 
 cd clash_of_code
 ```
@@ -73,7 +75,27 @@ python manage.py createsuperuser
 ```bash
 django-admin compilemessages
 ```
+### Подготовка тестирующей системы
+* Запустите redis в качестве брокера сообщений через docker 
+```bash
+docker run -d -p 6379:6379 redis
+```
+* Чтобы проверить, что redis успешно запустился можете выполнить команду:
+```bash
+docker container ls
+```
+* в списке запущенных образов должен быть redis
+
 ## Запуск
+### Внимание, перед запуском основного сервера рекомендуется запустить worker (если вы запустите их не в том порядке, ничего критичного не произойдёт, все посылки будут добавлены в redis и начнут выполнятся после запуска worker'а)
+* Запуск тестирующей системы (для linux):
+```bash
+celery -A clash_of_code worker -l info
+```
+* Запуск тестирующей системы (для windows):
+```bash
+celery -A clash_of_code worker -l info -P gevent
+```
 * Запустить приложение: 
 ```bash
 python manage.py runserver

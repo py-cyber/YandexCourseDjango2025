@@ -171,3 +171,13 @@ MAIL = os.getenv('DJANGO_MAIL', 'example@example.com')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'auth.User'
+
+
+REDIS_HOST = os.getenv('DJANGO_REDIS_HOST', '0.0.0.0')
+REDIS_PORT = os.getenv('DJANGO_REDIS_PORT', '6379')
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 120}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

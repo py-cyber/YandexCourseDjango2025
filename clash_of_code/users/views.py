@@ -50,9 +50,15 @@ class UserListView(ListView):
     model = User
     template_name = 'users/user_list.html'
     context_object_name = 'users'
+    paginate_by = 20
 
     def get_queryset(self):
-        return User.objects.user_list().order_by('profile__score')[::-1]
+        return (
+            User.objects.user_list()
+            .select_related('profile')
+            .only('username', 'date_joined', 'profile__image', 'profile__score')
+            .order_by('-profile__score')
+        )
 
 
 class UserDetailView(DetailView):

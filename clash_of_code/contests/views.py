@@ -29,6 +29,7 @@ class ContestCreateView(LoginRequiredMixin, CreateView):
 class ContestDetailView(LoginRequiredMixin, DetailView):
     model = contests.models.Contest
     template_name = 'contests/detail.html'
+    queryset = contests.models.Contest.objects.select_related('created_by')
     context_object_name = 'contest'
 
     def get_context_data(self, **kwargs):
@@ -139,7 +140,7 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         self.contest = get_object_or_404(
-            contests.models.Contest,
+            contests.models.Contest.objects.select_related('created_by'),
             pk=self.kwargs['contest_id'],
         )
 
@@ -155,10 +156,6 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self.contest = get_object_or_404(
-            contests.models.Contest,
-            pk=self.kwargs['contest_id'],
-        )
         context['contest'] = self.contest
         return context
 
@@ -177,6 +174,7 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
             )
             .select_related('author')
             .only('id', 'title', 'author__username', 'is_public')
+            .all()
         )
         return kwargs
 

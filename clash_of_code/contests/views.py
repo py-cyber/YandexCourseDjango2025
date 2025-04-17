@@ -194,7 +194,7 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
                 form.instance.order = last_order + 1
 
             if form.cleaned_data['new_problem']:
-                problem_form = problems.forms.ProblemForm(self.request.POST)
+                problem_form = problems.forms.ProblemsForm(self.request.POST)
                 if problem_form.is_valid():
                     problem = problem_form.save(commit=False)
                     problem.author = self.request.user

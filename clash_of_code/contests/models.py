@@ -6,7 +6,13 @@ from django.utils import timezone
 User = get_user_model()
 
 
+class ContestManager(django.db.models.Manager):
+    def is_public(self):
+        return self.filter(is_public=True)
+
+
 class Contest(django.db.models.Model):
+    objects = ContestManager()
     name = django.db.models.CharField(
         max_length=200,
     )

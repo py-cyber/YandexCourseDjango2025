@@ -12,6 +12,17 @@ class LanguageChoices(django.db.models.TextChoices):
     Python_3_11 = 'Py3.11', 'Python 3.11'
 
 
+class VerdictChoice(django.db.models.TextChoices):
+    Accept = 'AC', _('Accept')
+    Compilation_error = 'CE', _('Compilation error')
+    Wrong_answer = 'WA', _('Wrong answer')
+    Time_limit = 'TL', _('Time limit')
+    Runtime_error = 'RE', _('Runtime error')
+    Memory_limit = 'ML', _('Memory limit')
+    In_queue = 'IQ', _('In queue')
+    In_processing = 'IP', _('In processing')
+
+
 class Tag(django.db.models.Model):
     name = django.db.models.CharField(
         verbose_name=_('name'),
@@ -137,6 +148,27 @@ class Problem(django.db.models.Model):
             django.core.validators.MinValueValidator(64),
         ),
     )
+
+    is_correct = django.db.models.BooleanField(
+        verbose_name=_('is correct'),
+        help_text=_("Shows whether the author's solution is correct"),
+        default=False,
+    )
+
+    status = django.db.models.CharField(
+        choices=VerdictChoice,
+        default=VerdictChoice.In_queue,
+    )
+
+    test_error = django.db.models.IntegerField(
+        blank=True,
+    )
+
+    logs = django.db.models.TextField(
+        verbose_name=_('logs'),
+        blank=True,
+    )
+
     created_at = django.db.models.DateTimeField(
         auto_now_add=True,
     )

@@ -174,7 +174,6 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
             )
             .select_related('author')
             .only('id', 'title', 'author__username', 'is_public')
-            .all()
         )
         return kwargs
 

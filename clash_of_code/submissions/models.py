@@ -3,21 +3,9 @@ import django.db.models
 from django.utils.translation import gettext_lazy as _
 
 import problems.models
-from problems.models import Problem
 
 
 User = get_user_model()
-
-
-class VerdictChoice(django.db.models.TextChoices):
-    Accept = 'AC', _('Accept')
-    Compilation_error = 'CE', _('Compilation error')
-    Wrong_answer = 'WA', _('Wrong answer')
-    Time_limit = 'TL', _('Time limit')
-    Runtime_error = 'RE', _('Runtime error')
-    Memory_limit = 'ML', _('Memory limit')
-    In_queue = 'IQ', _('In queue')
-    In_processing = 'IP', _('In processing')
 
 
 class Submission(django.db.models.Model):
@@ -26,7 +14,7 @@ class Submission(django.db.models.Model):
         on_delete=django.db.models.CASCADE,
     )
     problem = django.db.models.ForeignKey(
-        to=Problem,
+        to=problems.models.Problem,
         on_delete=django.db.models.CASCADE,
     )
     code = django.db.models.TextField()
@@ -35,7 +23,7 @@ class Submission(django.db.models.Model):
     )
     verdict = django.db.models.CharField(
         max_length=3,
-        choices=VerdictChoice,
+        choices=problems.models.VerdictChoice,
         default='IQ',
     )
 
@@ -46,14 +34,11 @@ class Submission(django.db.models.Model):
         default=None,
     )
 
-    time_taken = django.db.models.FloatField(
-        null=True,
+    logs = django.db.models.TextField(
+        verbose_name=_('logs'),
         blank=True,
     )
-    memory_used = django.db.models.FloatField(
-        null=True,
-        blank=True,
-    )
+
     submitted_at = django.db.models.DateTimeField(
         auto_now_add=True,
     )

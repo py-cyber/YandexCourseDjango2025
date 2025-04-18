@@ -36,17 +36,6 @@ class Contest(django.db.models.Model):
         blank=True,
     )
 
-    def add_problem(self, problem, points=100, order=None):
-        if order is None:
-            order = self.contestproblem_set.count() + 1
-
-        return ContestProblem.objects.create(
-            contest=self,
-            problem=problem,
-            points=points,
-            order=order,
-        )
-
     @property
     def status(self):
         now = timezone.now()

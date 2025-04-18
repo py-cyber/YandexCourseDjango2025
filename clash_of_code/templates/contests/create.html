@@ -1,16 +1,96 @@
-{% extends 'base.html' %}
-
-{% block title %}Create Contest - CFClone{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 mx-auto">
-        <h2>Create New Contest</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Create Contest</button>
-        </form>
-    </div>
+<div class="container mt-4">
+    <h1 class="mb-4">Создать новый контест</h1>
+    
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="mb-3">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Название контеста</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <div class="invalid-feedback d-block">
+                {{ form.name.errors|first }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Описание</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+            <div class="invalid-feedback d-block">
+                {{ form.description.errors|first }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="{{ form.start_time.id_for_label }}" class="form-label">Время начала</label>
+                {{ form.start_time }}
+                {% if form.start_time.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.start_time.errors|first }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.end_time.id_for_label }}" class="form-label">Время окончания</label>
+                {{ form.end_time }}
+                {% if form.end_time.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ form.end_time.errors|first }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="mb-3 form-check">
+            {{ form.is_public }}
+            <label for="{{ form.is_public.id_for_label }}" class="form-check-label">Публичный контест</label>
+            {% if form.is_public.errors %}
+            <div class="invalid-feedback d-block">
+                {{ form.is_public.errors|first }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3 form-check">
+            {{ form.registration_open }}
+            <label for="{{ form.registration_open.id_for_label }}" class="form-check-label">Открыта регистрация</label>
+            {% if form.registration_open.errors %}
+            <div class="invalid-feedback d-block">
+                {{ form.registration_open.errors|first }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Создать контест</button>
+        <a href="{% url 'contests:list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const now = new Date();
+        const tz_offset = now.getTimezoneOffset();
+        const localISOTime = new Date(now.getTime() - (tz_offset * 60000)).toISOString().slice(0, 16);
+        
+        document.getElementById('id_start_time').min = localISOTime;
+        document.getElementById('id_end_time').min = localISOTime;
+    });
+</script>
 {% endblock %}

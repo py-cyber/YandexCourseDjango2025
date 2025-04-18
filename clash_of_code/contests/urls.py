@@ -7,6 +7,7 @@ app_name = 'contests'
 
 
 urlpatterns = [
+    path('', views.ContestListView.as_view(), name='list'),
     path(
         'create/',
         views.ContestCreateView.as_view(),

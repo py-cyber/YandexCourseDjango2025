@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Контесты</h1>
+    
+    {% if request.user.is_authenticated %}
+    <div class="mb-3">
+        <a href="{% url 'contests:create' %}" class="btn btn-primary">Создать контест</a>
+    </div>
+    {% endif %}
+    
+    <div class="list-group">
+        {% for contest in contests %}
+        <a href="{% url 'contests:detail' contest.pk %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ contest.name }}</h5>
+                <span class="badge 
+                    {% if contest.status == 'upcoming' %}bg-primary
+                    {% elif contest.status == 'running' %}bg-success
+                    {% else %}bg-secondary{% endif %}">
+                    {% if contest.status == 'upcoming' %}Предстоящий
+                    {% elif contest.status == 'running' %}Идет
+                    {% else %}Завершен{% endif %}
+                </span>
+            </div>
+            <small>
+                Начало: {{ contest.start_time }} | 
+                Окончание: {{ contest.end_time }}
+                <br>Создатель: {{ contest.created_by.username }}
+            </small>
+        </a>
+        {% empty %}
+        <div class="list-group-item">
+            <p class="mb-0">Контестов пока нет.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

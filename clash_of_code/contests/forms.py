@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 import django.forms
+from django.utils import timezone
 
 import contests.models
 import problems.models
@@ -23,6 +24,7 @@ class ContestForm(django.forms.ModelForm):
             contests.models.Contest.end_time.field.name: django.forms.DateTimeInput(
                 attrs={'type': 'datetime-local'},
             ),
+            'description': django.forms.Textarea(attrs={'rows': 3}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -32,6 +34,24 @@ class ContestForm(django.forms.ModelForm):
                 field.field.widget.attrs['class'] = 'form-control'
             else:
                 field.field.widget.attrs['class'] = 'form-check-input'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_time = cleaned_data.get('start_time')
+        end_time = cleaned_data.get('end_time')
+
+        if start_time and end_time:
+            if start_time >= end_time:
+                raise django.forms.ValidationError(
+                    'Время окончания должно быть позже времени начала',
+                )
+
+            if start_time < timezone.now():
+                raise django.forms.ValidationError(
+                    'Время начала не может быть в прошлом',
+                )
+
+        return cleaned_data
 
 
 class AddProblemToContestForm(django.forms.ModelForm):

@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     # Project middleware
     'clash_of_code.middleware.OptimizedUserMiddleware',
+    'contests.middleware.TimezoneMiddleware',
 ]
 
 if DEBUG:

@@ -5,7 +5,7 @@ import django.db.models
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import CreateView, DetailView, TemplateView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 import contests.forms
 import contests.models
@@ -19,6 +19,18 @@ class ContestCreateView(LoginRequiredMixin, CreateView):
     template_name = 'contests/create.html'
 
     def form_valid(self, form):
+        if form.cleaned_data['start_time']:
+            naive_start = form.cleaned_data['start_time'].replace(tzinfo=None)
+            form.instance.start_time = timezone.make_aware(
+                naive_start,
+            )
+
+        if form.cleaned_data['end_time']:
+            naive_end = form.cleaned_data['end_time'].replace(tzinfo=None)
+            form.instance.end_time = timezone.make_aware(
+                naive_end,
+            )
+
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
@@ -218,3 +230,23 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         messages.success(self.request, 'Задача успешно добавлена в контест!')
         return redirect('contests:detail', pk=self.kwargs['contest_id']).url
+
+
+class ContestListView(ListView):
+    model = contests.models.Contest
+    template_name = 'contests/list.html'
+    context_object_name = 'contests'
+
+    def get_queryset(self):
+        queryset = self.model.objects.select_related('created_by')
+
+        queryset = queryset.order_by('start_time')
+
+        upcoming = [c for c in queryset if c.status == 'upcoming']
+        running = [c for c in queryset if c.status == 'running']
+        finished = [c for c in queryset if c.status == 'finished']
+
+        return running + upcoming + finished
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)

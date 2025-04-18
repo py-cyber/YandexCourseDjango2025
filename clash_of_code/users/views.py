@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
@@ -31,6 +32,14 @@ class SignUpView(FormView):
             settings.DEFAULT_FROM_EMAIL,
             [user.email],
             fail_silently=False,
+        )
+        messages.success(
+            self.request,
+            _(
+                'A confirmation email has been'
+                ' sent to %(email)s. Please check your inbox.',
+            )
+            % {'email': user.email},
         )
         return super().form_valid(form)
 

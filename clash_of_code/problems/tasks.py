@@ -2,8 +2,8 @@ import json
 
 import docker
 
-import problems.models
 from clash_of_code.celery import app
+import problems.models
 import submissions.models
 
 
@@ -35,7 +35,6 @@ def check_solution(pk_solution):
         'memory_limit': max_memory,
     }
 
-
     result = check_tests(data, lang)
     status = result['status']
     test_error = result['test_error']
@@ -46,15 +45,57 @@ def check_solution(pk_solution):
 
     else:
         solution.status = status
-        solution.test_error = problems.models.TestCase.objects.get(problem=solution.problem, number=test_error,)
+        solution.test_error = problems.models.TestCase.objects.get(
+            problem=solution.problem,
+            number=test_error,
+        )
         solution.logs = message
 
     solution.save()
 
 
 @app.task
-def check_author_solution(pk_task):
-    pass
+def check_auther_solution(pk_task):
+    problem = problems.models.Problem.objects.get(pk=pk_task)
+    problem.status = problems.models.VerdictChoice.In_processing
+    problem.save()
+
+    code = problem.author_solution
+    lang = problem.author_solution
+    tests = problem.tests
+    max_time = problem.time_limit
+    max_memory = problem.memory_limit
+
+    tests_json = list()
+    for test in tests:
+        test_json = {
+            'input_data': test.input_data,
+            'output_data': test.outpur_data,
+            'number': test.number,
+        }
+        tests_json.append(test_json)
+
+    data = {
+        'tests': tests,
+        'user_code': code,
+        'time_limit': max_time,
+        'memory_limit': max_memory,
+    }
+
+    result = check_tests(data, lang)
+    status = result['status']
+    test_error = result['test_error']
+    message = result['message']
+
+    if status == problems.models.VerdictChoice.Accept:
+        problem.status = status
+        problem.test_error = None
+        problem.is_correct = True
+
+    else:
+        problem.status = status
+        problem.test_error = test_error
+        problem.logs = message
 
 
 def check_tests(data, lang):
@@ -78,3 +119,8 @@ def check_tests(data, lang):
                 'status': 'CE',
                 'message': str(e),
             }
+
+    return {
+        'status': 'CE',
+        'message': 'Language is not found in test system',
+    }

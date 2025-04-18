@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='problem',
             name='test_error',
-            field=models.IntegerField(blank=True, default=''),
+            field=models.IntegerField(blank=True, null=True),
             preserve_default=False,
         ),
     ]

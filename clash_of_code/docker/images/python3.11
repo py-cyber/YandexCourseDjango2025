@@ -1,4 +1,0 @@
-FROM python:3.11
-COPY clash_of_code/docker/runners/user_code_runner.py /app/user_code_runner.py
-WORKDIR /app
-CMD ["python", "user_code_runner.py"]

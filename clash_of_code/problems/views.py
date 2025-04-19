@@ -11,6 +11,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 import problems.forms
 import problems.models
+import problems.tasks
 
 
 class ProblemsListView(ListView):
@@ -99,8 +100,10 @@ class ProblemsTestView(LoginRequiredMixin, View):
             test.full_clean()
             test.save()
 
-        # TODO когда будет готова тест систему
-        # TODO здесь надо запускать проверку авторского решения
+        problem.is_correct = False
+        problem.status = problems.models.VerdictChoice.In_queue
+        problem.save()
+        problems.tasks.check_auther_solution.delay_on_commit(problem.pk)
 
         return django.shortcuts.redirect(
             django.shortcuts.reverse('problems:tests', args=[pk]),

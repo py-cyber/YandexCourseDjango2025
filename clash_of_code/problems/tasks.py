@@ -10,7 +10,7 @@ import submissions.models
 @app.task
 def check_solution(pk_solution):
     solution = submissions.models.Submission.objects.get_full_submit(pk=pk_solution)
-    solution.status = submissions.models.VerdictChoice.In_processing
+    solution.status = problems.models.VerdictChoice.In_processing
     solution.save()
 
     code = solution.code
@@ -23,16 +23,20 @@ def check_solution(pk_solution):
     for test in tests:
         test_json = {
             'input_data': test.input_data,
-            'output_data': test.outpur_data,
+            'output_data': test.output_data,
             'number': test.number,
         }
         tests_json.append(test_json)
 
     data = {
-        'tests': tests,
-        'user_code': code,
-        'time_limit': max_time,
-        'memory_limit': max_memory,
+        'input_data': json.dumps(
+            {
+                'tests': tests_json,
+                'user_code': code,
+                'time_limit': max_time,
+                'memory_limit': max_memory,
+            }
+        )
     }
 
     result = check_tests(data, lang)
@@ -61,8 +65,8 @@ def check_auther_solution(pk_task):
     problem.save()
 
     code = problem.author_solution
-    lang = problem.author_solution
-    tests = problem.tests
+    lang = problem.author_language
+    tests = problem.tests.all()
     max_time = problem.time_limit
     max_memory = problem.memory_limit
 
@@ -70,21 +74,26 @@ def check_auther_solution(pk_task):
     for test in tests:
         test_json = {
             'input_data': test.input_data,
-            'output_data': test.outpur_data,
+            'output_data': test.output_data,
             'number': test.number,
         }
         tests_json.append(test_json)
 
     data = {
-        'tests': tests,
-        'user_code': code,
-        'time_limit': max_time,
-        'memory_limit': max_memory,
+        'input_data': json.dumps(
+            {
+                'tests': tests_json,
+                'user_code': code,
+                'time_limit': max_time,
+                'memory_limit': max_memory,
+            }
+        )
     }
 
     result = check_tests(data, lang)
+    print(result)
     status = result['status']
-    test_error = result['test_error']
+    test_error = result.get('test_error', None)
     message = result['message']
 
     if status == problems.models.VerdictChoice.Accept:
@@ -97,15 +106,16 @@ def check_auther_solution(pk_task):
         problem.test_error = test_error
         problem.logs = message
 
+    problem.save()
+
 
 def check_tests(data, lang):
     client = docker.from_env()
-
     if lang == problems.models.LanguageChoices.Python_3_11:
         try:
             container = client.containers.run(
-                'clash_of_code/docker/images/python3.11',
-                input=json.dumps(data),
+                'python3_11_image',
+                environment=data,
                 remove=True,
                 stdout=True,
                 stderr=True,
@@ -123,4 +133,5 @@ def check_tests(data, lang):
     return {
         'status': 'CE',
         'message': 'Language is not found in test system',
+        'test_error': None,
     }

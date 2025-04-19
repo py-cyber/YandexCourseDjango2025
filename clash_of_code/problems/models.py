@@ -167,6 +167,7 @@ class Problem(django.db.models.Model):
     logs = django.db.models.TextField(
         verbose_name=_('logs'),
         blank=True,
+        null=True,
     )
 
     created_at = django.db.models.DateTimeField(

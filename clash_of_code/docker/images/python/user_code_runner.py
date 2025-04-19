@@ -1,8 +1,8 @@
 import json
+import os
 from pathlib import Path
 import resource
 import subprocess
-import sys
 
 
 def set_memory_limit(max_memory_mb):
@@ -11,8 +11,9 @@ def set_memory_limit(max_memory_mb):
 
 
 def run_user_code(user_code, tests, time_limit, memory_limit):
-    with Path('user_code.py', 'w').open() as f:
-        f.write(user_code)
+    file = Path('user_code.py')
+    file.touch()
+    file.write_text(user_code)
 
     set_memory_limit(memory_limit)
 
@@ -24,7 +25,7 @@ def run_user_code(user_code, tests, time_limit, memory_limit):
 
     for test in tests:
         input_data = test['input_data']
-        expected_output = test['expected_output']
+        expected_output = test['output_data']
         test_number = test['number']
         try:
             process = subprocess.run(
@@ -40,23 +41,26 @@ def run_user_code(user_code, tests, time_limit, memory_limit):
             if user_program_output != expected_output.strip():
                 result['status'] = 'WA'
                 result['test_error'] = test_number
+                result['message'] = f'Wrong answer on test {test_number} received {user_program_output} excepted {expected_output}'
                 break
 
         except subprocess.TimeoutExpired:
             result['status'] = 'TL'
             result['test_error'] = test_number
+            result['message'] = f'Time limit exceeded on test {test_number}'
             break
 
         except Exception as e:
             result['status'] = 'RE'
             result['test_index'] = test_number
             result['message'] = str(e)
+            break
 
     return result
 
 
 if __name__ == '__main__':
-    input_json = sys.stdin.read()
+    input_json = os.getenv('input_data')
     data = json.loads(input_json)
 
     tests = data['tests']

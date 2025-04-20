@@ -17,6 +17,7 @@ black:
 
 unit-test:
   stage: test
+  image: docker
   services:
     - docker:dind
   script:

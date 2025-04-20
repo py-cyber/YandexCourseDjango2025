@@ -15,20 +15,17 @@ black:
   script:
     - black --check .
 
-docker-build:
+unit-test:
   stage: test
-  image: docker
   services:
     - docker:dind
   script:
+    - apt update && apt isntall -y docker.io
+    - pip install -r requirements/test.txt
     - cd clash_of_code/docker/images/python
     - docker build -t python3_11_image .
-
-unit-test:
-  stage: test
-  image: python
-  script:
-    - pip install -r requirements/test.txt
-    - cd clash_of_code
+    - cd ..
+    - cd ..
+    - cd ..
     - python3 manage.py test
 

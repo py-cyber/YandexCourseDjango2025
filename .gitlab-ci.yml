@@ -23,7 +23,7 @@ unit-test:
     - apt-get update &&
     - apt-get install -y docker.io &&
     - apt-get clean
-    - service docker start
+    - sudo service docker start
     - pip install -r requirements/test.txt
     - cd clash_of_code/docker/images/python
     - docker build -t python3_11_image .

@@ -25,6 +25,7 @@ unit-test:
     - apt-get clean
     - pip install -r requirements/test.txt
     - cd clash_of_code/docker/images/python
+    - systemctl start docker
     - docker build -t python3_11_image .
     - cd ..
     - cd ..

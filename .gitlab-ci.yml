@@ -20,7 +20,9 @@ unit-test:
   services:
     - docker:dind
   script:
-    - apt-get update && apt-get isntall -y docker.io
+    - apt-get update &&
+    - apt-get install -y docker.io &&
+    - apt-get clean
     - pip install -r requirements/test.txt
     - cd clash_of_code/docker/images/python
     - docker build -t python3_11_image .

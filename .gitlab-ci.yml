@@ -20,7 +20,6 @@ unit-test:
   script:
     - pip install -r requirements/test.txt
     - cd clash_of_code
-    - docker info
     - sudo systemctl start docker
     - python3 manage.py test
 

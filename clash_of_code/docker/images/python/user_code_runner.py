@@ -41,7 +41,10 @@ def run_user_code(user_code, tests, time_limit, memory_limit):
             if user_program_output != expected_output.strip():
                 result['status'] = 'WA'
                 result['test_error'] = test_number
-                result['message'] = f'Wrong answer on test {test_number} received {user_program_output} excepted {expected_output}'
+                result['message'] = (
+                    f'Wrong answer on test {test_number} '
+                    f'received {user_program_output} excepted {expected_output}'
+                )
                 break
 
         except subprocess.TimeoutExpired:

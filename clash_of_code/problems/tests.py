@@ -125,7 +125,8 @@ class TestSystemTests(django.test.TestCase):
         correct_task = problems.models.Problem.objects.get(pk=correct_task.pk)
         self.assertEqual(correct_task.is_correct, False)
         self.assertEqual(
-            correct_task.status, problems.models.VerdictChoice.Wrong_answer,
+            correct_task.status,
+            problems.models.VerdictChoice.Wrong_answer,
         )
         self.assertIsNotNone(correct_task.logs, correct_task.logs)
         self.assertIsNotNone(correct_task.test_error, correct_task.test_error)

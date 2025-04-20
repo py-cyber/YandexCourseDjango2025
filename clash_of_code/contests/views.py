@@ -19,16 +19,18 @@ class ContestCreateView(LoginRequiredMixin, CreateView):
     template_name = 'contests/create.html'
 
     def form_valid(self, form):
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+
         if form.cleaned_data['start_time']:
-            naive_start = form.cleaned_data['start_time'].replace(tzinfo=None)
-            form.instance.start_time = timezone.make_aware(
-                naive_start,
+            user_local_start = form.cleaned_data['start_time']
+            form.instance.start_time = user_local_start - timezone.timedelta(
+                minutes=tz_offset,
             )
 
         if form.cleaned_data['end_time']:
-            naive_end = form.cleaned_data['end_time'].replace(tzinfo=None)
-            form.instance.end_time = timezone.make_aware(
-                naive_end,
+            user_local_end = form.cleaned_data['end_time']
+            form.instance.end_time = user_local_end - timezone.timedelta(
+                minutes=tz_offset,
             )
 
         form.instance.created_by = self.request.user
@@ -44,10 +46,34 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
     queryset = contests.models.Contest.objects.select_related('created_by')
     context_object_name = 'contest'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        contest = self.object
+        user = self.request.user
+
+        if not (
+            contest.is_public
+            or contest.created_by == user.id
+            or contest.participants.filter(id=user.id).exists()
+            or user.is_staff
+        ):
+            raise PermissionDenied('Недостаточно прав')
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contest = self.object
         now = timezone.now()
+
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+
+        contest.display_start_time = contest.start_time + timezone.timedelta(
+            minutes=tz_offset,
+        )
+        contest.display_end_time = contest.end_time + timezone.timedelta(
+            minutes=tz_offset,
+        )
 
         context.update(
             {
@@ -59,6 +85,7 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
                 ).exists(),
                 'is_creator': contest.created_by == self.request.user,
                 'problems': contest.contestproblem_set.all().order_by('order'),
+                'duration': contest.end_time - contest.start_time,
             },
         )
 
@@ -228,7 +255,6 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
             return self.form_invalid(form)
 
     def get_success_url(self):
-        messages.success(self.request, 'Задача успешно добавлена в контест!')
         return redirect('contests:detail', pk=self.kwargs['contest_id']).url
 
 
@@ -240,7 +266,17 @@ class ContestListView(ListView):
     def get_queryset(self):
         queryset = self.model.objects.select_related('created_by')
 
-        queryset = queryset.order_by('start_time')
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+
+        queryset = queryset.annotate(
+            display_start_time=django.db.models.F('start_time')
+            + timezone.timedelta(minutes=tz_offset),
+            display_end_time=django.db.models.F('end_time')
+            + timezone.timedelta(minutes=tz_offset),
+        )
+        queryset = queryset.order_by('start_time').filter(
+            is_public=True,
+        )
 
         upcoming = [c for c in queryset if c.status == 'upcoming']
         running = [c for c in queryset if c.status == 'running']

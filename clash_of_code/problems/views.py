@@ -156,4 +156,5 @@ class AllMyTaskView(LoginRequiredMixin, ListView):
 
 
 def problem_view(request, pk):
+    # доступ только для автора и для staff
     return django.http.HttpResponse('бла бла бла')

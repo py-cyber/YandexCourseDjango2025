@@ -43,11 +43,13 @@ class ContestForm(django.forms.ModelForm):
         if start_time and end_time:
             if start_time >= end_time:
                 raise django.forms.ValidationError(
+                    f'{start_time}|{end_time} '
                     'Время окончания должно быть позже времени начала',
                 )
 
             if start_time < timezone.now():
                 raise django.forms.ValidationError(
+                    f'{start_time}|{timezone.localtime(timezone.now())} '
                     'Время начала не может быть в прошлом',
                 )
 

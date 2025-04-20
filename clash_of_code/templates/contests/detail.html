@@ -23,11 +23,11 @@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <p><strong>Start:</strong> {{ contest.start_time|date:"DATETIME_FORMAT" }}</p>
-                    <p><strong>End:</strong> {{ contest.end_time|date:"DATETIME_FORMAT" }}</p>
+                    <p><strong>Start:</strong> {{ contest.display_start_time|date:"DATETIME_FORMAT" }}</p>
+                    <p><strong>End:</strong> {{ contest.display_end_time|date:"DATETIME_FORMAT" }}</p>
                 </div>
                 <div class="col-md-6">
-                    <p><strong>Duration:</strong> {{ contest.duration }}</p>
+                    <p><strong>Duration:</strong> {{ duration }}</p>
                     <p><strong>Creator:</strong> {{ contest.created_by.username }}</p>
                 </div>
             </div>
@@ -77,7 +77,8 @@
                             <td>{{ problem.order }}</td>
                             <td>
                                 {% if is_creator or is_running and is_registered or is_past %}
-                                    <a href="{% url 'problems:update' pk=problem.pk %}">
+                                    <!-- change url -->
+                                    <a href="{% url 'problems:update' pk=problem.id %}">
                                         {{ problem.problem.title }}
                                     </a>
                                 {% else %}

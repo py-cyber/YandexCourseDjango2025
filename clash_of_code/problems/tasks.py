@@ -1,8 +1,8 @@
 import json
 
 from clash_of_code.celery import app
-import problems.models
 import core.core
+import problems.models
 
 
 @app.task

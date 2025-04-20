@@ -124,7 +124,9 @@ class TestSystemTests(django.test.TestCase):
         problems.tasks.check_auther_solution(correct_task.pk)
         correct_task = problems.models.Problem.objects.get(pk=correct_task.pk)
         self.assertEqual(correct_task.is_correct, False)
-        self.assertEqual(correct_task.status, problems.models.VerdictChoice.Wrong_answer)
+        self.assertEqual(
+            correct_task.status, problems.models.VerdictChoice.Wrong_answer,
+        )
         self.assertIsNotNone(correct_task.logs, correct_task.logs)
         self.assertIsNotNone(correct_task.test_error, correct_task.test_error)
 
@@ -152,7 +154,11 @@ class TestSystemTests(django.test.TestCase):
         problems.tasks.check_auther_solution(incorrect_task.pk)
         incorrect_task = problems.models.Problem.objects.get(pk=incorrect_task.pk)
         self.assertEqual(incorrect_task.is_correct, False)
-        self.assertEqual(incorrect_task.status, problems.models.VerdictChoice.Time_limit, incorrect_task.logs)
+        self.assertEqual(
+            incorrect_task.status,
+            problems.models.VerdictChoice.Time_limit,
+            incorrect_task.logs,
+        )
         self.assertIsNotNone(incorrect_task.logs, incorrect_task.logs)
         self.assertIsNotNone(incorrect_task.test_error, incorrect_task.test_error)
 
@@ -180,6 +186,10 @@ class TestSystemTests(django.test.TestCase):
         problems.tasks.check_auther_solution(incorrect_task.pk)
         incorrect_task = problems.models.Problem.objects.get(pk=incorrect_task.pk)
         self.assertEqual(incorrect_task.is_correct, False)
-        self.assertEqual(incorrect_task.status, problems.models.VerdictChoice.Runtime_error, incorrect_task.logs)
+        self.assertEqual(
+            incorrect_task.status,
+            problems.models.VerdictChoice.Runtime_error,
+            incorrect_task.logs,
+        )
         self.assertIsNotNone(incorrect_task.logs, incorrect_task.logs)
         self.assertIsNotNone(incorrect_task.test_error, incorrect_task.test_error)

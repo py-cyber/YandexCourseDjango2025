@@ -1,5 +1,6 @@
-import docker
 import json
+
+import docker
 
 import problems.models
 

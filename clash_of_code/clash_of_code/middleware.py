@@ -7,16 +7,12 @@ class OptimizedUserMiddleware:
 
     def __call__(self, request):
         if request.user.is_authenticated:
-            request.user = (
+            user_queryset = (
                 get_user_model()
-                .objects.select_related(
-                    'profile',
-                )
-                .prefetch_related(
-                    'groups',
-                    'user_permissions',
-                )
-                .get(pk=request.user.pk)
+                .objects.select_related('profile')
+                .filter(is_active=True)
+                .prefetch_related('groups', 'user_permissions')
             )
+            request.user = user_queryset.get(pk=request.user.pk)
 
         return self.get_response(request)

@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -24,7 +24,9 @@ class SignUpView(FormView):
         user = form.save(commit=False)
         user.is_active = settings.DEFAULT_USER_IS_ACTIVE
         user.save()
-        activation_link = f'http://{self.request.get_host()}/activate/{user.username}/'
+        activation_link = (
+            f'http://{self.request.get_host()}/users/activate/{user.username}/'
+        )
         send_mail(
             _('Account activate'),
             _('Follow to link for activate: %(link)s') % {'link': activation_link},
@@ -36,14 +38,14 @@ class SignUpView(FormView):
 
 
 class ActivateView(View):
-    def get(self, username):
-        user = User.objects.get(username=username)
+    def get(self, request, username):
+        user = get_object_or_404(User, username=username)
         if timezone.now() - user.date_joined < timedelta(hours=12):
             user.is_active = True
             user.save()
             return redirect('login')
 
-        return render(self.request, 'users/activation_expired.html')
+        return render(request, 'users/activation_expired.html')
 
 
 class UserListView(ListView):

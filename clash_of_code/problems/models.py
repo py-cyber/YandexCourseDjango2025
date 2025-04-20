@@ -156,12 +156,15 @@ class Problem(django.db.models.Model):
     )
 
     status = django.db.models.CharField(
+        verbose_name=_('status checked'),
         choices=VerdictChoice,
         default=VerdictChoice.In_queue,
     )
 
     test_error = django.db.models.IntegerField(
+        verbose_name=_('test error'),
         blank=True,
+        null=True,
     )
 
     logs = django.db.models.TextField(

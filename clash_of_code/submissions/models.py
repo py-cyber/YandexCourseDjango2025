@@ -22,9 +22,8 @@ class Submission(django.db.models.Model):
         max_length=20,
     )
     verdict = django.db.models.CharField(
-        max_length=3,
         choices=problems.models.VerdictChoice,
-        default='IQ',
+        default=problems.models.VerdictChoice.In_queue,
     )
 
     test_error = django.db.models.ForeignKey(
@@ -37,6 +36,7 @@ class Submission(django.db.models.Model):
     logs = django.db.models.TextField(
         verbose_name=_('logs'),
         blank=True,
+        null=True,
     )
 
     submitted_at = django.db.models.DateTimeField(

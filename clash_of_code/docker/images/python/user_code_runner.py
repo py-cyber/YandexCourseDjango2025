@@ -52,8 +52,8 @@ def run_user_code(user_code, tests, time_limit, memory_limit):
 
         except Exception as e:
             result['status'] = 'RE'
-            result['test_index'] = test_number
-            result['message'] = str(e)
+            result['test_error'] = test_number
+            result['message'] = str(e) + ' ' + e.__class__.__name__
             break
 
     return result

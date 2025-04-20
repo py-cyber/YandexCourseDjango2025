@@ -38,7 +38,6 @@ def check_auther_solution(pk_task):
     }
 
     result = core.core.check_tests(data, lang)
-    print(result)
     status = result['status']
     test_error = result.get('test_error', None)
     message = result['message']
@@ -47,10 +46,10 @@ def check_auther_solution(pk_task):
         problem.status = status
         problem.test_error = None
         problem.is_correct = True
+        problem.save()
 
     else:
         problem.status = status
         problem.test_error = test_error
         problem.logs = message
-
-    problem.save()
+        problem.save()

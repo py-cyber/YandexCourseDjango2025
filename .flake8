@@ -1,6 +1,6 @@
 [flake8]
 max-line-length = 88
-application_import_names = clash_of_code contests duet homepage problems submissions users
+application_import_names = clash_of_code core contests duet homepage problems submissions users
 black-config = .black
 import-order-style = google
 

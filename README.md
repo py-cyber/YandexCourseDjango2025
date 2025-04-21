@@ -76,6 +76,18 @@ python manage.py createsuperuser
 django-admin compilemessages
 ```
 ### Подготовка тестирующей системы
+* Перейдите в директорию с образом языка (это можно сделать с помощью команды ниже)
+```bash
+cd docker/images/python
+```
+* соберите контейнер для тестирующей системы для языка python:
+```bash
+docker build -t python3_11_image .
+```
+* Вернитесь назад в директорию проекта
+```bash
+cd ../../..
+```
 * Запустите redis в качестве брокера сообщений через docker 
 ```bash
 docker run -d -p 6379:6379 redis

@@ -10,7 +10,7 @@
         <div class="card-header bg-dark text-white">
             <div class="d-flex justify-content-between align-items-center">
                 <h2>{{ contest.name }}</h2>
-                <span class="badge 
+                <span class="badge
                     {% if is_upcoming %}bg-primary
                     {% elif is_running %}bg-success
                     {% else %}bg-secondary
@@ -33,9 +33,9 @@
                     <p><strong>{% translate "Creator" %}:</strong> {{ contest.created_by.username }}</p>
                 </div>
             </div>
-            
+
             <p class="card-text">{{ contest.description|linebreaks }}</p>
-            
+
             <div class="d-flex justify-content-between mt-3">
                 {% if is_upcoming %}
                     {% if is_registered %}
@@ -44,11 +44,11 @@
                         <a href="{% url 'contests:register' pk=contest.pk %}" class="btn btn-primary">{% translate "Register" %}</a>
                     {% endif %}
                 {% endif %}
-                
+
                 {% if is_running or is_past %}
                     <a href="{% url 'contests:standings' pk=contest.pk %}" class="btn btn-info">{% translate "Results" %}</a>
                 {% endif %}
-                
+
                 {% if is_creator or user.is_staff %}
                     <a href="{% url 'contests:add_problem' contest_id=contest.pk %}" class="btn btn-primary">{% translate "Add Problem" %}</a>
                 {% endif %}
@@ -86,7 +86,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <span class="badge 
+                                <span class="badge
                                     {% if problem.problem.difficulty == 'E' %}bg-success
                                     {% elif problem.problem.difficulty == 'M' %}bg-warning text-dark
                                     {% else %}bg-danger
@@ -119,7 +119,7 @@
                 </div>
             </div>
         </div>
-    
+
         {% if user.is_staff and participants %}
         <div class="card">
             <div class="card-header bg-light">
@@ -145,4 +145,4 @@
         </div>
         {% endif %}
     </div>
-{% endblock %}    
+{% endblock %}

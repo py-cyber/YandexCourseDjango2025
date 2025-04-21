@@ -271,27 +271,34 @@ class ContestListView(ListView):
     model = contests.models.Contest
     template_name = 'contests/list.html'
     context_object_name = 'contests'
+    ordering = ['start_time']
 
     def get_queryset(self):
-        queryset = self.model.objects.select_related('created_by')
-
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
 
-        queryset = queryset.annotate(
+        queryset = self.model.objects.select_related(
+            'created_by',
+            'created_by__profile',
+        ).filter(is_public=True)
+
+        return queryset.annotate(
             display_start_time=django.db.models.F('start_time')
             + timezone.timedelta(minutes=tz_offset),
             display_end_time=django.db.models.F('end_time')
             + timezone.timedelta(minutes=tz_offset),
-        )
-        queryset = queryset.order_by('start_time').filter(
-            is_public=True,
-        )
-
-        upcoming = [c for c in queryset if c.status == 'upcoming']
-        running = [c for c in queryset if c.status == 'running']
-        finished = [c for c in queryset if c.status == 'finished']
-
-        return running + upcoming + finished
+            contests=django.db.models.Case(
+                django.db.models.When(
+                    start_time__gt=timezone.now(),
+                    then=django.db.models.Value('upcoming'),
+                ),
+                django.db.models.When(
+                    end_time__lt=timezone.now(),
+                    then=django.db.models.Value('finished'),
+                ),
+                default=django.db.models.Value('running'),
+                output_field=django.db.models.CharField(),
+            ),
+        ).order_by('start_time')
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)

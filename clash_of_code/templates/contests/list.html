@@ -4,39 +4,175 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">{% translate "Contests" %}</h1>
-    
-    {% if request.user.is_authenticated %}
-    <div class="mb-3">
-        <a href="{% url 'contests:create' %}" class="btn btn-primary">{% translate "Create Contest" %}</a>
+    <div class="contests-card card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 pb-1">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">{% trans "Contests List" %}</h2>
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'contests:create' %}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-1"></i> {% trans "Create Contest" %}
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">{% trans "Contest" %}</th>
+                            <th>{% trans "Status" %}</th>
+                            <th>{% trans "Time Period" %}</th>
+                            <th class="text-end pe-4">{% trans "Creator" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contest in contests %}
+                        {% with created_by=contest.created_by %}
+                        <tr class="contest-row">
+                            <td class="ps-4">
+                                <a href="{% url 'contests:detail' contest.pk %}" class="contest-link fw-bold">
+                                    {{ contest.name }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge
+                                    {% if contest.status == 'upcoming' %}bg-warning
+                                    {% elif contest.status == 'running' %}bg-primary
+                                    {% else %}bg-success{% endif %}">
+                                    {% if contest.status == 'upcoming' %}{% translate "Upcoming" %}
+                                    {% elif contest.status == 'running' %}{% translate "Ongoing" %}
+                                    {% else %}{% translate "Completed" %}{% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <small class="text-muted">
+                                        <i class="far fa-calendar-alt me-1"></i>
+                                        {% translate "Start" %}: {{ contest.display_start_time }}
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="far fa-clock me-1"></i>
+                                        {% translate "End" %}: {{ contest.display_end_time }}
+                                    </small>
+                                </div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <a href="{% url 'user_detail' pk=created_by.id %}" class="creator-link text-decoration-none">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <div class="me-2">
+                                            {% if created_by.profile.image %}
+                                                <img src="{{ created_by.profile.image.url }}"
+                                                     class="avatar-img-sm rounded-circle"
+                                                     alt="{{ created_by.username }}">
+                                            {% else %}
+                                                <div class="avatar-default-sm rounded-circle d-flex align-items-center justify-content-center">
+                                                    {{ created_by.username|first|upper }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <span class="username">{{ created_by.username }}</span>
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endwith %}
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                {% trans "There are currently no contests" %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% if is_paginated %}
+    <div class="mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
     {% endif %}
-    
-    <div class="list-group">
-        {% for contest in contests %}
-        <a href="{% url 'contests:detail' contest.pk %}" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{ contest.name }}</h5>
-                <span class="badge 
-                    {% if contest.status == 'upcoming' %}bg-primary
-                    {% elif contest.status == 'running' %}bg-success
-                    {% else %}bg-secondary{% endif %}">
-                    {% if contest.status == 'upcoming' %}{% translate "Upcoming" %}
-                    {% elif contest.status == 'running' %}{% translate "Ongoing" %}
-                    {% else %}{% translate "Completed" %}{% endif %}
-                </span>
-            </div>
-            <small>
-                {% translate "Start" %}: {{ contest.display_start_time }} | 
-                {% translate "End" %}: {{ contest.display_end_time }}
-                <br>{% translate "Creator" %}: {{ contest.created_by.username }}
-            </small>
-        </a>
-        {% empty %}
-        <div class="list-group-item">
-            <p class="mb-0">{% translate "There are currently no contests" %}</p>
-        </div>
-        {% endfor %}
-    </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/all_problems.css' %}">
+<style>
+    .contests-card {
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .contest-link {
+        color: #2c3e50;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .contest-link:hover {
+        color: #00bf8e;
+    }
+
+    .avatar-img-sm {
+        width: 28px;
+        height: 28px;
+        object-fit: cover;
+    }
+
+    .avatar-default-sm {
+        width: 28px;
+        height: 28px;
+        background-color: #f8f9fa;
+        color: #6c757d;
+        font-size: 0.8rem;
+    }
+
+    .creator-link {
+        color: #495057;
+    }
+
+    .creator-link:hover {
+        color: #00bf8e;
+    }
+</style>
 {% endblock %}

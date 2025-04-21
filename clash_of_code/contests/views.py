@@ -84,7 +84,9 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
                     id=self.request.user.id,
                 ).exists(),
                 'is_creator': contest.created_by == self.request.user,
-                'problems': contest.contestproblem_set.all().order_by('order'),
+                'problems': contest.contestproblem_set.all()
+                .select_related('problem')
+                .order_by('order'),
                 'duration': contest.end_time - contest.start_time,
             },
         )

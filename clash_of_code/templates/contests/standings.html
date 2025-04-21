@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 
-{% block title %}{{ contest.name }} - Standings{% endblock %}
+{% block title %}{{ contest.name }} - {% translate "Results" %}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2>{{ contest.name }} - Standings</h2>
+    <h2>{{ contest.name }} - {% translate "Results" %}</h2>
     
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>#</th>
-                    <th>Participant</th>
+                    <th>{% translate "Participant" %}</th>
                     {% for problem in problems %}
                         <th>{{ problem.order }}</th>
                     {% endfor %}
-                    <th>Total</th>
+                    <th>{% translate "Total" %}</th>
                 </tr>
                 <tr>
                     <th colspan="2"></th>

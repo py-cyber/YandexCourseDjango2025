@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 
-{% block title %}{{ contest.name }} - Contest Details{% endblock %}
+{% block title %}{{ contest.name }} - {% translate "Contest Details" %}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -13,9 +15,9 @@
                     {% elif is_running %}bg-success
                     {% else %}bg-secondary
                     {% endif %}">
-                    {% if is_upcoming %}Upcoming
-                    {% elif is_running %}Running
-                    {% else %}Finished
+                    {% if is_upcoming %}{% translate "Upcoming" %}
+                    {% elif is_running %}{% translate "Ongoing" %}
+                    {% else %}{% translate "Completed" %}
                     {% endif %}
                 </span>
             </div>
@@ -23,12 +25,12 @@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <p><strong>Start:</strong> {{ contest.display_start_time|date:"DATETIME_FORMAT" }}</p>
-                    <p><strong>End:</strong> {{ contest.display_end_time|date:"DATETIME_FORMAT" }}</p>
+                    <p><strong>{% translate "Start" %}:</strong> {{ contest.display_start_time|date:"DATETIME_FORMAT" }}</p>
+                    <p><strong>{% translate "End" %}:</strong> {{ contest.display_end_time|date:"DATETIME_FORMAT" }}</p>
                 </div>
                 <div class="col-md-6">
-                    <p><strong>Duration:</strong> {{ duration }}</p>
-                    <p><strong>Creator:</strong> {{ contest.created_by.username }}</p>
+                    <p><strong>{% translate "Duration" %}:</strong> {{ duration }}</p>
+                    <p><strong>{% translate "Creator" %}:</strong> {{ contest.created_by.username }}</p>
                 </div>
             </div>
             
@@ -37,19 +39,18 @@
             <div class="d-flex justify-content-between mt-3">
                 {% if is_upcoming %}
                     {% if is_registered %}
-                        <button class="btn btn-success" disabled>You are registered</button>
+                        <button class="btn btn-success" disabled>{% translate "You are registered" %}</button>
                     {% else %}
-                        <a href="{% url 'contests:register' pk=contest.pk %}" class="btn btn-primary">Register</a>
+                        <a href="{% url 'contests:register' pk=contest.pk %}" class="btn btn-primary">{% translate "Register" %}</a>
                     {% endif %}
                 {% endif %}
                 
                 {% if is_running or is_past %}
-                    <a href="{% url 'contests:standings' pk=contest.pk %}" class="btn btn-info">View Standings</a>
+                    <a href="{% url 'contests:standings' pk=contest.pk %}" class="btn btn-info">{% translate "Results" %}</a>
                 {% endif %}
                 
                 {% if is_creator or user.is_staff %}
-                    {% comment %} <a href="{% url 'contests:update' pk=contest.pk %}" class="btn btn-warning">Edit Contest</a> {% endcomment %}
-                    <a href="{% url 'contests:add_problem' contest_id=contest.pk %}" class="btn btn-primary">Add Problem</a>
+                    <a href="{% url 'contests:add_problem' contest_id=contest.pk %}" class="btn btn-primary">{% translate "Add Problem" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -57,7 +58,7 @@
 
     <div class="card mb-4">
         <div class="card-header bg-light">
-            <h3 class="mb-0">Problems</h3>
+            <h3 class="mb-0">{% translate "Problems" %}</h3>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -65,10 +66,10 @@
                     <thead class="table-dark">
                         <tr>
                             <th width="5%">#</th>
-                            <th width="45%">Problem</th>
-                            <th width="15%">Difficulty</th>
-                            <th width="15%">Points</th>
-                            <th width="20%">Status</th>
+                            <th width="45%">{% translate "Problem" %}</th>
+                            <th width="15%">{% translate "Difficulty" %}</th>
+                            <th width="15%">{% translate "Points" %}</th>
+                            <th width="20%">{% translate "Status" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,7 +78,6 @@
                             <td>{{ problem.order }}</td>
                             <td>
                                 {% if is_creator or is_running and is_registered or is_past %}
-                                    <!-- change url -->
                                     <a href="{% url 'problems:update' pk=problem.id %}">
                                         {{ problem.problem.title }}
                                     </a>
@@ -98,51 +98,51 @@
                             <td>
                                 {% if is_running or is_past %}
                                     {% if is_registered and problem.problem.id in solved_problems %}
-                                        <span class="text-success">Solved</span>
+                                        <span class="text-success">{% translate "Solved" %}</span>
                                     {% elif is_registered %}
-                                        <span class="text-warning">Not solved</span>
+                                        <span class="text-warning">{% translate "Not Solved" %}</span>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
                                     {% else %}
                                         <span class="text-muted">-</span>
                                     {% endif %}
-                                {% else %}
-                                    <span class="text-muted">-</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="text-center py-4">No problems added to this contest yet</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4">{% translate "There are currently no problems in this contest" %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-
-    {% if user.is_staff and participants %}
-    <div class="card">
-        <div class="card-header bg-light">
-            <h3 class="mb-0">Participants ({{ participants|length }})</h3>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                {% for participant in participants %}
-                <div class="col-md-4 mb-2">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <span class="badge bg-primary rounded-pill">{{ forloop.counter }}</span>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <a href="{% url 'profile' %}">{{ participant.username }}</a>
-                            <small class="text-muted d-block">{{ participant.rating }} rating</small>
+    
+        {% if user.is_staff and participants %}
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3 class="mb-0">{% translate "Participants" %} ({{ participants|length }})</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for participant in participants %}
+                    <div class="col-md-4 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <span class="badge bg-primary rounded-pill">{{ forloop.counter }}</span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <a href="{% url 'profile' %}">{{ participant.username }}</a>
+                                <small class="text-muted d-block">{{ participant.rating }} {% translate "rating" %}</small>
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
-    {% endif %}
-</div>
-{% endblock %}
+{% endblock %}    

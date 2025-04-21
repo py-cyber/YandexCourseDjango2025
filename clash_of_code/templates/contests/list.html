@@ -1,12 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">Контесты</h1>
+    <h1 class="mb-4">{% translate "Contests" %}</h1>
     
     {% if request.user.is_authenticated %}
     <div class="mb-3">
-        <a href="{% url 'contests:create' %}" class="btn btn-primary">Создать контест</a>
+        <a href="{% url 'contests:create' %}" class="btn btn-primary">{% translate "Create Contest" %}</a>
     </div>
     {% endif %}
     
@@ -19,20 +21,20 @@
                     {% if contest.status == 'upcoming' %}bg-primary
                     {% elif contest.status == 'running' %}bg-success
                     {% else %}bg-secondary{% endif %}">
-                    {% if contest.status == 'upcoming' %}Предстоящий
-                    {% elif contest.status == 'running' %}Идет
-                    {% else %}Завершен{% endif %}
+                    {% if contest.status == 'upcoming' %}{% translate "Upcoming" %}
+                    {% elif contest.status == 'running' %}{% translate "Ongoing" %}
+                    {% else %}{% translate "Completed" %}{% endif %}
                 </span>
             </div>
             <small>
-                Начало: {{ contest.display_start_time }} | 
-                Окончание: {{ contest.display_end_time }}
-                <br>Создатель: {{ contest.created_by.username }}
+                {% translate "Start" %}: {{ contest.display_start_time }} | 
+                {% translate "End" %}: {{ contest.display_end_time }}
+                <br>{% translate "Creator" %}: {{ contest.created_by.username }}
             </small>
         </a>
         {% empty %}
         <div class="list-group-item">
-            <p class="mb-0">Контестов пока нет.</p>
+            <p class="mb-0">{% translate "There are currently no contests" %}</p>
         </div>
         {% endfor %}
     </div>

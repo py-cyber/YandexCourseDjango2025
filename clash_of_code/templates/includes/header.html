@@ -57,6 +57,11 @@
                             {% translate "My code rooms" %}
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link {% if request.resolver_match.view_name == 'contests:list' %}active{% endif %}" {% if not request.resolver_match.view_name == 'contests:list' %} href="{% url 'contests:list' %}" {% endif %}>
+                            {% translate "Contests" %}
+                        </a>
+                    </li>
                     {% if user.is_superuser %}
                         <li>
                             <a class="nav-link {% if request.resolver_match.view_name == 'admin:index' %}active{% endif %}" {% if not request.resolver_match.view_name == 'admin:index' %} href="{% url 'admin:index' %}" {% endif %}>

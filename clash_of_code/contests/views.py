@@ -53,7 +53,7 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
 
         if not (
             contest.is_public
-            or contest.created_by == user.id
+            or contest.created_by == user
             or contest.participants.filter(id=user.id).exists()
             or user.is_staff
         ):
@@ -184,6 +184,13 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
         )
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.warning(
+                request,
+                'Пожалуйста, войдите в систему для доступа к этой странице',
+            )
+            return redirect('login')
+
         if not (
             request.user.is_staff
             or request.user == self.contest.created_by

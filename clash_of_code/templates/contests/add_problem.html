@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 
-{% block title %}Добавить задачу в {{ contest.name }}{% endblock %}
+{% block title %}{% translate "Add task to" %} {{ contest.name }}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Добавить задачу в {{ contest.name }}</h2>
+    <h2>{% translate "Add task to" %} {{ contest.name }}</h2>
 
     {% if messages %}
         <div class="mb-4">
@@ -19,7 +21,7 @@
 
     {% if form.errors %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <h5 class="alert-heading">Ошибки в форме:</h5>
+            <h5 class="alert-heading">{% translate "Errors in the form" %}:</h5>
             <ul class="mb-0">
                 {% for field, errors in form.errors.items %}
                     {% for error in errors %}
@@ -41,41 +43,41 @@
 
         <div class="card mb-3">
             <div class="card-header">
-                <h4>Выберите способ добавления</h4>
+                <h4>{% translate "Select method of addition" %}</h4>
             </div>
             <div class="card-body">
                 <div class="btn-group w-100 mb-4" role="group" id="problem-type-selector">
                     <input type="radio" class="btn-check" name="new_problem" id="existing_problem_btn" value="false"
                            autocomplete="off" {% if not form.new_problem.value %}checked{% endif %}>
                     <label class="btn btn-outline-primary" for="existing_problem_btn">
-                        <i class="bi bi-search me-2"></i>Выбрать существующую
+                        <i class="bi bi-search me-2"></i>{% translate "Select existing" %}
                     </label>
                     
                     <input type="radio" class="btn-check" name="new_problem" id="new_problem_btn" value="true"
                            autocomplete="off" {% if form.new_problem.value %}checked{% endif %}>
                     <label class="btn btn-outline-primary" for="new_problem_btn">
-                        <i class="bi bi-plus-circle me-2"></i>Создать новую
+                        <i class="bi bi-plus-circle me-2"></i>{% translate "Create new" %}
                     </label>
                 </div>
                 
                 <div id="existing-problem-section" {% if form.new_problem.value %}style="display:none;"{% endif %}>
                     <div class="mb-3">
-                        <label for="problem-search" class="form-label">Поиск задачи:</label>
+                        <label for="problem-search" class="form-label">{% translate "Search task" %}:</label>
                         <input type="text" id="problem-search" class="form-control" 
-                               placeholder="Начните вводить название...">
+                               placeholder="Start typing the title...">
                         <div class="form-check mt-2">
                             <input type="checkbox" name="show_only_mine" class="form-check-input" id="id_show_only_mine">
                             <label class="form-check-label" for="id_show_only_mine">
-                                Мои задачи
+                                {% translate "My tasks" %}
                             </label>
                         </div>
                         <input type="hidden" id="selected_problem_id" name="problem" value="">
                         <div id="problem-results" class="mt-2 border rounded" style="display:none; max-height: 300px; overflow-y: auto;">
                             <select name="problem" id="id_problem" class="form-select mt-2">
-                                <option value="">-- Выберите задачу --</option>
+                                <option value="">-- {% translate "Select task" %} --</option>
                                 {% for problem in form.problem.field.queryset %}
                                     <option value="{{ problem.id }}" data-author="{{ author.id }}">
-                                        {{ problem.title }} (Автор: {{ author.username }})
+                                        {{ problem.title }} ({% translate "Author" %}: {{ author.username }})
                                     </option>
                                 {% endfor %}
                             </select>
@@ -85,33 +87,32 @@
 
                 <div id="new-problem-section" {% if not form.new_problem.value %}style="display:none;"{% endif %}>
                     <div class="mb-3">
-                        <label for="id_title" class="form-label">Название</label>
+                        <label for="id_title" class="form-label">{% translate "Title" %}</label>
                         <input type="text" name="title" class="form-control" id="id_title">
                     </div>
                     <div class="mb-3">
-                        <label for="id_description" class="form-label">Описание</label>
+                        <label for="id_description" class="form-label">{% translate "Description" %}</label>
                         <textarea name="description" class="form-control" id="id_description" rows="5"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="id_difficult" class="form-label">Сложность (0-100)</label>
+                        <label for="id_difficult" class="form-label">{% translate "Difficulty" %}</label>
                         <input type="number" name="difficult" class="form-control" id="id_difficult" 
                                min="0" max="100"
-                               placeholder="Введите число от 0 до 100">
-                        <div class="form-text">20 - легкая, 50 - средняя, 80 - сложная</div>
+                               placeholder="Enter a number from 0 to 100">
                     </div>
                     <div class="mb-3">
-                        <label for="id_time_limit" class="form-label">Лимит времени (сек)</label>
+                        <label for="id_time_limit" class="form-label">{% translate "Time limit (sec)" %}</label>
                         <input type="number" name="time_limit" class="form-control" id="id_time_limit" 
                                min="1" max="10" value="1" required>
                     </div>
                     <div class="mb-3">
-                        <label for="id_memory_limit" class="form-label">Лимит памяти (MB)</label>
+                        <label for="id_memory_limit" class="form-label">{% translate "Memory limit (MB)" %}</label>
                         <input type="number" name="memory_limit" class="form-control" id="id_memory_limit" 
                                min="64" max="1024" value="256" required>
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" name="is_public" class="form-check-input" id="id_is_public">
-                        <label class="form-check-label" for="id_is_public">Публичная задача</label>
+                        <label class="form-check-label" for="id_is_public">{% translate "Public task" %}</label>
                     </div>
                 </div>
             </div>
@@ -119,24 +120,24 @@
         
         <div class="card mb-3">
             <div class="card-header">
-                <h4>Параметры задачи в контесте</h4>
+                <h4>{% translate "Task parameters in the contest" %}</h4>
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label for="id_points" class="form-label">Баллы</label>
+                    <label for="id_points" class="form-label">{% translate "Points" %}</label>
                     <input type="number" name="points" class="form-control" id="id_points" 
                            value="{{ form.points.value|default:'50' }}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="id_order" class="form-label">Порядковый номер</label>
+                    <label for="id_order" class="form-label">{% translate "Order number" %}</label>
                     <input type="number" name="order" class="form-control" id="id_order" 
                            value="{{ form.order.value }}">
                 </div>
             </div>
         </div>
         
-        <button type="submit" class="btn btn-primary">Добавить</button>
-        <a href="{% url 'contests:detail' pk=contest.pk %}" class="btn btn-secondary">Отмена</a>
+        <button type="submit" class="btn btn-primary">{% translate "Add" %}</button>
+        <a href="{% url 'contests:detail' pk=contest.pk %}" class="btn btn-secondary">{% translate "Cancel" %}</a>
     </form>
 </div>
 {% endblock %}
@@ -214,7 +215,7 @@
                             <small class="badge bg-primary rounded-pill">ID: ${problem.id}</small>
                         </div>
                         <small class="text-muted d-block mt-1">
-                            Автор: ${problem.author || 'Неизвестен'}${problem.authorId ? ` (ID: ${problem.authorId})` : ''}
+                            Author: ${problem.author || 'Unknown'}${problem.authorId ? ` (ID: ${problem.authorId})` : ''}
                         </small>
                     `;
                     item.addEventListener('click', function() {
@@ -229,15 +230,15 @@
             } else {
                 resultsContainer.innerHTML = `
                     <div class="list-group-item text-danger">
-                        <div class="fw-bold">Почему задачи не найдены?</div>
+                        <div class="fw-bold">Why were no tasks found?</div>
                         <ul class="mt-2">
-                            <li>Проверьте написание названия</li>
-                            <li>Отключите фильтр "Мои задачи"</li>
-                            <li>Проверьте консоль для диагностики</li>
+                            <li>Check the spelling of the title</li>
+                            <li>Disable the "My tasks" filter</li>
+                            <li>Check the console for diagnostics</li>
                         </ul>
                         <div class="mt-2 small">
-                            <div>Поиск: "${searchInput.value}"</div>
-                            <div>Всего задач: ${problemsData.length}</div>
+                            <div>Search: "${searchInput.value}"</div>
+                            <div>Total tasks: ${problemsData.length}</div>
                         </div>
                     </div>
                 `;
@@ -249,13 +250,11 @@
         searchInput.addEventListener('focus', showResults);
         showOnlyMine.addEventListener('change', showResults);
         
-
         document.addEventListener('click', function(e) {
             if (!resultsContainer.contains(e.target) && e.target !== searchInput) {
                 resultsContainer.style.display = 'none';
             }
         });
-
 
         document.querySelector('form').addEventListener('submit', function(e) {
             const isNewProblem = document.getElementById('new_problem_btn').checked;
@@ -263,7 +262,7 @@
             
             if (!isNewProblem && !problemSelected) {
                 e.preventDefault();
-                alert('Пожалуйста, выберите задачу из списка');
+                alert('Please select a task from the list');
                 return false;
             }
             

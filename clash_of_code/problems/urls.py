@@ -27,7 +27,11 @@ urlpatterns = [
         problems.views.AllMyTaskView.as_view(),
         name='my_tasks',
     ),
-    django.urls.path('<int:pk>/', problems.views.problem_view, name='problem'),
+    django.urls.path(
+        '<int:pk>/',
+        problems.views.ProblemDetailView.as_view(),
+        name='problem',
+    ),
     django.urls.path(
         'delete_test/<int:pk>/',
         problems.views.DeleteTestView.as_view(),

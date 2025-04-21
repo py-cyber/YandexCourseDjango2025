@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
@@ -34,6 +35,14 @@ class SignUpView(FormView):
             [user.email],
             fail_silently=False,
         )
+        messages.success(
+            self.request,
+            _(
+                'A confirmation email has been'
+                ' sent to %(email)s. Please check your inbox.',
+            )
+            % {'email': user.email},
+        )
         return super().form_valid(form)
 
 
@@ -66,7 +75,7 @@ class UserListView(ListView):
 class UserDetailView(DetailView):
     model = User
     template_name = 'users/user_detail.html'
-    context_object_name = 'user'
+    context_object_name = 'profile_user'
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):

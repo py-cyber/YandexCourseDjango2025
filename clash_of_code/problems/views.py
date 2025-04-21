@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 import django.db.transaction
 import django.http
 from django.http import HttpResponse
@@ -158,6 +159,35 @@ class AllMyTaskView(LoginRequiredMixin, ListView):
         return problems.models.Problem.objects.filter(author=self.request.user)
 
 
-def problem_view(request, pk):
-    # доступ только для автора и для staff
-    return django.http.HttpResponse('бла бла бла')
+class ProblemDetailView(View):
+    template_name = 'problems/problem_detail.html'
+
+    def get(self, request, pk):
+
+        pf = problems.models.Problem.objects.select_related('author').prefetch_related(
+            'tags',
+            'tests',
+        )
+        problem = django.shortcuts.get_object_or_404(
+            pf,
+            pk=pk,
+        )
+
+        if not problem.is_public and problem.author != request.user:
+            raise PermissionDenied
+
+        sample_tests = problem.tests.filter(is_sample=True).order_by('number')
+
+        context = {
+            'problem': problem,
+            'tests': sample_tests,
+            'can_edit': problem.author == request.user,
+            'input_format': problem.input_format,
+            'output_format': problem.output_format,
+            'time_limit': problem.time_limit,
+            'memory_limit': problem.memory_limit,
+            'tags': problem.tags.all(),
+            'created_at': problem.created_at,
+            'difficulty': problem.difficult,
+        }
+        return django.shortcuts.render(request, self.template_name, context)

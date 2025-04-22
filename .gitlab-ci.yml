@@ -19,6 +19,7 @@ unit-test:
   stage: test
   script:
     - pip install -r requirements/test.txt
+    - cd clash_of_code
     - python3 manage.py test --exclude-tag test_system
 
 

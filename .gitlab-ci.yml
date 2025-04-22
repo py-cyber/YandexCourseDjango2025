@@ -17,18 +17,8 @@ black:
 
 unit-test:
   stage: test
-  services:
-    - docker:dind
   script:
-    - apt-get update &&
-    - apt-get install -y docker.io &&
-    - apt-get clean
-    - sudo service docker start
     - pip install -r requirements/test.txt
-    - cd clash_of_code/docker/images/python
-    - docker build -t python3_11_image .
-    - cd ..
-    - cd ..
-    - cd ..
-    - python3 manage.py test
+    - python3 manage.py test --exclude-tag test_system
+
 

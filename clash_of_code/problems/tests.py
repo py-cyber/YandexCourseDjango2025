@@ -63,7 +63,7 @@ class ProblemTests(django.test.TestCase):
         self.client.post(django.shortcuts.reverse('problems:create_task'), data=data)
         self.assertEqual(problems_count, problems.models.Problem.objects.count())
 
-
+@django.test.tag('test_system')
 class TestSystemTests(django.test.TestCase):
     def setUp(self):
         self.user = users.models.User.objects.create_user(

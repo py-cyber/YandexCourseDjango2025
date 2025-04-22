@@ -25,8 +25,8 @@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <p><strong>{% translate "Start" %}:</strong> {{ contest.display_start_time|date:"DATETIME_FORMAT" }}</p>
-                    <p><strong>{% translate "End" %}:</strong> {{ contest.display_end_time|date:"DATETIME_FORMAT" }}</p>
+                    <p><strong>{% translate "Start" %}:</strong> {{ contest.display_start_time|date:"d.m.Y H:i" }}</p>
+                    <p><strong>{% translate "End" %}:</strong> {{ contest.display_end_time|date:"d.m.Y H:i" }}</p>
                 </div>
                 <div class="col-md-6">
                     <p><strong>{% translate "Duration" %}:</strong> {{ duration }}</p>

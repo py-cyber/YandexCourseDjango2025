@@ -8,6 +8,7 @@ from django.http import HttpResponse
 import django.shortcuts
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
+from django.utils import timezone
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -262,6 +263,11 @@ class MySubmissionsView(LoginRequiredMixin, ListView):
             problems.models.Problem,
             pk=self.kwargs['pk'],
         )
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+        for submission in context['submissions']:
+            submission.display_submitted_at = submission.submitted_at + timezone.timedelta(
+                minutes=tz_offset
+            )
         return context
 
 
@@ -272,3 +278,12 @@ class SubmissionDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return Submission.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        submission = context['submission']
+
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+        submission.display_submitted_at = submission.submitted_at + timezone.timedelta(minutes=tz_offset)
+
+        return context

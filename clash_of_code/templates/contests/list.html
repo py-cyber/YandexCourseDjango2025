@@ -50,11 +50,11 @@
                                 <div class="d-flex flex-column">
                                     <small class="text-muted">
                                         <i class="far fa-calendar-alt me-1"></i>
-                                        {% translate "Start" %}: {{ contest.display_start_time }}
+                                        {% translate "Start" %}: {{ contest.display_start_time|date:"d.m.Y H:i" }}
                                     </small>
                                     <small class="text-muted">
                                         <i class="far fa-clock me-1"></i>
-                                        {% translate "End" %}: {{ contest.display_end_time }}
+                                        {% translate "End" %}: {{ contest.display_end_time|date:"d.m.Y H:i" }}
                                     </small>
                                 </div>
                             </td>

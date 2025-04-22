@@ -20,7 +20,7 @@
                         <div class="card-body">
                             <p><strong>Задача:</strong> {{ submission.problem.title }}</p>
                             <p><strong>Язык:</strong> {{ submission.get_language_display }}</p>
-                            <p><strong>Дата:</strong> {{ submission.submitted_at|date:"d.m.Y H:i" }}</p>
+                            <p><strong>Дата:</strong> {{ submission.display_submitted_at|date:"d.m.Y H:i" }}</p>
                             <p><strong>Статус:</strong> 
                                 <span class="badge bg-{% if submission.verdict == 'AC' %}success{% else %}danger{% endif %}">
                                     {{ submission.get_verdict_display }}

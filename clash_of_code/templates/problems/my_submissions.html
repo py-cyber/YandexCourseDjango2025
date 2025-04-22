@@ -24,7 +24,7 @@
                     <tbody>
                         {% for submission in submissions %}
                         <tr>
-                            <td>{{ submission.submitted_at|date:"d.m.Y H:i" }}</td>
+                            <td>{{ submission.display_submitted_at|date:"d.m.Y H:i" }}</td>
                             <td>{{ submission.get_language_display }}</td>
                             <td>
                                 <span class="badge bg-{% if submission.verdict == 'AC' %}success{% else %}danger{% endif %}">

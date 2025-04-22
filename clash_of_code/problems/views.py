@@ -187,6 +187,7 @@ class ProblemDetailView(View):
             'tags': problem.tags.all(),
             'created_at': problem.created_at,
             'difficulty': problem.difficult,
+            'languages': problems.models.LanguageChoices,
         }
         return django.shortcuts.render(request, self.template_name, context)
 

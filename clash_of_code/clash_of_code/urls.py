@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 import django.urls
 
+import clash_of_code.views
+
 urlpatterns = [
     django.urls.path('admin/', admin.site.urls),
     django.urls.path('tinymce/', django.urls.include('tinymce.urls')),
@@ -17,6 +19,10 @@ urlpatterns = [
     django.urls.path('', django.urls.include('homepage.urls')),
 ]
 
+handler404 = clash_of_code.views.Error404.as_view()
+handler403 = clash_of_code.views.Error403.as_view()
+handler500 = clash_of_code.views.Error500.as_view()
+
 if django.conf.settings.DEBUG:
     import debug_toolbar.toolbar
 
@@ -30,3 +36,9 @@ if django.conf.settings.DEBUG:
         django.conf.settings.MEDIA_URL,
         document_root=django.conf.settings.MEDIA_ROOT,
     )
+
+    urlpatterns += [
+        django.urls.path('404/', clash_of_code.views.Error404.as_view()),
+        django.urls.path('403/', clash_of_code.views.Error403.as_view()),
+        django.urls.path('500/', clash_of_code.views.Error500.as_view()),
+        ]

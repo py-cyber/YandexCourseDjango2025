@@ -1,3 +1,5 @@
+import http
+
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -84,7 +86,7 @@ class ViewTests(BaseDuetTest):
         response = self.client.get(
             reverse('duet:room_detail', kwargs={'pk': self.room.pk}),
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertContains(response, 'Test Room')
 
     def test_room_delete_view(self):
@@ -92,5 +94,5 @@ class ViewTests(BaseDuetTest):
         response = self.client.post(
             reverse('duet:room_delete', kwargs={'pk': self.room.pk}),
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, http.HTTPStatus.FOUND)
         self.assertFalse(CodeRoom.objects.filter(pk=self.room.pk).exists())

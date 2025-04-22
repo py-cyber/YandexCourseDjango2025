@@ -47,4 +47,19 @@ urlpatterns = [
         problems.views.CheckAuthorSolutionView.as_view(),
         name='check_author_solution',
     ),
+    django.urls.path(
+        'submit/<int:pk>/',
+        problems.views.SubmitSolutionView.as_view(),
+        name='submit_solution',
+    ),
+    django.urls.path(
+        'submissions/<int:pk>/',
+        problems.views.MySubmissionsView.as_view(),
+        name='my_submissions',
+    ),
+    django.urls.path(
+        'submission/<int:pk>/',
+        problems.views.SubmissionDetailView.as_view(),
+        name='submission_detail',
+    ),
 ]

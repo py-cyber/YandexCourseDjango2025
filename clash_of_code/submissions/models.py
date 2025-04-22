@@ -8,7 +8,14 @@ import problems.models
 User = get_user_model()
 
 
+class SubmissionManager(django.db.models.Manager):
+    def get_full_submit(self, pk):
+        return self.select_related('problem', 'user', 'test_error').get(pk=pk)
+
+
 class Submission(django.db.models.Model):
+    objects = SubmissionManager()
+
     user = django.db.models.ForeignKey(
         to=User,
         on_delete=django.db.models.CASCADE,

@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load i18n %}
 
 {% block content %}
 <div class="container mt-4 animate__animated animate__fadeIn">
@@ -137,23 +136,24 @@
                     <i class="fas fa-code me-2 text-primary"></i>Отправить решение
                 </h4>
                 <div class="solution-submission">
-                    <form method="post" action="#">
+                    <form method="post" action="{% url 'problems:submit_solution' pk=problem.pk %}">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="language" class="form-label">Язык программирования</label>
                             <select class="form-select" id="language" name="language" required>
-                                <option value="">{% trans 'Select language...' %}</option>
+                                <option value="">Выберите язык...</option>
                                 {% for lang in languages %}
-                                <option value="{{ lang }}">{{ lang.name }}</option>
+                                    <option value="{{ lang.0 }}">{{ lang.1 }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="card-body p-0">
-                            <div id="editor" style="height: 70vh; width: 100%;"></div>
+                        <div class="mb-3">
+                            <label for="code" class="form-label">Код решения</label>
+                            <textarea class="form-control" id="code" name="code" rows="10" required></textarea>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="#"
-                               class="btn btn-outline-primary">
+                            <a href="{% url 'problems:my_submissions' pk=problem.pk %}"
+                            class="btn btn-outline-primary">
                                 <i class="fas fa-history"></i>Мои решения
                             </a>
                             <button type="submit" class="btn btn-primary">
@@ -162,6 +162,7 @@
                         </div>
                     </form>
                 </div>
+            </section>
 
             <div class="card-footer bg-light">
                 <div class="d-flex justify-content-between align-items-center">
@@ -195,6 +196,10 @@
         fontSize: "14px",
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true
+    });
+
+    document.querySelector('form').addEventListener('submit', function() {
+        document.getElementById('editor').value = editor.getValue();
     });
 </script>
 <script src="{% static 'js/problem_detail.js' %}"></script>

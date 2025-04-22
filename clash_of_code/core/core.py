@@ -23,6 +23,7 @@ def check_tests(data, lang):
         except Exception as e:
             return {
                 'status': 'CE',
+                'test_error': None,
                 'message': str(e),
             }
 

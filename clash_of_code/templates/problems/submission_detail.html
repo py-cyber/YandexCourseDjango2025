@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">
+                <i class="fas fa-code me-2"></i>Решение #{{ submission.pk }}
+            </h2>
+        </div>
+        
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <i class="fas fa-info-circle me-2"></i>Информация
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Задача:</strong> {{ submission.problem.title }}</p>
+                            <p><strong>Язык:</strong> {{ submission.get_language_display }}</p>
+                            <p><strong>Дата:</strong> {{ submission.submitted_at|date:"d.m.Y H:i" }}</p>
+                            <p><strong>Статус:</strong> 
+                                <span class="badge bg-{% if submission.verdict == 'AC' %}success{% else %}danger{% endif %}">
+                                    {{ submission.get_verdict_display }}
+                                </span>
+                            </p>
+                            {% if submission.test_error %}
+                            <p><strong>Ошибка в тесте:</strong> #{{ submission.test_error.number }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">
+                            <i class="fas fa-file-code me-2"></i>Код решения
+                        </div>
+                        <div class="card-body p-0">
+                            <pre class="m-0"><code class="language-{{ submission.language|lower }}">{{ submission.code }}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% if submission.logs %}
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <i class="fas fa-bug me-2"></i>Логи ошибки
+                </div>
+                <div class="card-body">
+                    <pre class="text-danger">{{ submission.logs }}</pre>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="mt-3">
+                <a href="{% url 'problems:my_submissions' pk=submission.problem.pk %}" 
+                   class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Вернуться к списку решений
+                </a>
+                <a href="{% url 'problems:problem' pk=submission.problem.pk %}" 
+                   class="btn btn-outline-secondary ms-2">
+                    <i class="fas fa-tasks me-2"></i>К задаче
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+{% endblock %}

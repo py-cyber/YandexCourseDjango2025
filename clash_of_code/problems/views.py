@@ -6,13 +6,22 @@ import django.db.transaction
 import django.http
 from django.http import HttpResponse
 import django.shortcuts
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 import problems.forms
 import problems.models
 import problems.tasks
+from submissions.models import Submission
+from submissions.tasks import check_solution
 
 
 class ProblemsListView(ListView):
@@ -187,7 +196,7 @@ class ProblemDetailView(View):
             'tags': problem.tags.all(),
             'created_at': problem.created_at,
             'difficulty': problem.difficult,
-            'languages': problems.models.LanguageChoices,
+            'languages': problems.models.LanguageChoices.choices,
         }
         return django.shortcuts.render(request, self.template_name, context)
 
@@ -209,3 +218,57 @@ class CheckAuthorSolutionView(View):
         return django.shortcuts.redirect(
             django.shortcuts.reverse('problems:update', args=[pk]),
         )
+
+
+class SubmitSolutionView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        return redirect('problems:problem', pk=pk)
+
+    def post(self, request, pk):
+        problem = get_object_or_404(problems.models.Problem, pk=pk)
+        code = request.POST.get('code', '').strip()
+        language = request.POST.get('language', '').strip()
+
+        if not code or not language:
+            return redirect('problems:problem', pk=pk)
+
+        submission = Submission.objects.create(
+            user=request.user,
+            problem=problem,
+            code=code,
+            language=language,
+        )
+
+        check_solution.delay_on_commit(submission.pk)
+
+        return redirect('problems:submission_detail', pk=submission.pk)
+
+
+class MySubmissionsView(LoginRequiredMixin, ListView):
+    model = Submission
+    template_name = 'problems/my_submissions.html'
+    context_object_name = 'submissions'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Submission.objects.filter(
+            user=self.request.user,
+            problem_id=self.kwargs['pk'],
+        ).order_by('-submitted_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['problem'] = get_object_or_404(
+            problems.models.Problem,
+            pk=self.kwargs['pk'],
+        )
+        return context
+
+
+class SubmissionDetailView(LoginRequiredMixin, DetailView):
+    model = Submission
+    template_name = 'problems/submission_detail.html'
+    context_object_name = 'submission'
+
+    def get_queryset(self):
+        return Submission.objects.filter(user=self.request.user)

@@ -78,7 +78,7 @@
                             <td>{{ problem.order }}</td>
                             <td>
                                 {% if is_creator or is_running and is_registered or is_past %}
-                                    <a href="{% url 'problems:update' pk=problem.id %}">
+                                    <a href="{% url 'problems:problem' pk=problem.id %}">
                                         {{ problem.problem.title }}
                                     </a>
                                 {% else %}

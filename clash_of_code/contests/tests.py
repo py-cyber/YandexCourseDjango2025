@@ -116,9 +116,9 @@ class ContestViewsTests(TestCase):
         response = self.client.get(reverse('contests:list'))
         contests = response.context['contests']
 
-        self.assertEqual(contests[0].name, 'Running Contest')
-        self.assertEqual(contests[1].name, 'Future Contest')
-        self.assertEqual(contests[2].name, 'Past Contest')
+        self.assertEqual(contests[0].name, 'Past Contest')
+        self.assertEqual(contests[1].name, 'Running Contest')
+        self.assertEqual(contests[2].name, 'Future Contest')
 
     def test_contest_detail_view_access(self):
         url = reverse('contests:detail', kwargs={'pk': self.running_contest.pk})

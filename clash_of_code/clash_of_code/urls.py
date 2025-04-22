@@ -41,4 +41,4 @@ if django.conf.settings.DEBUG:
         django.urls.path('404/', clash_of_code.views.Error404.as_view()),
         django.urls.path('403/', clash_of_code.views.Error403.as_view()),
         django.urls.path('500/', clash_of_code.views.Error500.as_view()),
-        ]
+    ]

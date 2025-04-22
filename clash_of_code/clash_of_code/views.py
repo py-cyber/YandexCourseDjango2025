@@ -1,7 +1,8 @@
 import http
 
-from django.views.generic import TemplateView
 from django.shortcuts import render
+from django.views.generic import TemplateView
+
 
 class Error404(TemplateView):
     template_name = 'errors/404.html'

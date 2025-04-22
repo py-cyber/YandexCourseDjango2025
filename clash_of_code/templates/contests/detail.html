@@ -48,6 +48,15 @@
                 {% if is_running or is_past %}
                     <a href="{% url 'contests:standings' pk=contest.pk %}" class="btn btn-info">{% translate "Results" %}</a>
                 {% endif %}
+                
+                {% if user.is_authenticated %}
+                <div class="mb-3">
+                    <a href="{% url 'contests:contest_submissions' pk=contest.pk %}" 
+                    class="btn btn-outline-primary">
+                    <i class="fas fa-list-ol me-2"></i>Мои решения в этом контесте
+                    </a>
+                </div>
+                {% endif %}
 
                 {% if is_creator or user.is_staff %}
                     <a href="{% url 'contests:add_problem' contest_id=contest.pk %}" class="btn btn-primary">{% translate "Add Problem" %}</a>

@@ -21,7 +21,7 @@ from django.views.generic import (
 import problems.forms
 import problems.models
 import problems.tasks
-from submissions.models import Submission
+import submissions.models
 from submissions.tasks import check_solution
 
 
@@ -233,7 +233,7 @@ class SubmitSolutionView(LoginRequiredMixin, View):
         if not code or not language:
             return redirect('problems:problem', pk=pk)
 
-        submission = Submission.objects.create(
+        submission = submissions.models.Submission.objects.create(
             user=request.user,
             problem=problem,
             code=code,
@@ -246,13 +246,12 @@ class SubmitSolutionView(LoginRequiredMixin, View):
 
 
 class MySubmissionsView(LoginRequiredMixin, ListView):
-    model = Submission
+    model = submissions.models.Submission
     template_name = 'problems/my_submissions.html'
     context_object_name = 'submissions'
-    paginate_by = 10
 
     def get_queryset(self):
-        return Submission.objects.filter(
+        return self.model.objects.filter(
             user=self.request.user,
             problem_id=self.kwargs['pk'],
         ).order_by('-submitted_at')
@@ -265,25 +264,28 @@ class MySubmissionsView(LoginRequiredMixin, ListView):
         )
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
         for submission in context['submissions']:
-            submission.display_submitted_at = submission.submitted_at + timezone.timedelta(
-                minutes=tz_offset
+            submission.display_submitted_at = (
+                submission.submitted_at + timezone.timedelta(minutes=tz_offset)
             )
+
         return context
 
 
 class SubmissionDetailView(LoginRequiredMixin, DetailView):
-    model = Submission
+    model = submissions.models.Submission
     template_name = 'problems/submission_detail.html'
     context_object_name = 'submission'
 
     def get_queryset(self):
-        return Submission.objects.filter(user=self.request.user)
+        return self.model.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         submission = context['submission']
 
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
-        submission.display_submitted_at = submission.submitted_at + timezone.timedelta(minutes=tz_offset)
+        submission.display_submitted_at = submission.submitted_at + timezone.timedelta(
+            minutes=tz_offset,
+        )
 
         return context

@@ -11,6 +11,7 @@ import contests.forms
 import contests.models
 import problems.forms
 import problems.models
+import submissions.models
 
 
 class ContestCreateView(LoginRequiredMixin, CreateView):
@@ -302,3 +303,33 @@ class ContestListView(ListView):
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
+
+
+class ContestSubmissionsView(LoginRequiredMixin, ListView):
+    model = submissions.models.Submission
+    template_name = 'contests/contest_submissions.html'
+    context_object_name = 'submissions'
+
+    def get_queryset(self):
+        contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
+
+        problem_ids = contests.models.ContestProblem.objects.filter(
+            contest=contest,
+        ).values_list('problem_id', flat=True)
+
+        return (
+            self.model.objects.filter(
+                user=self.request.user,
+                problem_id__in=problem_ids,
+            )
+            .select_related('problem')
+            .order_by('-submitted_at')
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['contest'] = get_object_or_404(
+            contests.models.Contest,
+            pk=self.kwargs['pk'],
+        )
+        return context

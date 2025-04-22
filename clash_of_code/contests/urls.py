@@ -33,4 +33,9 @@ urlpatterns = [
         views.AddProblemToContestView.as_view(),
         name='add_problem',
     ),
+    path(
+        '<int:pk>/submissions/',
+        views.ContestSubmissionsView.as_view(),
+        name='contest_submissions',
+    ),
 ]

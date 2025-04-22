@@ -7,8 +7,19 @@
 <div class="container mt-4">
     <div class="card border-0 shadow-sm rounded-3">
         <div class="card-header bg-white border-0 py-3">
-            <h2 class="h4 mb-0">{% trans 'Problem Editor' %}</h2>
-
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">{% trans 'Problem Editor' %}</h2>
+                <a href="{% url 'problems:check_author_solution' pk=object.pk %}">
+                    {% if object.is_correct %}
+                    <i class="bi bi-check-circle status-icon" style="color: green;" title="{% trans 'Task is correct' %}"></i>
+                    {% else %}
+                        <i class="bi bi-x-circle status-icon" style="color: red;" title="{% trans 'The task needs to be rechecked' %}"></i>
+                    {% endif %}
+                    <button id="addTaskButton" class="btn btn-info">
+                        <i class="bi bi-arrow-clockwise"></i> {% trans 'Check solution' %}
+                    </button>
+                </a>
+            </div>
             {% if request.resolver_match.view_name == "problems:update" or request.resolver_match.view_name == "problems:tests" %}
             <ul class="nav nav-tabs mt-3">
                 <li class="nav-item">
@@ -115,11 +126,16 @@
                             <div class="form-text">{% trans 'Select multiple tags with Ctrl/Cmd click' %}</div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <h5>{% trans 'Status' %}: {{ object.get_status_display }}</h5>
+                        <h5>{% trans 'Error test' %}: {% if object.test_error%}{{ object.test_error }}{% endif %}</h5>
+                        <h5>{% trans 'Logs' %}: {% if object.logs %}{{ object.logs }}{% endif %}</h5>
+                    </div>
                 </div>
 
                 <div class="d-grid mt-4">
                     <button type="submit" class="btn btn-primary btn-lg">
-                        <i class="bi bi-save me-2"></i>{% trans 'Save Problem' %}
+                        <i class="bi bi-save me-2"></i>{% trans 'Save Problem' %}e
                     </button>
                 </div>
             </form>

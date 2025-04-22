@@ -42,4 +42,9 @@ urlpatterns = [
         problems.views.UpdateTestOrderView.as_view(),
         name='update_task_order',
     ),
+    django.urls.path(
+        'check_author_solution/<int:pk>/',
+        problems.views.CheckAuthorSolutionView.as_view(),
+        name='check_author_solution',
+    )
 ]

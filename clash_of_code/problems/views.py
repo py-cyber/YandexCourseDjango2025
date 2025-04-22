@@ -102,9 +102,7 @@ class ProblemsTestView(LoginRequiredMixin, View):
             test.save()
 
         problem.is_correct = False
-        problem.status = problems.models.VerdictChoice.In_queue
         problem.save()
-        problems.tasks.check_auther_solution.delay_on_commit(problem.pk)
 
         return django.shortcuts.redirect(
             django.shortcuts.reverse('problems:tests', args=[pk]),
@@ -191,3 +189,22 @@ class ProblemDetailView(View):
             'difficulty': problem.difficult,
         }
         return django.shortcuts.render(request, self.template_name, context)
+
+
+class CheckAuthorSolutionView(View):
+    def get(self, request, pk):
+        task = django.shortcuts.get_object_or_404(problems.models.Problem, pk=pk)
+        if task.author != request.user:
+            return PermissionDenied
+
+        task.is_correct = False
+        task.status = problems.models.VerdictChoice.In_queue
+        task.test_error = None
+        task.logs = None
+        task.save()
+
+        problems.tasks.check_auther_solution.delay_on_commit(pk)
+
+        return django.shortcuts.redirect(
+            django.shortcuts.reverse('problems:update', args=[pk]),
+        )

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 11:10+0300\n"
+"POT-Creation-Date: 2025-04-22 16:41+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,116 +20,116 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: clash_of_code/settings.py:148
+#: .\clash_of_code\settings.py:148
 msgid "English"
 msgstr "Английский"
 
-#: clash_of_code/settings.py:149
+#: .\clash_of_code\settings.py:149
 msgid "Russian"
 msgstr "Русский"
 
-#: contests/apps.py:8 templates/includes/header.html:67
+#: .\contests\apps.py:8 .\templates\includes\header.html:67
 msgid "Contests"
 msgstr "Соревнования"
 
-#: core/apps.py:8
+#: .\core\apps.py:8
 msgid "Core"
-msgstr ""
+msgstr "Ядро"
 
-#: duet/apps.py:8
+#: .\duet\apps.py:8
 msgid "Duet"
 msgstr "Дуэли"
 
-#: homepage/apps.py:8
+#: .\homepage\apps.py:8
 msgid "Homepage"
 msgstr "Главная"
 
-#: problems/apps.py:8 templates/contests/detail.html:61
-#: templates/includes/header.html:57
+#: .\problems\apps.py:10 .\templates\contests\detail.html:61
+#: .\templates\includes\header.html:57
 msgid "Problems"
 msgstr "Задачи"
 
-#: problems/models.py:16 templates/duet/invitations_list.html:17
+#: .\problems\models.py:16 .\templates\duet\invitations_list.html:17
 msgid "Accept"
 msgstr "Принято"
 
-#: problems/models.py:17
+#: .\problems\models.py:17
 msgid "Compilation error"
 msgstr "Ошибка компиляции"
 
-#: problems/models.py:18
+#: .\problems\models.py:18
 msgid "Wrong answer"
 msgstr "Неверный ответ"
 
-#: problems/models.py:19
+#: .\problems\models.py:19
 msgid "Time limit"
 msgstr "Превышен лимит времени"
 
-#: problems/models.py:20
+#: .\problems\models.py:20
 msgid "Runtime error"
 msgstr "Ошибка во время исполнения"
 
-#: problems/models.py:21
+#: .\problems\models.py:21
 msgid "Memory limit"
 msgstr "Превышен лимит памяти"
 
-#: problems/models.py:22
+#: .\problems\models.py:22
 msgid "In queue"
 msgstr "В очереди"
 
-#: problems/models.py:23
+#: .\problems\models.py:23
 msgid "In processing"
 msgstr "В процессе"
 
-#: problems/models.py:28
+#: .\problems\models.py:28
 msgid "name"
 msgstr "название"
 
-#: problems/models.py:36
+#: .\problems\models.py:36
 msgid "tag"
 msgstr "тег"
 
-#: problems/models.py:37 problems/models.py:132
+#: .\problems\models.py:37 .\problems\models.py:132
 msgid "tags"
 msgstr "теги"
 
-#: problems/models.py:62
+#: .\problems\models.py:62
 msgid "title"
 msgstr "название"
 
-#: problems/models.py:68
+#: .\problems\models.py:68
 msgid "author"
 msgstr "автор"
 
-#: problems/models.py:74
+#: .\problems\models.py:74
 msgid "description"
 msgstr "описание"
 
-#: problems/models.py:75
+#: .\problems\models.py:75
 msgid "Explain the idea of the task"
 msgstr "Опишите суть задачи"
 
-#: problems/models.py:80
+#: .\problems\models.py:80
 msgid "input data format"
 msgstr "формат входных данных"
 
-#: problems/models.py:81
+#: .\problems\models.py:81
 msgid "Input data format"
 msgstr "Формат входных данных"
 
-#: problems/models.py:88
+#: .\problems\models.py:88
 msgid "output data format"
 msgstr "формат выходных данных"
 
-#: problems/models.py:89
+#: .\problems\models.py:89
 msgid "Output data format"
 msgstr "Формат выходных данных"
 
-#: problems/models.py:96
+#: .\problems\models.py:96
 msgid "is public"
 msgstr "опубликован"
 
-#: problems/models.py:98
+#: .\problems\models.py:98
 msgid ""
 "If you open the task for public access, other users will be able to add it "
 "to their contests, and moderation will be able to evaluate it and add it to "
@@ -139,69 +139,67 @@ msgstr ""
 "добавлять её в свои соревнования и модераторы смогут проверить её и добавить "
 "в основной пул задач "
 
-#: problems/models.py:106
+#: .\problems\models.py:106
 msgid "difficult"
 msgstr "сложность"
 
-#: problems/models.py:107
+#: .\problems\models.py:107
 msgid "Assess the complexity of your task"
 msgstr "Укажите сложность вашей задачи"
 
-#: problems/models.py:114
+#: .\problems\models.py:114
 msgid "author solution"
 msgstr "авторское решение"
 
-#: problems/models.py:116
+#: .\problems\models.py:116
 msgid "The author's solution is to take a long time to pass all the tests"
 msgstr "Авторское решение долго проходить все тесты"
 
-#: problems/models.py:124
+#: .\problems\models.py:124
 msgid "author language"
 msgstr "авторский язык"
 
-#: problems/models.py:153
+#: .\problems\models.py:153
 msgid "is correct"
-msgstr ""
+msgstr "корректно"
 
-#: problems/models.py:154
+#: .\problems\models.py:154
 msgid "Shows whether the author's solution is correct"
-msgstr ""
+msgstr "Показывает корректно ли авторское решение"
 
-#: problems/models.py:159
+#: .\problems\models.py:159
 msgid "status checked"
-msgstr ""
+msgstr "статус проверки"
 
-#: problems/models.py:165
-#, fuzzy
-#| msgid "Runtime error"
+#: .\problems\models.py:165
 msgid "test error"
-msgstr "Ошибка во время исполнения"
+msgstr "Тест с ошибкой"
 
-#: problems/models.py:171 submissions/models.py:37
+#: .\problems\models.py:171 .\submissions\models.py:37
 msgid "logs"
-msgstr ""
+msgstr "логи"
 
-#: problems/models.py:189 problems/models.py:196
+#: .\problems\models.py:189 .\problems\models.py:196
 msgid "problem"
 msgstr "задача"
 
-#: problems/models.py:190
+#: .\problems\models.py:190
 msgid "problems"
 msgstr "задачи"
 
-#: problems/models.py:202
+#: .\problems\models.py:202
 msgid "is sample"
 msgstr "пример"
 
-#: problems/models.py:203
+#: .\problems\models.py:203
 msgid "If True, then this test will be shown as an example."
 msgstr "Если True, то этот тест будет показан в качестве примера"
 
-#: problems/models.py:208
+#: .\problems\models.py:208
 msgid "input data"
 msgstr "входные данные"
 
-#: problems/models.py:210
+#: .\problems\models.py:210
 msgid ""
 "Input data for the test. It will be passed to the program during execution "
 "via the standard stream"
@@ -209,797 +207,741 @@ msgstr ""
 "Входные данные теста. Эти данные поступят программе во время выполнениячерез "
 "стандартный поток"
 
-#: problems/models.py:216
+#: .\problems\models.py:216
 msgid "output data"
 msgstr "выходные данные"
 
-#: problems/models.py:218
+#: .\problems\models.py:218
 msgid "Test output. The program should output exactly this text in this format"
 msgstr ""
 "Выходные данные теста. Программа должна вернуть данные в точно таком же виде"
 
-#: problems/models.py:223
+#: .\problems\models.py:223
 msgid "number of test"
 msgstr "номер теста"
 
-#: problems/models.py:231
+#: .\problems\models.py:231
 msgid "test case"
 msgstr "тест"
 
-#: problems/models.py:232
+#: .\problems\models.py:232
 msgid "tests cases"
 msgstr "тесты"
 
-#: submissions/apps.py:8
+#: .\submissions\apps.py:8
 msgid "Submissions"
 msgstr "Посылки"
 
-#: templates/contests/add_problem.html:5 templates/contests/add_problem.html:9
-#, fuzzy
-#| msgid "Add test"
+#: .\templates\contests\add_problem.html:5
+#: .\templates\contests\add_problem.html:9
 msgid "Add task to"
 msgstr "Добавить задачу"
 
-#: templates/contests/add_problem.html:24
+#: .\templates\contests\add_problem.html:24
 msgid "Errors in the form"
 msgstr "Ошибки в форме"
 
-#: templates/contests/add_problem.html:46
+#: .\templates\contests\add_problem.html:46
 msgid "Select method of addition"
 msgstr "Выберите способ добавления"
 
-#: templates/contests/add_problem.html:53
-#, fuzzy
-#| msgid "Select user"
+#: .\templates\contests\add_problem.html:53
 msgid "Select existing"
-msgstr "Выберите пользователя"
+msgstr "Выберите существующий"
 
-#: templates/contests/add_problem.html:59
-#, fuzzy
-#| msgid "Create new room"
+#: .\templates\contests\add_problem.html:59
 msgid "Create new"
-msgstr "Создать новую комнату"
+msgstr "Создать новую"
 
-#: templates/contests/add_problem.html:65
+#: .\templates\contests\add_problem.html:65
 msgid "Search task"
 msgstr "Поиск задачи"
 
-#: templates/contests/add_problem.html:71 templates/includes/header.html:114
-#: templates/problems/my_tasks.html:7
+#: .\templates\contests\add_problem.html:71
+#: .\templates\includes\header.html:114 .\templates\problems\my_tasks.html:7
 msgid "My tasks"
 msgstr "Мои задачи"
 
-#: templates/contests/add_problem.html:77
-#, fuzzy
-#| msgid "Select user"
+#: .\templates\contests\add_problem.html:77
 msgid "Select task"
-msgstr "Выберите пользователя"
+msgstr "Выберите задачу"
 
-#: templates/contests/add_problem.html:80
-#: templates/problems/all_problems.html:18
+#: .\templates\contests\add_problem.html:80
+#: .\templates\problems\all_problems.html:18
 msgid "Author"
 msgstr "Автор"
 
-#: templates/contests/add_problem.html:90
-#: templates/problems/problem_form.html:50
+#: .\templates\contests\add_problem.html:90
+#: .\templates\problems\problem_form.html:61
 msgid "Title"
 msgstr "Название"
 
-#: templates/contests/add_problem.html:94 templates/contests/create.html:31
-#: templates/problems/problem_form.html:56
+#: .\templates\contests\add_problem.html:94 .\templates\contests\create.html:31
+#: .\templates\problems\problem_form.html:67
 msgid "Description"
 msgstr "Описание"
 
-#: templates/contests/add_problem.html:98 templates/contests/detail.html:70
-#: templates/problems/all_problems.html:19
-#: templates/problems/problem_form.html:62
-#, fuzzy
-#| msgid "Difficult"
+#: .\templates\contests\add_problem.html:98 .\templates\contests\detail.html:70
+#: .\templates\problems\all_problems.html:19
+#: .\templates\problems\problem_form.html:73
 msgid "Difficulty"
 msgstr "Сложность"
 
-#: templates/contests/add_problem.html:104
-#, fuzzy
-#| msgid "Time limit"
 msgid "Time limit (sec)"
-msgstr "Превышен лимит времени"
+msgstr "Ограничение по времени (секунды)"
 
-#: templates/contests/add_problem.html:109
-#, fuzzy
-#| msgid "Memory limit"
+#: .\templates\contests\add_problem.html:109
 msgid "Memory limit (MB)"
-msgstr "Превышен лимит памяти"
+msgstr "Ограничение по памяти (MB)"
 
-#: templates/contests/add_problem.html:115
+#: .\templates\contests\add_problem.html:115
 msgid "Public task"
 msgstr "Опубликовать задачу"
 
-#: templates/contests/add_problem.html:123
+#: .\templates\contests\add_problem.html:123
 msgid "Task parameters in the contest"
 msgstr "Параметры задания в контесте"
 
-#: templates/contests/add_problem.html:127 templates/contests/detail.html:71
+#: .\templates\contests\add_problem.html:127
+#: .\templates\contests\detail.html:71
 msgid "Points"
 msgstr "Баллы"
 
-#: templates/contests/add_problem.html:132
+#: .\templates\contests\add_problem.html:132
 msgid "Order number"
 msgstr "Порядковый номер задачи"
 
-#: templates/contests/add_problem.html:139
+#: .\templates\contests\add_problem.html:139
 msgid "Add"
 msgstr "Добавить"
 
-#: templates/contests/add_problem.html:140 templates/contests/create.html:82
-#: templates/contests/register.html:19 templates/duet/create_room.html:28
-#: templates/duet/invite_user.html:24
-#: templates/duet/room_confirm_delete.html:18 templates/users/profile.html:110
+#: .\templates\contests\add_problem.html:140
+#: .\templates\contests\create.html:82 .\templates\contests\register.html:19
+#: .\templates\duet\create_room.html:28 .\templates\duet\invite_user.html:24
+#: .\templates\duet\room_confirm_delete.html:18
+#: .\templates\users\profile.html:110
 msgid "Cancel"
 msgstr "Отмена"
 
-#: templates/contests/create.html:7
-#, fuzzy
-#| msgid "Create new task"
+#: .\templates\contests\create.html:7
 msgid "Create a new contest"
-msgstr "Создать новую задачу"
+msgstr "Создать новое соревнование"
 
-#: templates/contests/create.html:21
-#, fuzzy
-#| msgid "Contests"
+#: .\templates\contests\create.html:21
 msgid "Contest Name"
-msgstr "Соревнования"
+msgstr "Название соревнования"
 
-#: templates/contests/create.html:42
-#, fuzzy
-#| msgid "Start"
+#: .\templates\contests\create.html:42
 msgid "Start Time"
-msgstr "Начало"
+msgstr "Время начало"
 
-#: templates/contests/create.html:51
+#: .\templates\contests\create.html:51
 msgid "End Time"
-msgstr "Конец"
+msgstr "Время конца"
 
-#: templates/contests/create.html:63
-#, fuzzy
-#| msgid "Contests"
+#: .\templates\contests\create.html:63
 msgid "Public Contest"
-msgstr "Соревнования"
+msgstr "Публичное соревнование"
 
-#: templates/contests/create.html:73
+#: .\templates\contests\create.html:73
 msgid "Registration Open"
 msgstr "Открытая регистрация"
 
-#: templates/contests/create.html:81 templates/contests/list.html:13
-#, fuzzy
-#| msgid "Create new task"
+#: .\templates\contests\create.html:81 .\templates\contests\list.html:13
 msgid "Create Contest"
-msgstr "Создать новую задачу"
+msgstr "Создать новое соревнование"
 
-#: templates/contests/detail.html:5
-#, fuzzy
-#| msgid "Contests"
+#: .\templates\contests\detail.html:5
 msgid "Contest Details"
-msgstr "Соревнования"
+msgstr "Детали соревнования"
 
-#: templates/contests/detail.html:18 templates/contests/list.html:44
+#: .\templates\contests\detail.html:18 .\templates\contests\list.html:44
 msgid "Upcoming"
 msgstr "Предстоящий"
 
-#: templates/contests/detail.html:19 templates/contests/list.html:45
+#: .\templates\contests\detail.html:19 .\templates\contests\list.html:45
 msgid "Ongoing"
 msgstr "Текущий"
 
-#: templates/contests/detail.html:20 templates/contests/list.html:46
+#: .\templates\contests\detail.html:20 .\templates\contests\list.html:46
 msgid "Completed"
 msgstr "Завершенный"
 
-#: templates/contests/detail.html:28 templates/contests/list.html:53
-#: templates/homepage/home.html:54
+#: .\templates\contests\detail.html:28 .\templates\contests\list.html:53
+#: .\templates\homepage\home.html:54
 msgid "Start"
 msgstr "Начать"
 
-#: templates/contests/detail.html:29 templates/contests/list.html:57
+#: .\templates\contests\detail.html:29 .\templates\contests\list.html:57
 msgid "End"
 msgstr "Конец"
 
-#: templates/contests/detail.html:32
-#, fuzzy
-#| msgid "Description"
+#: .\templates\contests\detail.html:32
 msgid "Duration"
-msgstr "Описание"
+msgstr "Длительность"
 
-#: templates/contests/detail.html:33 templates/contests/list.html:27
-#, fuzzy
-#| msgid "Create room"
+#: .\templates\contests\detail.html:33 .\templates\contests\list.html:27
 msgid "Creator"
-msgstr "Создать комнату"
+msgstr "Создатель"
 
-#: templates/contests/detail.html:42
+#: .\templates\contests\detail.html:42
 msgid "You are registered"
 msgstr "Вы зарегистрированы"
 
-#: templates/contests/detail.html:44
+#: .\templates\contests\detail.html:44
 msgid "Register"
 msgstr "Зарегистрирован"
 
-#: templates/contests/detail.html:49 templates/contests/standings.html:5
-#: templates/contests/standings.html:9
+#: .\templates\contests\detail.html:49 .\templates\contests\standings.html:5
+#: .\templates\contests\standings.html:9
 msgid "Results"
 msgstr "Результаты"
 
-#: templates/contests/detail.html:53
-#, fuzzy
-#| msgid "Problems"
+#: .\templates\contests\detail.html:53
 msgid "Add Problem"
-msgstr "Задачи"
+msgstr "Добавить задачи"
 
-#: templates/contests/detail.html:69 templates/problems/all_problems.html:17
-#, fuzzy
-#| msgid "Problems"
+#: .\templates\contests\detail.html:69
+#: .\templates\problems\all_problems.html:17
 msgid "Problem"
-msgstr "Задачи"
+msgstr "Задача"
 
-#: templates/contests/detail.html:72 templates/contests/list.html:25
-#, fuzzy
-#| msgid "status"
+#: .\templates\contests\detail.html:72 .\templates\contests\list.html:25
+#: .\templates\problems\problem_form.html:130
 msgid "Status"
-msgstr "статус"
+msgstr "Статус"
 
-#: templates/contests/detail.html:101
+#: .\templates\contests\detail.html:101
 msgid "Solved"
 msgstr "Решено"
 
-#: templates/contests/detail.html:103
+#: .\templates\contests\detail.html:103
 msgid "Not Solved"
 msgstr "Не решено"
 
-#: templates/contests/detail.html:114
+#: .\templates\contests\detail.html:114
 msgid "There are currently no problems in this contest"
 msgstr "В настоящее время в этом контесте нет никаких проблем"
 
-#: templates/contests/detail.html:126 templates/duet/user_rooms.html:28
+#: .\templates\contests\detail.html:126 .\templates\duet\user_rooms.html:28
 msgid "Participants"
 msgstr "Участники"
 
-#: templates/contests/detail.html:138
-#, fuzzy
-#| msgid "Rating"
+#: .\templates\contests\detail.html:138
 msgid "rating"
 msgstr "Рейтинг"
 
-#: templates/contests/list.html:10
-#, fuzzy
-#| msgid "Contests"
+#: .\templates\contests\list.html:10
 msgid "Contests List"
-msgstr "Соревнования"
+msgstr "Список соревнований"
 
-#: templates/contests/list.html:24
-#, fuzzy
-#| msgid "Contests"
+#: .\templates\contests\list.html:24
 msgid "Contest"
-msgstr "Соревнования"
+msgstr "Соревнование"
 
-#: templates/contests/list.html:26
+#: .\templates\contests\list.html:26
 msgid "Time Period"
-msgstr ""
+msgstr "Период времени"
 
-#: templates/contests/list.html:84
+#: .\templates\contests\list.html:84
 msgid "There are currently no contests"
 msgstr "В настоящее время контесты не проводятся"
 
-#: templates/contests/register.html:5 templates/contests/register.html:12
+#: .\templates\contests\register.html:5 .\templates\contests\register.html:12
 msgid "Register for"
 msgstr "Зарегистрирован на"
 
-#: templates/contests/register.html:17
-#, fuzzy
-#| msgid "Are you sure you want to delete the room"
+#: .\templates\contests\register.html:17
 msgid "Are you sure you want to register for this contest?"
-msgstr "Вы уверены, что хотите удалить комнату"
+msgstr "Вы уверены, что хотите удалить соревнование"
 
-#: templates/contests/register.html:18
-#, fuzzy
-#| msgid "Confirm"
+#: .\templates\contests\register.html:18
 msgid "Confirm Registration"
-msgstr "Подтвердить"
+msgstr "Подтвердить регистрацию"
 
-#: templates/contests/standings.html:16
-#, fuzzy
-#| msgid "Participants"
+#: .\templates\contests\standings.html:16
 msgid "Participant"
-msgstr "Участники"
+msgstr "Участник"
 
-#: templates/contests/standings.html:20
+#: .\templates\contests\standings.html:20
 msgid "Total"
 msgstr "Всего"
 
-#: templates/duet/create_room.html:10
+#: .\templates\duet\create_room.html:10
 msgid "Create new code room"
 msgstr "Создать новую комнату для кода"
 
-#: templates/duet/create_room.html:16
+#: .\templates\duet\create_room.html:16
 msgid "Room name"
 msgstr "Название комнаты"
 
-#: templates/duet/create_room.html:20
+#: .\templates\duet\create_room.html:20
 msgid "Programming language"
 msgstr "Язык программирования"
 
-#: templates/duet/create_room.html:29
+#: .\templates\duet\create_room.html:29
 msgid "Create room"
 msgstr "Создать комнату"
 
-#: templates/duet/invitations_list.html:6 templates/duet/user_rooms.html:12
-#: templates/includes/header.html:106
+#: .\templates\duet\invitations_list.html:6 .\templates\duet\user_rooms.html:12
+#: .\templates\includes\header.html:106
 msgid "My invitations"
 msgstr "Мои приглашения"
 
-#: templates/duet/invitations_list.html:14
+#: .\templates\duet\invitations_list.html:14
 msgid "Invited by"
 msgstr "Приглашение от"
 
-#: templates/duet/invitations_list.html:23
+#: .\templates\duet\invitations_list.html:23
 msgid "You have no pending invitations"
 msgstr "У вас нет ожидающих приглашений"
 
-#: templates/duet/invite_user.html:10
+#: .\templates\duet\invite_user.html:10
 msgid "Invite user to"
 msgstr "Пригласить пользователя в"
 
-#: templates/duet/invite_user.html:16
+#: .\templates\duet\invite_user.html:16
 msgid "Select user"
 msgstr "Выберите пользователя"
 
-#: templates/duet/invite_user.html:25
+#: .\templates\duet\invite_user.html:25
 msgid "Send invitation"
 msgstr "Отправить приглашение"
 
-#: templates/duet/room.html:32
+#: .\templates\duet\room.html:32
 msgid "Invite user"
 msgstr "Пригласить пользователя"
 
-#: templates/duet/room.html:35 templates/problems/problem_add_test.html:76
-#: templates/problems/problem_add_test.html:97 templates/users/profile.html:79
+#: .\templates\duet\room.html:35 .\templates\problems\problem_add_test.html:76
+#: .\templates\problems\problem_add_test.html:97
+#: .\templates\users\profile.html:79
 msgid "Save"
 msgstr "Сохранить"
 
-#: templates/duet/room.html:39 templates/duet/room_confirm_delete.html:17
-#: templates/duet/user_rooms.html:42 templates/users/profile.html:112
+#: .\templates\duet\room.html:39 .\templates\duet\room_confirm_delete.html:17
+#: .\templates\duet\user_rooms.html:42 .\templates\users\profile.html:112
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/duet/room.html:45
+#: .\templates\duet\room.html:45
 msgid "My rooms"
 msgstr "Мои комнаты"
 
-#: templates/duet/room.html:73
+#: .\templates\duet\room.html:73
 msgid "Success"
 msgstr "Успешно"
 
-#: templates/duet/room.html:77
+#: .\templates\duet\room.html:77
 msgid "Code saved successfully!"
 msgstr "Код успешно сохранен"
 
-#: templates/duet/room_confirm_delete.html:11
+#: .\templates\duet\room_confirm_delete.html:11
 msgid "Are you sure you want to delete the room"
 msgstr "Вы уверены, что хотите удалить комнату"
 
-#: templates/duet/room_confirm_delete.html:12
+#: .\templates\duet\room_confirm_delete.html:12
 msgid "This action cannot be undone"
 msgstr "Это действие не может быть отменено"
 
-#: templates/duet/user_rooms.html:7 templates/includes/header.html:62
+#: .\templates\duet\user_rooms.html:7 .\templates\includes\header.html:62
 msgid "My code rooms"
 msgstr "Мои комнаты для кода"
 
-#: templates/duet/user_rooms.html:9
+#: .\templates\duet\user_rooms.html:9
 msgid "Create new room"
 msgstr "Создать новую комнату"
 
-#: templates/duet/user_rooms.html:27
+#: .\templates\duet\user_rooms.html:27
 msgid "Owner"
 msgstr "Владелец"
 
-#: templates/duet/user_rooms.html:31
+#: .\templates\duet\user_rooms.html:31
 msgid "Last updated"
 msgstr "Последнее обновление"
 
-#: templates/duet/user_rooms.html:31
+#: .\templates\duet\user_rooms.html:31
 msgid "ago"
 msgstr "назад"
 
-#: templates/duet/user_rooms.html:36
+#: .\templates\duet\user_rooms.html:36
 msgid "Open room"
 msgstr "Открыть комнату"
 
-#: templates/duet/user_rooms.html:40
+#: .\templates\duet\user_rooms.html:40
 msgid "Invite"
 msgstr "Пригласить"
 
-#: templates/duet/user_rooms.html:51
+#: .\templates\duet\user_rooms.html:51
 msgid "You don't have any code rooms yet. Create one to start collaborating!"
 msgstr ""
 "У вас пока нет комнат для кода. Создайте одну, чтобы начать совместную "
 "работу!"
 
-#: templates/errors/403.html:9
-msgid "403 Error"
-msgstr "Ошибка 403"
-
-#: templates/errors/403.html:11
+#: .\templates\errors\403.html:8
 msgid "Access denied"
 msgstr "Доступ запрещен"
 
-#: templates/errors/403.html:13
+#: .\templates\errors\403.html:10
 msgid "You don't have permission to view this page."
 msgstr "У вас нет разрешения на просмотр этой страницы."
 
-#: templates/errors/403.html:18
+#: .\templates\errors\403.html:15
 msgid "Log in"
 msgstr "Войти"
 
-#: templates/errors/403.html:24 templates/errors/404.html:14
-#: templates/errors/500.html:17 templates/includes/header.html:47
+#: .\templates\errors\403.html:21 .\templates\errors\404.html:14
+#: .\templates\errors\500.html:14 .\templates\includes\header.html:47
 msgid "Home"
 msgstr "Главная"
 
-#: templates/errors/404.html:8
-#, fuzzy
-#| msgid "tags not found"
+#: .\templates\errors\404.html:8
 msgid "Page not found"
-msgstr "теги не найдены"
+msgstr "Страница не найдены"
 
-#: templates/errors/404.html:10
+#: .\templates\errors\404.html:10
 msgid "The requested page doesn't exist or has been moved."
 msgstr "Запрошенная страница не существует или была перемещена."
 
-#: templates/errors/404.html:17
+#: .\templates\errors\404.html:17
 msgid "Back"
 msgstr "Назад"
 
-#: templates/errors/404.html:23
+#: .\templates\errors\404.html:23
 msgid "Path"
 msgstr "Путь"
 
-#: templates/errors/404.html:24
-#, fuzzy
-#| msgid "Actions"
+#: .\templates\errors\404.html:24
 msgid "Exception"
-msgstr "Действия"
+msgstr "Исключение"
 
-#: templates/errors/500.html:9
-msgid "500 Error"
-msgstr "Ошибка 500"
-
-#: templates/errors/500.html:11
+#: .\templates\errors\500.html:8
 msgid "Server error"
 msgstr "Ошибка сервера"
 
-#: templates/errors/500.html:13
+#: .\templates\errors\500.html:10
 msgid ""
 "An unexpected error occurred on the server. We're already working on a "
 "solution."
-msgstr "На сервере произошла непредвиденная ошибка. Мы уже работаем над решением."
+msgstr ""
+"На сервере произошла непредвиденная ошибка. Мы уже работаем над решением."
 
-#: templates/errors/500.html:20
+#: .\templates\errors\500.html:17
 msgid "Refresh"
 msgstr "Обновить"
 
-#: templates/errors/500.html:25
-#, fuzzy
-#| msgid "Description"
+#: .\templates\errors\500.html:22
 msgid "Debug Information"
-msgstr "Описание"
+msgstr "Информация отладки"
 
-#: templates/homepage/home.html:10
+#: .\templates\homepage\home.html:10
 msgid "Welcome,"
 msgstr "Добро пожаловать,"
 
-#: templates/homepage/home.html:12
+#: .\templates\homepage\home.html:12
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
-#: templates/homepage/home.html:23
+#: .\templates\homepage\home.html:23
 msgid "Join us!"
 msgstr "Присоединитесь к нам"
 
-#: templates/homepage/home.html:26
+#: .\templates\homepage\home.html:26
 msgid "Sign up to get access to all features"
 msgstr "Зарегистрируйтесь, чтобы получить доступ ко всем функциям"
 
-#: templates/homepage/home.html:32 templates/includes/header.html:133
+#: .\templates\homepage\home.html:32 .\templates\includes\header.html:133
 msgid "Sign Up"
 msgstr "Зарегистрироваться"
 
-#: templates/homepage/home.html:45
+#: .\templates\homepage\home.html:45
 msgid "New to the site?"
 msgstr "Впервые на сайте?"
 
-#: templates/homepage/home.html:48
+#: .\templates\homepage\home.html:48
 msgid "Take a quick tutorial!"
 msgstr "Пройдите быстрое обучение"
 
-#: templates/includes/footer.html:5 templates/includes/footer.html:14
+#: .\templates\includes\footer.html:5 .\templates\includes\footer.html:14
 msgid "Clash of Code"
 msgstr "Clash of Code"
 
-#: templates/includes/footer.html:5 templates/includes/footer.html:14
+#: .\templates\includes\footer.html:5 .\templates\includes\footer.html:14
 msgid "All rights reserved"
 msgstr "Все права защищены"
 
-#: templates/includes/header.html:52
+#: .\templates\includes\header.html:52
 msgid "Leaderboard"
 msgstr "Список лучших"
 
-#: templates/includes/header.html:73
+#: .\templates\includes\header.html:73
 msgid "Admin"
 msgstr "Админ-панель"
 
-#: templates/includes/header.html:101 templates/users/user_list.html:21
-#: templates/users/user_list.html:54
+#: .\templates\includes\header.html:101 .\templates\users\user_list.html:21
+#: .\templates\users\user_list.html:54
 msgid "Profile"
 msgstr "Профиль"
 
-#: templates/includes/header.html:121 templates/users/profile.html:88
+#: .\templates\includes\header.html:121 .\templates\users\profile.html:88
 msgid "Logout"
 msgstr "Выйти"
 
-#: templates/includes/header.html:128
+#: .\templates\includes\header.html:128
 msgid "Login"
 msgstr "Войти"
 
-#: templates/problems/all_problems.html:9
-#, fuzzy
-#| msgid "Problems"
+#: .\templates\problems\all_problems.html:9
 msgid "Problems List"
-msgstr "Задачи"
+msgstr "Список задач"
 
-#: templates/problems/all_problems.html:20
-#: templates/problems/problem_form.html:113
+#: .\templates\problems\all_problems.html:20
+#: .\templates\problems\problem_form.html:124
 msgid "Tags"
 msgstr "Теги"
 
-#: templates/problems/all_problems.html:59
-#, fuzzy
-#| msgid "tags"
+#: .\templates\problems\all_problems.html:59
 msgid "No tags"
-msgstr "теги"
+msgstr "Нет тегов"
 
-#: templates/problems/all_problems.html:67
-#, fuzzy
-#| msgid ""
-#| "Oh, it looks like there were no tasks with the specified filters, try "
-#| "changing them"
+#: .\templates\problems\all_problems.html:67
 msgid "No problems found with the specified filters. Try changing them."
 msgstr ""
 "Похоже, что не нашлась задача с такими фильтрами, попробуйте изменить их"
 
-#: templates/problems/check_delete_test.html:8
+#: .\templates\problems\check_delete_test.html:8
 msgid "Are you sure you want to delete"
 msgstr "Вы точно хотите удалить"
 
-#: templates/problems/check_delete_test.html:10
+#: .\templates\problems\check_delete_test.html:10
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: templates/problems/my_tasks.html:9
+#: .\templates\problems\my_tasks.html:9
 msgid "Create new task"
 msgstr "Создать новую задачу"
 
-#: templates/problems/my_tasks.html:21
+#: .\templates\problems\my_tasks.html:21
 msgid "Is public"
 msgstr "Опубликован"
 
-#: templates/problems/my_tasks.html:22
+#: .\templates\problems\my_tasks.html:22
 msgid "Difficult"
 msgstr "Сложность"
 
-#: templates/problems/my_tasks.html:36
+#: .\templates\problems\my_tasks.html:36
 msgid "You don't have any tasks yet. Create one to see!"
 msgstr "У вас нет никаких задач. Создайте одну, чтобы увидеть их"
 
-#: templates/problems/problem_add_test.html:10
+#: .\templates\problems\problem_add_test.html:10
 msgid "Test Cases Management"
 msgstr "Управление тест-кейсами"
 
-#: templates/problems/problem_add_test.html:12
-#, fuzzy
-#| msgid "Add test"
+#: .\templates\problems\problem_add_test.html:12
 msgid "Add Test"
-msgstr "Добавить задачу"
+msgstr "Добавить тест"
 
-#: templates/problems/problem_add_test.html:21
-#: templates/problems/problem_form.html:17
+#: .\templates\problems\problem_add_test.html:21
+#: .\templates\problems\problem_form.html:28
 msgid "General"
 msgstr "Основное"
 
-#: templates/problems/problem_add_test.html:27
-#: templates/problems/problem_form.html:23
+#: .\templates\problems\problem_add_test.html:27
+#: .\templates\problems\problem_form.html:34
 msgid "Tests"
 msgstr "Тесты"
 
-#: templates/problems/problem_add_test.html:46
-#: templates/problems/problem_add_test.html:94
+#: .\templates\problems\problem_add_test.html:46
+#: .\templates\problems\problem_add_test.html:94
 msgid "Input data"
 msgstr "Входные данные"
 
-#: templates/problems/problem_add_test.html:50
-#: templates/problems/problem_add_test.html:95
+#: .\templates\problems\problem_add_test.html:50
+#: .\templates\problems\problem_add_test.html:95
 msgid "Output data"
 msgstr "Выходные данные"
 
-#: templates/problems/problem_add_test.html:56
+#: .\templates\problems\problem_add_test.html:56
 msgid "Sample Test Case"
-msgstr ""
+msgstr "Тест для примера"
 
-#: templates/problems/problem_add_test.html:84
+#: .\templates\problems\problem_add_test.html:84
 msgid "No test cases found. Please add at least one test case."
-msgstr ""
+msgstr "Никаких тестов не найдено. Пожалуйста, добавьте тесты как можно скорее"
 
-#: templates/problems/problem_add_test.html:96
+#: .\templates\problems\problem_add_test.html:96
 msgid "Is sample"
 msgstr "Пример"
 
-#: templates/problems/problem_form.html:10
-#, fuzzy
-#| msgid "Problems"
+#: .\templates\problems\problem_form.html:11
 msgid "Problem Editor"
-msgstr "Задачи"
+msgstr "Редактор задач"
 
-#: templates/problems/problem_form.html:36
+#: .\templates\problems\problem_form.html:14
+msgid "Task is correct"
+msgstr "Задача корректна"
+
+#: .\templates\problems\problem_form.html:16
+msgid "The task needs to be rechecked"
+msgstr "Нужно перепроверить задачу"
+
+#: .\templates\problems\problem_form.html:19
+msgid "Check solution"
+msgstr "Проверить решение"
+
+#: .\templates\problems\problem_form.html:47
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
-#: templates/problems/problem_form.html:70
-#, fuzzy
-#| msgid "Problems"
+#: .\templates\problems\problem_form.html:81
 msgid "Public Problem"
 msgstr "Задачи"
 
-#: templates/problems/problem_form.html:76
-#, fuzzy
-#| msgid "Time limit"
+#: .\templates\problems\problem_form.html:87
 msgid "Time Limit (ms)"
 msgstr "Превышен лимит времени"
 
-#: templates/problems/problem_form.html:81
-#, fuzzy
-#| msgid "Memory limit"
+#: .\templates\problems\problem_form.html:92
 msgid "Memory Limit (MB)"
 msgstr "Превышен лимит памяти"
 
-#: templates/problems/problem_form.html:87
-#, fuzzy
-#| msgid "Author solution"
+#: .\templates\problems\problem_form.html:98
 msgid "Author Solution"
 msgstr "Авторское решение"
 
-#: templates/problems/problem_form.html:93
-#, fuzzy
-#| msgid "author language"
+#: .\templates\problems\problem_form.html:104
+
 msgid "Solution Language"
 msgstr "авторский язык"
 
-#: templates/problems/problem_form.html:99
-#, fuzzy
-#| msgid "Input data format"
+#: .\templates\problems\problem_form.html:110
+
 msgid "Input Format"
 msgstr "Формат входных данных"
 
-#: templates/problems/problem_form.html:106
-#, fuzzy
-#| msgid "Output data format"
+#: .\templates\problems\problem_form.html:117
+
 msgid "Output Format"
 msgstr "Формат выходных данных"
 
-#: templates/problems/problem_form.html:115
+#: .\templates\problems\problem_form.html:126
 msgid "Select multiple tags with Ctrl/Cmd click"
 msgstr "Выберите несколько тегов с помощью Ctrl/Cmd."
 
-#: templates/problems/problem_form.html:122
-#, fuzzy
-#| msgid "Problems"
+#: .\templates\problems\problem_form.html:131
+msgid "Error test"
+msgstr "Тест с ошибкой"
+
+#: .\templates\problems\problem_form.html:132
+msgid "Logs"
+msgstr "Логи"
+
+#: .\templates\problems\problem_form.html:138
+
 msgid "Save Problem"
 msgstr "Задачи"
 
-#: templates/users/profile.html:10
+#: .\templates\users\profile.html:10
 msgid "My profile"
 msgstr "Мой профиль"
 
-#: templates/users/profile.html:25
-#, fuzzy
-#| msgid "Delete"
+#: .\templates\users\profile.html:25
+
 msgid "Delete avatar"
 msgstr "Удалить"
 
-#: templates/users/profile.html:37 templates/users/user_detail.html:26
-#: templates/users/user_list.html:20
+#: .\templates\users\profile.html:37 .\templates\users\user_detail.html:26
+#: .\templates\users\user_list.html:20
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: templates/users/profile.html:53 templates/users/user_detail.html:32
+#: .\templates\users\profile.html:53 .\templates\users\user_detail.html:32
 msgid "Username"
 msgstr "Логин"
 
-#: templates/users/profile.html:57 templates/users/user_detail.html:36
+#: .\templates\users\profile.html:57 .\templates\users\user_detail.html:36
 msgid "Email"
 msgstr "Почта"
 
-#: templates/users/profile.html:61 templates/users/user_detail.html:40
+#: .\templates\users\profile.html:61 .\templates\users\user_detail.html:40
 msgid "Name"
 msgstr "Имя"
 
-#: templates/users/profile.html:65 templates/users/user_detail.html:50
+#: .\templates\users\profile.html:65 .\templates\users\user_detail.html:50
 msgid "Surname"
 msgstr "Фамилия"
 
-#: templates/users/profile.html:69
+#: .\templates\users\profile.html:69
 msgid "Avatar"
 msgstr "Аватарка"
 
-#: templates/users/profile.html:75 templates/users/profile.html:76
+#: .\templates\users\profile.html:75 .\templates\users\profile.html:76
 msgid "Choose file"
 msgstr "Выберете файл"
 
-#: templates/users/profile.html:77
+#: .\templates\users\profile.html:77
 msgid "No file chosen"
 msgstr "Файл не выбран"
 
-#: templates/users/profile.html:103
-#, fuzzy
-#| msgid "Confirm"
+#: .\templates\users\profile.html:103
+
 msgid "Confirm deletion"
 msgstr "Подтвердить"
 
-#: templates/users/profile.html:107
-#, fuzzy
-#| msgid "Are you sure you want to delete"
+#: .\templates\users\profile.html:107
 msgid "Are you sure you want to delete your avatar?"
 msgstr "Вы точно хотите удалить"
 
-#: templates/users/user_detail.html:10
+#: .\templates\users\user_detail.html:10
 msgid "User info"
 msgstr "Информация о пользователе"
 
-#: templates/users/user_detail.html:45 templates/users/user_detail.html:55
-#: templates/users/user_detail.html:65
+#: .\templates\users\user_detail.html:45 .\templates\users\user_detail.html:55
+#: .\templates\users\user_detail.html:65
 msgid "not specified"
 msgstr "не указано"
 
-#: templates/users/user_detail.html:60
+#: .\templates\users\user_detail.html:60
 msgid "Birthday"
 msgstr "День рождения"
 
-#: templates/users/user_list.html:9
+#: .\templates\users\user_list.html:9
 msgid "Player Rankings"
 msgstr "Рейтинг игроков"
 
-#: templates/users/user_list.html:18
+#: .\templates\users\user_list.html:18
 msgid "Player"
 msgstr "Игроки"
 
-#: templates/users/user_list.html:19
+#: .\templates\users\user_list.html:19
 msgid "Joined"
 msgstr "Присоединился"
 
-#: users/apps.py:8
+#: .\users\apps.py:8
 msgid "Users"
 msgstr "Пользователи"
 
-#: users/views.py:32
+#: .\users\views.py:32
 msgid "Account activate"
 msgstr "Активный аккаунт"
 
-#: users/views.py:33
+#: .\users\views.py:33
 #, python-format
 msgid "Follow to link for activate: %(link)s"
 msgstr "Перейдите по ссылке для активации: %(link)s"
 
-#: users/views.py:41
+#: .\users\views.py:41
 #, python-format
 msgid ""
 "A confirmation email has been sent to %(email)s. Please check your inbox."
-msgstr "Письмо с подтверждением отправлено на %(email)s. Проверьте свой почтовый ящик."
+msgstr ""
+"Письмо с подтверждением отправлено на %(email)s. Проверьте свой почтовый "
+"ящик."
+
+#~ msgid "403 Error"
+#~ msgstr "Ошибка 403"
+
+#~ msgid "500 Error"
+#~ msgstr "Ошибка 500"
 
 #~ msgid "Title problem"
 #~ msgstr "Название задачи"
@@ -1036,9 +978,6 @@ msgstr "Письмо с подтверждением отправлено на %
 
 #~ msgid "task"
 #~ msgstr "задача"
-
-#~ msgid "Auther solution"
-#~ msgstr "Авторское решение"
 
 #~ msgid "Auther language"
 #~ msgstr "Авторский язык"

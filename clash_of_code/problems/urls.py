@@ -46,5 +46,5 @@ urlpatterns = [
         'check_author_solution/<int:pk>/',
         problems.views.CheckAuthorSolutionView.as_view(),
         name='check_author_solution',
-    )
+    ),
 ]

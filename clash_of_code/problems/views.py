@@ -1,5 +1,7 @@
 import json
+import logging
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 import django.db.transaction
@@ -18,11 +20,15 @@ from django.views.generic import (
     UpdateView,
 )
 
+import contests.models
 import problems.forms
 import problems.models
 import problems.tasks
 import submissions.models
 from submissions.tasks import check_solution
+
+
+logger = logging.getLogger(__name__)
 
 
 class ProblemsListView(ListView):
@@ -222,25 +228,110 @@ class CheckAuthorSolutionView(View):
 
 
 class SubmitSolutionView(LoginRequiredMixin, View):
-    def get(self, request, pk):
-        return redirect('problems:problem', pk=pk)
-
     def post(self, request, pk):
+        logger.debug(f'Начало обработки submission для задачи {pk}')
+
         problem = get_object_or_404(problems.models.Problem, pk=pk)
+        contest_id = request.POST.get('contest_id')
         code = request.POST.get('code', '').strip()
         language = request.POST.get('language', '').strip()
 
-        if not code or not language:
-            return redirect('problems:problem', pk=pk)
-
-        submission = submissions.models.Submission.objects.create(
-            user=request.user,
-            problem=problem,
-            code=code,
-            language=language,
+        logger.debug(
+            f'Получены данные: contest_id={contest_id}, '
+            f'language={language}, code_length={len(code)}',
         )
 
-        check_solution.delay_on_commit(submission.pk)
+        if not code or not language:
+            msg = 'Необходимо указать код и язык программирования'
+            logger.warning(msg)
+            messages.error(request, msg)
+            return redirect('problems:problem', pk=pk)
+
+        is_contest_submission = False
+        contest = None
+
+        if contest_id:
+            try:
+                logger.debug(f'Попытка найти контест {contest_id}')
+                contest = contests.models.Contest.objects.get(id=contest_id)
+                logger.debug(f'Найден контест: {contest.name}')
+
+                current_time = timezone.now()
+                logger.debug(f'Текущее время: {current_time}')
+                logger.debug(
+                    f'Время контеста: {contest.start_time} - {contest.end_time}',
+                )
+
+                time_ok = contest.start_time <= current_time <= contest.end_time
+                problem_in_contest = contests.models.ContestProblem.objects.filter(
+                    contest=contest,
+                    problem=problem,
+                ).exists()
+
+                user_has_privileges = any(
+                    [
+                        request.user.is_staff,
+                        request.user.is_superuser,
+                        contest.created_by == request.user,
+                    ],
+                )
+                user_registered = (
+                    user_has_privileges
+                    or contest.participants.filter(id=request.user.id).exists()
+                )
+
+                logger.debug(
+                    f'Проверки: time_ok={time_ok},'
+                    f' problem_in_contest={problem_in_contest},'
+                    f' user_registered={user_registered}',
+                )
+
+                valid_contest = all([time_ok, problem_in_contest, user_registered])
+                logger.debug(f'Контест валиден: {valid_contest}')
+
+                if valid_contest:
+                    is_contest_submission = True
+                    logger.info(f'Решение будет засчитано для контеста {contest_id}')
+                else:
+                    msg = 'Решение не засчитано для контеста'
+                    logger.warning(msg)
+                    messages.warning(request, msg)
+
+            except contests.models.Contest.DoesNotExist as e:
+                msg = 'Указанный контест не существует'
+                logger.error(f'{msg}: {str(e)}')
+                messages.error(request, msg)
+
+        submission_data = {
+            'user': request.user,
+            'problem': problem,
+            'code': code,
+            'language': language,
+            'contest': contest if is_contest_submission else None,
+        }
+
+        logger.debug(f'Данные для submission: {submission_data}')
+
+        try:
+            submission = submissions.models.Submission.objects.create(**submission_data)
+            logger.info(
+                f'Создано решение: ID={submission.id}, Contest={submission.contest_id}',
+            )
+        except Exception as e:
+            logger.error(f'Ошибка создания submission: {str(e)}')
+            messages.error(request, 'Ошибка при сохранении решения')
+            return redirect('problems:problem', pk=pk)
+
+        try:
+            check_solution.delay(submission.pk)
+            logger.debug(
+                f'Задача проверки отправлена в Celery для submission {submission.id}',
+            )
+        except Exception as e:
+            logger.error(f'Ошибка отправки в Celery: {str(e)}')
+
+        if is_contest_submission:
+            return redirect('contests:contest_submissions', pk=contest_id)
 
         return redirect('problems:submission_detail', pk=submission.pk)
 
@@ -254,6 +345,7 @@ class MySubmissionsView(LoginRequiredMixin, ListView):
         return self.model.objects.filter(
             user=self.request.user,
             problem_id=self.kwargs['pk'],
+            contest__isnull=True,
         ).order_by('-submitted_at')
 
     def get_context_data(self, **kwargs):
@@ -277,15 +369,48 @@ class SubmissionDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'submission'
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+        return submissions.models.Submission.objects.select_related(
+            'user',
+            'problem',
+            'contest',
+        ).prefetch_related('problem__tests')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not self.has_permission():
+            raise PermissionDenied('У вас нет прав для просмотра этого решения')
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def has_permission(self):
+        submission = self.object
+        user = self.request.user
+
+        if user == submission.user:
+            return True
+
+        if submission.contest:
+            return (
+                submission.contest.participants.filter(id=user.id).exists()
+                or submission.contest.created_by == user
+                or user.is_staff
+            )
+
+        return user.is_staff
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        submission = context['submission']
+        submission = self.object
 
-        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
-        submission.display_submitted_at = submission.submitted_at + timezone.timedelta(
-            minutes=tz_offset,
-        )
+        if submission.contest:
+            context['contest'] = submission.contest
+            context['contest_problem'] = contests.models.ContestProblem.objects.filter(
+                contest=submission.contest,
+                problem=submission.problem,
+            ).first()
+
+        if hasattr(submission, 'test_results'):
+            context['test_results'] = submission.test_results.all()
 
         return context

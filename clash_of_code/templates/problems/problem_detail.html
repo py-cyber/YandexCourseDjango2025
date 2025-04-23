@@ -138,6 +138,7 @@
                 <div class="solution-submission">
                     <form method="post" action="{% url 'problems:submit_solution' pk=problem.pk %}">
                         {% csrf_token %}
+                        <input type="hidden" name="contest_id" value="{{ request.GET.contest_id }}">
                         <div class="mb-3">
                             <label for="language" class="form-label">Язык программирования</label>
                             <select class="form-select" id="language" name="language" required>

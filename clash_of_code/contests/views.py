@@ -308,28 +308,49 @@ class ContestListView(ListView):
 class ContestSubmissionsView(LoginRequiredMixin, ListView):
     model = submissions.models.Submission
     template_name = 'contests/contest_submissions.html'
-    context_object_name = 'submissions'
+    context_object_name = 'my_submissions'
 
     def get_queryset(self):
         contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
 
-        problem_ids = contests.models.ContestProblem.objects.filter(
-            contest=contest,
-        ).values_list('problem_id', flat=True)
-
         return (
             self.model.objects.filter(
                 user=self.request.user,
-                problem_id__in=problem_ids,
+                contest=contest,
+                problem__in=contest.contestproblem_set.values('problem'),
             )
             .select_related('problem')
             .order_by('-submitted_at')
         )
 
+    def dispatch(self, request, *args, **kwargs):
+        self.contest = get_object_or_404(contests.models.Contest, pk=kwargs['pk'])
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['contest'] = get_object_or_404(
-            contests.models.Contest,
-            pk=self.kwargs['pk'],
-        )
+        context['contest'] = self.contest
+
+        if self.request.user.is_staff or self.request.user == self.contest.created_by:
+            contest_problem_ids = contests.models.ContestProblem.objects.filter(
+                contest=self.contest,
+            ).values_list('problem_id', flat=True)
+
+            context['all_submissions'] = self.model.objects.filter(
+                contest=self.contest,
+                problem_id__in=contest_problem_ids,
+                submitted_at__range=(
+                    self.contest.start_time,
+                    self.contest.end_time,
+                ),
+            )
+            context['all_submissions'].select_related('problem', 'user')
+            context['all_submissions'].order_by('-submitted_at')
+
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+        for submission in context['my_submissions']:
+            submission.display_submitted_at = (
+                submission.submitted_at + timezone.timedelta(minutes=tz_offset)
+            )
+
         return context

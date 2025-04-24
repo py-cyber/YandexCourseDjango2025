@@ -14,7 +14,7 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
                         <tr>
-                            <th class="ps-4">{% trans 'Problem' %}</th>
+                            <th class="ps-4">{% trans "Problem" %}</th>
                             <th>{% trans "Author" %}</th>
                             <th class="text-center">{% trans "Difficulty" %}</th>
                             <th class="text-end pe-4">{% trans "Tags" %}</th>
@@ -56,7 +56,7 @@
                                     {% for tag in task.tags.all %}
                                         <span class="tag-badge">{{ tag.name }}</span>
                                     {% empty %}
-                                        <span class="text-muted">{% trans 'No tags' %}</span>
+                                        <span class="text-muted">{% trans "No tags" %}</span>
                                     {% endfor %}
                                 </div>
                             </td>

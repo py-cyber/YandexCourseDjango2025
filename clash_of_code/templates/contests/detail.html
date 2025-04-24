@@ -74,27 +74,27 @@
                 <table class="table table-hover mb-0">
                     <thead class="table-dark">
                         <tr>
-                            <th width="5%">#</th>
-                            <th width="45%">{% translate "Problem" %}</th>
-                            <th width="15%">{% translate "Difficulty" %}</th>
-                            <th width="15%">{% translate "Points" %}</th>
-                            <th width="20%">{% translate "Status" %}</th>
+                            <th style="width: 5%; text-align: center;">#</th>
+                            <th style="width: 45%; text-align: center;">{% translate "Problem" %}</th>
+                            <th style="width: 15%; text-align: center;">{% translate "Difficulty" %}</th>
+                            <th style="width: 15%; text-align: center;">{% translate "Points" %}</th>
+                            <th style="width: 20%; text-align: center;">{% translate "Status" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for problem in problems %}
                         <tr>
-                            <td>{{ problem.order }}</td>
-                            <td>
+                            <td style="width: 5%; text-align: center;">{{ problem.order }}</td>
+                            <td style="width: 45%; text-align: center;">
                                 {% if is_creator or is_running and is_registered or is_past %}
-                                    <a href="{% url 'problems:problem' pk=problem.id %}">
+                                    <a href="{% url 'problems:problem' pk=problem.problem.id %}?contest_id={{ contest.id }}">
                                         {{ problem.problem.title }}
                                     </a>
                                 {% else %}
                                     {{ problem.problem.title }}
                                 {% endif %}
                             </td>
-                            <td>
+                            <td style="width: 15%; text-align: center;">
                                 <span class="badge
                                     {% if problem.problem.difficulty == 'E' %}bg-success
                                     {% elif problem.problem.difficulty == 'M' %}bg-warning text-dark
@@ -103,21 +103,24 @@
                                     {{ problem.problem.get_difficulty_display }}
                                 </span>
                             </td>
-                            <td>{{ problem.points }}</td>
-                            <td>
+                            <td style="width: 15%; text-align: center;">
+                                {{ problem.points }}
+                            </td>
+                            <td style="width: 20%; text-align: center;">
                                 {% if is_running or is_past %}
-                                    {% if is_registered and problem.problem.id in solved_problems %}
-                                        <span class="text-success">{% translate "Solved" %}</span>
-                                    {% elif is_registered %}
-                                        <span class="text-warning">{% translate "Not Solved" %}</span>
-                                    {% else %}
-                                        <span class="text-muted">-</span>
+                                    {% if is_registered %}
+                                        {% if problem.problem.id in solved_problems %}
+                                            <span class="text-success">{% translate "Solved" %}</span>
+                                        {% else %}
+                                            <span class="text-warning">{% translate "Not Solved" %}</span>
                                         {% endif %}
                                     {% else %}
                                         <span class="text-muted">-</span>
                                     {% endif %}
-                                </td>
-                            </tr>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
                             {% empty %}
                             <tr>
                                 <td colspan="5" class="text-center py-4">{% translate "There are currently no problems in this contest" %}</td>

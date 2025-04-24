@@ -67,11 +67,6 @@ class ContestProblem(django.db.models.Model):
         null=True,
         blank=True,
     )
-    solved_by = django.db.models.ManyToManyField(
-        to=User,
-        through='ContestSolution',
-        blank=True,
-    )
 
     class Meta:
         ordering = ['order']
@@ -96,28 +91,3 @@ class ContestRegistration(django.db.models.Model):
 
     class Meta:
         unique_together = ('user', 'contest')
-
-
-class ContestSolution(django.db.models.Model):
-    user = django.db.models.ForeignKey(
-        to=User,
-        on_delete=django.db.models.CASCADE,
-    )
-    contest_problem = django.db.models.ForeignKey(
-        to=ContestProblem,
-        on_delete=django.db.models.CASCADE,
-    )
-    submission = django.db.models.ForeignKey(
-        to='submissions.Submission',
-        on_delete=django.db.models.CASCADE,
-    )
-    solved_time = django.db.models.DateTimeField(
-        auto_now_add=True,
-    )
-    penalty = django.db.models.IntegerField(
-        default=0,
-    )
-
-    class Meta:
-        ordering = ['solved_time']
-        unique_together = ('user', 'contest_problem')

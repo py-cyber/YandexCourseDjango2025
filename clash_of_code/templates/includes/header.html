@@ -58,11 +58,6 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link {% if request.resolver_match.view_name == 'duet:user_rooms' %}active{% endif %}" {% if not request.resolver_match.view_name == 'duet:user_rooms' %} href="{% url 'duet:user_rooms' %}" {% endif %}>
-                            {% translate "My code rooms" %}
-                        </a>
-                    </li>
-                    <li>
                         <a class="nav-link {% if request.resolver_match.view_name == 'contests:list' %}active{% endif %}" {% if not request.resolver_match.view_name == 'contests:list' %} href="{% url 'contests:list' %}" {% endif %}>
                             {% translate "Contests" %}
                         </a>
@@ -99,14 +94,6 @@
                                 <li>
                                     <a class="dropdown-item text-center" href="{% url 'profile' %}">
                                         {% translate "Profile" %}
-                                    </a>
-                                </li>
-                                <li class="position-relative">
-                                    <a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'duet:my_invitations' %}">
-                                        {% translate "My invitations" %}
-                                        {% if invitations_count > 0 %}
-                                        <span class="badge bg-danger rounded-pill" style="margin-left: 10px">{{ invitations_count }}</span>
-                                        {% endif %}
                                     </a>
                                 </li>
                                  <li>

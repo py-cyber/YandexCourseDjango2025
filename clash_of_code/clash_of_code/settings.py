@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Installed applications
-    'channels',
     'tinymce',
     # Project applications
     'contests.apps.ContestsConfig',

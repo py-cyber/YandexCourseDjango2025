@@ -187,8 +187,8 @@ class ProblemDetailView(View):
             pk=pk,
         )
 
-        if not problem.is_public and problem.author != request.user:
-            raise PermissionDenied
+        # if not problem.is_public and problem.author != request.user:
+        #     raise PermissionDenied
 
         sample_tests = problem.tests.filter(is_sample=True).order_by('number')
 

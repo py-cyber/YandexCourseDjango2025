@@ -1,54 +1,85 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block content %}
 <div class="container mt-4">
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">
-                <i class="fas fa-history me-2"></i>Мои решения в контесте "{{ contest.name }}"
-            </h2>
-        </div>
-        
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Задача</th>
-                            <th>Время</th>
-                            <th>Язык</th>
-                            <th>Статус</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for submission in submissions %}
-                        <tr>
-                            <td>{{ submission.problem.title }}</td>
-                            <td>{{ submission.submitted_at|date:"d.m.Y H:i" }}</td>
-                            <td>{{ submission.get_language_display }}</td>
-                            <td>
-                                <span class="badge bg-{% if submission.verdict == 'AC' %}success{% else %}danger{% endif %}">
-                                    {{ submission.get_verdict_display }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{% url 'problems:submission_detail' pk=submission.pk %}" 
-                                   class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> Подробнее
-                                </a>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="text-center">Нет отправленных решений</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <h2 class="mb-3">{% translate "My Submissions" %}</h2>
+    
+    {% if my_submissions %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 7%; text-align: center;">№</th>
+                    <th style="width: 15%; text-align: center;">{% translate "When" %}</th>
+                    <th style="width: 7%; text-align: center;">{% translate "Who" %}</th>
+                    <th style="width: 25%; text-align: center;">{% translate "Task" %}</th>
+                    <th style="width: 10%; text-align: center;">{% translate "Language" %}</th>
+                    <th style="width: 15%; text-align: center;">{% translate "Verdict" %}</th>
+                    <th style="width: 5%; text-align: center;">{% translate "Time" %}</th>
+                    <th style="width: 5%; text-align: center;">{% translate "Memory" %}</th>
+                    <th style="width: 5%; text-align: center;">{% translate "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in my_submissions %}
+                <tr>
+                    <td style="width: 7%; text-align: center;">
+                        {{ sub.id }}
+                    </td>
+                    <td style="width: 15%; text-align: center;">
+                        {{ sub.display_submitted_at|date:"d.m.Y H:i" }}
+                    </td>
+                    <td style="width: 7%; text-align: center;">
+                        {{ sub.user.username }}
+                    </td>
+                    <td style="width: 25%; text-align: center;">
+                        <a href="{% url 'problems:problem' sub.problem.pk %}" class="text-decoration-none">
+                            {{ sub.problem.title }}
+                        </a>
+                    </td>
+                    <td style="width: 10%; text-align: center;">
+                        {{ sub.language }}
+                    </td>
+                    <td style="width: 15%; text-align: center;">
+                        <span class="badge 
+                            {% if sub.verdict == 'AC' %}bg-success
+                            {% elif sub.verdict == 'CE' %}bg-warning text-dark
+                            {% else %}bg-danger
+                            {% endif %}">
+                            {{ sub.get_verdict_display }}
+                        </span>
+                    </td>
+                    <td style="width: 5%; text-align: center;">
+                        {% if sub.execution_time %}
+                            {{ sub.execution_time }} ms
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td style="width: 5%; text-align: center;">
+                        {% if sub.memory_used %}
+                            {{ sub.memory_used }} KB
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td style="width: 5%; text-align: center;">
+                        <a href="{% url 'problems:submission_detail' pk=sub.pk %}" 
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i> {% translate "View" %}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+    {% else %}
+    <div class="alert alert-warning">
+        {% translate "No submissions for this contest." %}
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -66,9 +66,9 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         contest = self.object
         now = timezone.now()
+        user = self.request.user
 
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
-
         contest.display_start_time = contest.start_time + timezone.timedelta(
             minutes=tz_offset,
         )
@@ -76,34 +76,36 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
             minutes=tz_offset,
         )
 
+        solved_problems = set()
+        is_registered = (
+            contest.participants.filter(id=self.request.user.id).exists()
+            or user.is_staff
+            or contest.created_by == user
+        )
+        qs_sub = submissions.models.Submission
+        if (now >= contest.start_time) and is_registered:
+            solved_problems = set(
+                qs_sub.objects.filter(
+                    user=self.request.user,
+                    contest=contest,
+                    verdict='AC',
+                ).values_list('problem_id', flat=True),
+            )
+
         context.update(
             {
                 'is_past': now > contest.end_time,
                 'is_running': contest.start_time <= now <= contest.end_time,
                 'is_upcoming': now < contest.start_time,
-                'is_registered': contest.participants.filter(
-                    id=self.request.user.id,
-                ).exists(),
+                'is_registered': is_registered,
                 'is_creator': contest.created_by == self.request.user,
                 'problems': contest.contestproblem_set.all()
                 .select_related('problem')
                 .order_by('order'),
                 'duration': contest.end_time - contest.start_time,
+                'solved_problems': solved_problems,
             },
         )
-
-        if context['is_running'] or context['is_past']:
-            if context['is_registered']:
-                query = contests.models.ContestSolution.objects
-                context['solved_problems'] = set(
-                    query.filter(
-                        user=self.request.user,
-                        contest_problem__contest=contest,
-                    ).values_list(
-                        'contest_problem__problem_id',
-                        flat=True,
-                    ),
-                )
 
         if self.request.user.is_staff:
             context['participants'] = contest.participants.all().order_by('username')
@@ -142,34 +144,88 @@ class ContestStandingsView(TemplateView):
         context = super().get_context_data(**kwargs)
         contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
 
-        standings = []
-        for registration in contest.contestregistration_set.filter(is_approved=True):
-            user = registration.user
-            solutions = contests.models.ContestSolution.objects.filter(
-                user=user,
-                contest_problem__contest=contest,
-            )
+        contest_problems = contest.contestproblem_set.select_related(
+            'problem',
+        ).order_by('order')
+        qs_sub = submissions.models.Submission
+        all_submissions = (
+            qs_sub.objects.filter(contest=contest)
+            .select_related('user', 'problem')
+            .order_by('submitted_at')
+        )
+        registrations = contest.contestregistration_set.filter(
+            is_approved=True,
+        ).select_related('user')
 
-            total_points = sum(s.contest_problem.points for s in solutions)
-            total_penalty = sum(s.penalty for s in solutions)
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+
+        standings = []
+        for registration in registrations:
+            user = registration.user
+            user_solutions = {}
+            total_points = 0
+            total_penalty = 0
+
+            for cp in contest_problems:
+                problem_subs = [
+                    s
+                    for s in all_submissions
+                    if s.user == user and s.problem == cp.problem
+                ]
+
+                ac_sub = next((s for s in problem_subs if s.verdict == 'AC'), None)
+                attempts = len(
+                    [
+                        s
+                        for s in problem_subs
+                        if not ac_sub or s.submitted_at <= ac_sub.submitted_at
+                    ],
+                )
+
+                if ac_sub:
+                    penalty_time = (
+                        ac_sub.submitted_at - contest.start_time
+                    ).total_seconds() // 60
+                    penalty = penalty_time + (20 * (attempts - 1))
+                    points = max(0, cp.points - penalty)
+
+                    user_solutions[str(cp.problem.id)] = {
+                        'verdict': 'AC',
+                        'points': points,
+                        'penalty': penalty,
+                        'time': (
+                            ac_sub.submitted_at + timezone.timedelta(minutes=tz_offset)
+                        ).strftime('%H:%M'),
+                        'attempts': attempts,
+                        'problem_id': cp.problem.id,
+                    }
+                    total_points += points
+                    total_penalty += penalty
+                elif attempts > 0:
+                    user_solutions[str(cp.problem.id)] = {
+                        'verdict': 'WA',
+                        'points': 0,
+                        'attempts': attempts,
+                        'problem_id': cp.problem.id,
+                    }
 
             standings.append(
                 {
                     'user': user,
                     'total_points': total_points,
                     'total_penalty': total_penalty,
-                    'solutions': solutions,
+                    'solutions': user_solutions,
+                    'solutions_list': list(user_solutions.values()),
                 },
             )
+
+        standings.sort(key=lambda x: (-x['total_points'], x['total_penalty']))
 
         context.update(
             {
                 'contest': contest,
-                'standings': sorted(
-                    standings,
-                    key=lambda x: (-x['total_points'], x['total_penalty']),
-                ),
-                'problems': contest.contestproblem_set.all().order_by('order'),
+                'standings': standings,
+                'problems': contest_problems,
             },
         )
         return context
@@ -308,28 +364,45 @@ class ContestListView(ListView):
 class ContestSubmissionsView(LoginRequiredMixin, ListView):
     model = submissions.models.Submission
     template_name = 'contests/contest_submissions.html'
-    context_object_name = 'submissions'
+    context_object_name = 'my_submissions'
 
     def get_queryset(self):
-        contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
-
-        problem_ids = contests.models.ContestProblem.objects.filter(
-            contest=contest,
-        ).values_list('problem_id', flat=True)
+        self.contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
 
         return (
             self.model.objects.filter(
                 user=self.request.user,
-                problem_id__in=problem_ids,
+                contest=self.contest,
+                problem__in=self.contest.contestproblem_set.values('problem'),
             )
-            .select_related('problem')
+            .select_related('problem', 'user')
             .order_by('-submitted_at')
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['contest'] = get_object_or_404(
-            contests.models.Contest,
-            pk=self.kwargs['pk'],
-        )
+        context['contest'] = self.contest
+
+        if self.request.user.is_staff or self.request.user == self.contest.created_by:
+            contest_problem_ids = contests.models.ContestProblem.objects.filter(
+                contest=self.contest,
+            ).values_list('problem_id', flat=True)
+
+            context['all_submissions'] = self.model.objects.filter(
+                contest=self.contest,
+                problem_id__in=contest_problem_ids,
+                submitted_at__range=(
+                    self.contest.start_time,
+                    self.contest.end_time,
+                ),
+            )
+            context['all_submissions'].select_related('problem', 'user')
+            context['all_submissions'].order_by('-submitted_at')
+
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+        for submission in context['my_submissions']:
+            submission.display_submitted_at = (
+                submission.submitted_at + timezone.timedelta(minutes=tz_offset)
+            )
+
         return context

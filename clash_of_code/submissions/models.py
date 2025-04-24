@@ -20,6 +20,13 @@ class Submission(django.db.models.Model):
         to=User,
         on_delete=django.db.models.CASCADE,
     )
+    contest = django.db.models.ForeignKey(
+        to='contests.Contest',
+        on_delete=django.db.models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='submissions',
+    )
     problem = django.db.models.ForeignKey(
         to=problems.models.Problem,
         on_delete=django.db.models.CASCADE,

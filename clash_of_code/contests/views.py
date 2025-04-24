@@ -311,21 +311,17 @@ class ContestSubmissionsView(LoginRequiredMixin, ListView):
     context_object_name = 'my_submissions'
 
     def get_queryset(self):
-        contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
+        self.contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
 
         return (
             self.model.objects.filter(
                 user=self.request.user,
-                contest=contest,
-                problem__in=contest.contestproblem_set.values('problem'),
+                contest=self.contest,
+                problem__in=self.contest.contestproblem_set.values('problem'),
             )
-            .select_related('problem')
+            .select_related('problem', 'user')
             .order_by('-submitted_at')
         )
-
-    def dispatch(self, request, *args, **kwargs):
-        self.contest = get_object_or_404(contests.models.Contest, pk=kwargs['pk'])
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

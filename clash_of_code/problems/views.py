@@ -241,12 +241,6 @@ class SubmitSolutionView(LoginRequiredMixin, View):
             f'language={language}, code_length={len(code)}',
         )
 
-        if not code or not language:
-            msg = 'Необходимо указать код и язык программирования'
-            logger.warning(msg)
-            messages.error(request, msg)
-            return redirect('problems:problem', pk=pk)
-
         is_contest_submission = False
         contest = None
 

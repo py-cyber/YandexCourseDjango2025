@@ -1,37 +1,48 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-3">Мои решения</h2>
+    <h2 class="mb-3">{% translate "My Submissions" %}</h2>
     
     {% if my_submissions %}
     <div class="table-responsive">
         <table class="table table-hover">
             <thead class="table-light">
                 <tr>
-                    <th width="8%">№</th>
-                    <th width="15%">Когда</th>
-                    <th width="15%">Кто</th>
-                    <th width="25%">Задача</th>
-                    <th width="12%">Язык</th>
-                    <th width="15%">Вердикт</th>
-                    <th width="5%">Время</th>
-                    <th width="5%">Память</th>
+                    <th style="width: 7%; text-align: center;">№</th>
+                    <th style="width: 15%; text-align: center;">{% translate "When" %}</th>
+                    <th style="width: 7%; text-align: center;">{% translate "Who" %}</th>
+                    <th style="width: 25%; text-align: center;">{% translate "Task" %}</th>
+                    <th style="width: 10%; text-align: center;">{% translate "Language" %}</th>
+                    <th style="width: 15%; text-align: center;">{% translate "Verdict" %}</th>
+                    <th style="width: 5%; text-align: center;">{% translate "Time" %}</th>
+                    <th style="width: 5%; text-align: center;">{% translate "Memory" %}</th>
+                    <th style="width: 5%; text-align: center;">{% translate "Actions" %}</th>
                 </tr>
             </thead>
             <tbody>
                 {% for sub in my_submissions %}
                 <tr>
-                    <td>{{ sub.id }}</td>
-                    <td>{{ sub.display_submitted_at|date:"d.m.Y H:i" }}</td>
-                    <td>{{ sub.user.username }}</td>
-                    <td>
+                    <td style="width: 7%; text-align: center;">
+                        {{ sub.id }}
+                    </td>
+                    <td style="width: 15%; text-align: center;">
+                        {{ sub.display_submitted_at|date:"d.m.Y H:i" }}
+                    </td>
+                    <td style="width: 7%; text-align: center;">
+                        {{ sub.user.username }}
+                    </td>
+                    <td style="width: 25%; text-align: center;">
                         <a href="{% url 'problems:problem' sub.problem.pk %}" class="text-decoration-none">
                             {{ sub.problem.title }}
                         </a>
                     </td>
-                    <td>{{ sub.get_language_display }}</td>
-                    <td>
+                    <td style="width: 10%; text-align: center;">
+                        {{ sub.language }}
+                    </td>
+                    <td style="width: 15%; text-align: center;">
                         <span class="badge 
                             {% if sub.verdict == 'AC' %}bg-success
                             {% elif sub.verdict == 'CE' %}bg-warning text-dark
@@ -40,19 +51,25 @@
                             {{ sub.get_verdict_display }}
                         </span>
                     </td>
-                    <td>
+                    <td style="width: 5%; text-align: center;">
                         {% if sub.execution_time %}
-                            {{ sub.execution_time }} мс
+                            {{ sub.execution_time }} ms
                         {% else %}
                             -
                         {% endif %}
                     </td>
-                    <td>
+                    <td style="width: 5%; text-align: center;">
                         {% if sub.memory_used %}
-                            {{ sub.memory_used }} КБ
+                            {{ sub.memory_used }} KB
                         {% else %}
                             -
                         {% endif %}
+                    </td>
+                    <td style="width: 5%; text-align: center;">
+                        <a href="{% url 'problems:submission_detail' pk=sub.pk %}" 
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i> {% translate "View" %}
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -61,7 +78,7 @@
     </div>
     {% else %}
     <div class="alert alert-warning">
-        Нет отправленных решений для этого контеста.
+        {% translate "No submissions for this contest." %}
     </div>
     {% endif %}
 </div>

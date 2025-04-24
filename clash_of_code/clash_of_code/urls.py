@@ -9,7 +9,7 @@ urlpatterns = [
     django.urls.path('admin/', admin.site.urls),
     django.urls.path('tinymce/', django.urls.include('tinymce.urls')),
     django.urls.path('users/', django.urls.include('users.urls')),
-    django.urls.path('duet/', django.urls.include('duet.urls')),
+    django.urls.path('duels/', django.urls.include('duels.urls')),
     django.urls.path('problems/', django.urls.include('problems.urls')),
     django.urls.path('i18n/', django.urls.include('django.conf.urls.i18n')),
     django.urls.path(

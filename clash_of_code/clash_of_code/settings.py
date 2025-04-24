@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'tinymce',
     # Project applications
     'contests.apps.ContestsConfig',
-    'duet.apps.DuetConfig',
+    'duels.apps.DuelsConfig',
     'problems.apps.ProblemsConfig',
     'submissions.apps.SubmissionsConfig',
     'users.apps.UsersConfig',
@@ -82,7 +82,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'duet.context_processors.invitations_count',
             ],
         },
     },
@@ -99,7 +98,7 @@ CHANNEL_LAYERS = {
 
 WSGI_APPLICATION = 'clash_of_code.wsgi.application'
 
-ASGI_APPLICATION = 'clash_of_code.routing.application'
+ASGI_APPLICATION = 'clash_of_code.asgi.application'
 
 
 DATABASES = {

@@ -157,6 +157,8 @@ class ContestStandingsView(TemplateView):
             is_approved=True,
         ).select_related('user')
 
+        tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+
         standings = []
         for registration in registrations:
             user = registration.user
@@ -181,11 +183,9 @@ class ContestStandingsView(TemplateView):
                 )
 
                 if ac_sub:
-                    penalty_time = max(
-                        0,
-                        (ac_sub.submitted_at - contest.start_time).total_seconds()
-                        // 60,
-                    )
+                    penalty_time = (
+                        ac_sub.submitted_at - contest.start_time
+                    ).total_seconds() // 60
                     penalty = penalty_time + (20 * (attempts - 1))
                     points = max(0, cp.points - penalty)
 
@@ -193,7 +193,9 @@ class ContestStandingsView(TemplateView):
                         'verdict': 'AC',
                         'points': points,
                         'penalty': penalty,
-                        'time': ac_sub.submitted_at.strftime('%H:%M'),
+                        'time': (
+                            ac_sub.submitted_at + timezone.timedelta(minutes=tz_offset)
+                        ).strftime('%H:%M'),
                         'attempts': attempts,
                         'problem_id': cp.problem.id,
                     }

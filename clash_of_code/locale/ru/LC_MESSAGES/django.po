@@ -37,10 +37,8 @@ msgid "Not enough rights"
 msgstr "Не хватает прав"
 
 #: contests/views.py:137
-#, fuzzy
-#| msgid "Are you sure you want to register for this contest?"
 msgid "You are already registered for this contest"
-msgstr "Вы уверены, что хотите удалить соревнование"
+msgstr "Вы уже зарегистрированны на это соревнование"
 
 #: contests/views.py:270
 msgid "Please log in to access this page"
@@ -340,10 +338,8 @@ msgstr "Отмена"
 
 #: templates/contests/contest_submissions.html:7
 #: templates/problems/problem_detail.html:159
-#, fuzzy
-#| msgid "Submissions"
 msgid "My Submissions"
-msgstr "Посылки"
+msgstr "Мои посылки"
 
 #: templates/contests/contest_submissions.html:15
 msgid "When"
@@ -360,8 +356,6 @@ msgstr "Задача"
 #: templates/contests/contest_submissions.html:18
 #: templates/problems/my_submissions.html:20
 #: templates/problems/submission_detail.html:23
-#, fuzzy
-#| msgid "Solution Language"
 msgid "Language"
 msgstr "Язык"
 
@@ -370,23 +364,17 @@ msgid "Verdict"
 msgstr "Вердикт"
 
 #: templates/contests/contest_submissions.html:20
-#, fuzzy
-#| msgid "End Time"
 msgid "Time"
-msgstr "Время конца"
+msgstr "Время"
 
 #: templates/contests/contest_submissions.html:21
-#, fuzzy
-#| msgid "Memory limit"
 msgid "Memory"
-msgstr "Превышен лимит памяти"
+msgstr "Память"
 
 #: templates/contests/contest_submissions.html:22
 #: templates/problems/my_submissions.html:22
-#, fuzzy
-#| msgid "Exception"
 msgid "Actions"
-msgstr "Исключение"
+msgstr "Действия"
 
 #: templates/contests/contest_submissions.html:71
 #: templates/problems/my_submissions.html:38
@@ -532,10 +520,8 @@ msgid "Confirm Registration"
 msgstr "Подтвердить регистрацию"
 
 #: templates/contests/standings.html:12
-#, fuzzy
-#| msgid "Submissions"
 msgid "Back to contest"
-msgstr "Посылки"
+msgstr "Вернутся к соревнованию"
 
 #: templates/contests/standings.html:21
 msgid "Participant"
@@ -546,10 +532,8 @@ msgid "Penalty"
 msgstr "Штраф"
 
 #: templates/contests/standings.html:59
-#, fuzzy
-#| msgid "Participants"
 msgid "No participants yet"
-msgstr "Участники"
+msgstr "Пока нет участников"
 
 #: templates/errors/403.html:8
 msgid "Access denied"
@@ -691,10 +675,8 @@ msgid "Confirm"
 msgstr "Подтвердить"
 
 #: templates/problems/my_submissions.html:10
-#, fuzzy
-#| msgid "Submissions"
 msgid "My Submissions for"
-msgstr "Мои посылки"
+msgstr "Мои посылки на"
 
 #: templates/problems/my_submissions.html:19
 #: templates/problems/submission_detail.html:24
@@ -702,10 +684,8 @@ msgid "Date"
 msgstr "Дата"
 
 #: templates/problems/my_submissions.html:44
-#, fuzzy
-#| msgid "Submissions"
 msgid "No submissions"
-msgstr "Посылки"
+msgstr "Нет поссылки"
 
 #: templates/problems/my_tasks.html:10
 msgid "Create new task"
@@ -773,10 +753,8 @@ msgid "Edit"
 msgstr "Изменить"
 
 #: templates/problems/problem_detail.html:36
-#, fuzzy
-#| msgid "Problems List"
 msgid "Problem Statement"
-msgstr "Список задач"
+msgstr "Описание задачи"
 
 #: templates/problems/problem_detail.html:48
 #: templates/problems/problem_form.html:112
@@ -793,61 +771,43 @@ msgid "Constraints"
 msgstr "Ограничения"
 
 #: templates/problems/problem_detail.html:79
-#, fuzzy
-#| msgid "Time limit"
 msgid "Time Limit"
-msgstr "Превышен лимит времени"
+msgstr "Лимит времени"
 
 #: templates/problems/problem_detail.html:89
-#, fuzzy
-#| msgid "Memory limit"
 msgid "Memory Limit"
-msgstr "Превышен лимит памяти"
+msgstr "Лимит памяти"
 
 #: templates/problems/problem_detail.html:102
 msgid "Examples"
 msgstr "Примеры"
 
 #: templates/problems/problem_detail.html:111
-#, fuzzy
-#| msgid "is sample"
 msgid "Example"
-msgstr "пример"
+msgstr "Пример"
 
 #: templates/problems/problem_detail.html:119
-#, fuzzy
-#| msgid "Input data"
 msgid "Input Data"
 msgstr "Входные данные"
 
 #: templates/problems/problem_detail.html:123
-#, fuzzy
-#| msgid "Output data"
 msgid "Output Data"
 msgstr "Выходные данные"
 
 #: templates/problems/problem_detail.html:137
-#, fuzzy
-#| msgid "Author Solution"
 msgid "Submit Solution"
-msgstr "Авторское решение"
+msgstr "Посылка с решением"
 
 #: templates/problems/problem_detail.html:144
-#, fuzzy
-#| msgid "Programming language"
 msgid "Programming Language"
 msgstr "Язык программирования"
 
 #: templates/problems/problem_detail.html:146
-#, fuzzy
-#| msgid "Solution Language"
 msgid "Select a language"
 msgstr "Выберите язык"
 
 #: templates/problems/problem_detail.html:153
 #: templates/problems/submission_detail.html:40
-#, fuzzy
-#| msgid "Solution Language"
 msgid "Solution Code"
 msgstr "Язык решения"
 
@@ -856,8 +816,6 @@ msgid "Submit"
 msgstr "Отправить"
 
 #: templates/problems/problem_detail.html:176
-#, fuzzy
-#| msgid "Creator"
 msgid "Created"
 msgstr "Создатель"
 
@@ -918,40 +876,28 @@ msgid "Save Problem"
 msgstr "Задачи"
 
 #: templates/problems/submission_detail.html:10
-#, fuzzy
-#| msgid "solution"
 msgid "Solution"
-msgstr "решение"
+msgstr "Решения"
 
 #: templates/problems/submission_detail.html:19
-#, fuzzy
-#| msgid "Debug Information"
 msgid "Information"
-msgstr "Информация отладки"
+msgstr "Информация"
 
 #: templates/problems/submission_detail.html:31
-#, fuzzy
-#| msgid "test error"
 msgid "Test Error:"
 msgstr "Тест с ошибкой"
 
 #: templates/problems/submission_detail.html:52
-#, fuzzy
-#| msgid "Error test"
 msgid "Error Logs"
-msgstr "Тест с ошибкой"
+msgstr "Журнал ошибки"
 
 #: templates/problems/submission_detail.html:63
-#, fuzzy
-#| msgid "Submissions"
 msgid "Back to Submission List"
-msgstr "Посылки"
+msgstr "Вернутся к списку посылок"
 
 #: templates/problems/submission_detail.html:67
-#, fuzzy
-#| msgid "Problem"
 msgid "To Problem"
-msgstr "Задача"
+msgstr "К Задачи"
 
 #: templates/users/login.html:12
 msgid "Forgot password"
@@ -966,19 +912,15 @@ msgid "You have logged out"
 msgstr "Вы вышли из системы"
 
 #: templates/users/logout.html:8
-#, fuzzy
-#| msgid "Log in"
 msgid "Log in again"
-msgstr "Войти"
+msgstr "Войти снова"
 
 #: templates/users/password_change.html:10
 #: templates/users/password_change.html:14
 #: templates/users/password_reset.html:14
 #: templates/users/password_reset_confirm.html:14
-#, fuzzy
-#| msgid "Change modifier"
 msgid "Change Password"
-msgstr "Сохранить изменения"
+msgstr "Изменить пароль"
 
 #: templates/users/password_change_done.html:7
 msgid "Password successfully changed"
@@ -1002,10 +944,8 @@ msgid "Log in with new password"
 msgstr "Войдите в систему с новым паролем"
 
 #: templates/users/password_reset_done.html:10
-#, fuzzy
-#| msgid "Email"
 msgid "Email Sent"
-msgstr "Почта"
+msgstr "Письмо отправлено"
 
 #: templates/users/password_reset_done.html:11
 msgid "Check your email for further instructions."
@@ -1067,20 +1007,16 @@ msgid "Delete"
 msgstr "Удалить"
 
 #: templates/users/signup.html:10
-#, fuzzy
-#| msgid "Registration Open"
 msgid "Registration"
-msgstr "Открытая регистрация"
+msgstr "Регистрация"
 
 #: templates/users/signup.html:31
 msgid "Password"
 msgstr "Пароль"
 
 #: templates/users/signup.html:35
-#, fuzzy
-#| msgid "Confirm"
 msgid "Confirm Password"
-msgstr "Подтвердить"
+msgstr "Подтвердить пароль"
 
 #: templates/users/user_detail.html:11
 msgid "User info"

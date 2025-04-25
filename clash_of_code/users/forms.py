@@ -1,6 +1,5 @@
-import django.contrib
-import users.models
 from django import forms
+import django.contrib
 from django.contrib.auth.forms import (
     AuthenticationForm,
     UserChangeForm,
@@ -8,7 +7,8 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.utils import timezone
+
+import users.models
 from users.models import Profile
 
 
@@ -43,17 +43,24 @@ class SignUpForm(UserCreationForm):
     class Meta(django.contrib.auth.forms.UserCreationForm.Meta):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
-        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            if not isinstance(field.field.widget, django.forms.CheckboxInput):
+                field.field.widget.attrs['class'] = 'form-control'
+            else:
+                field.field.widget.attrs['class'] = 'form-check-input'
 
 
 class ProfileForm(forms.ModelForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
+    delete_image = django.forms.BooleanField(
+        label=('Delete avatar?'),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -65,9 +72,16 @@ class ProfileForm(forms.ModelForm):
     def save(self, commit=True):
         profile = super().save(commit=False)
         user = profile.user
+
         user.email = self.cleaned_data['email']
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
+
+        if self.cleaned_data.get('delete_image'):
+            if profile.image:
+                profile.image.delete(save=False)
+                profile.image = None
+
         if commit:
             user.save()
             profile.save()
@@ -81,6 +95,3 @@ class ProfileForm(forms.ModelForm):
         ]
 
         verbose_name = 'Форма профиля'
-
-
-__all__ = []

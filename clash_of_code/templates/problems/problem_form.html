@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+{{ form.media }}
+<div class="container mt-4">
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-header bg-white border-0 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">{% trans 'Problem Editor' %}</h2>
+                {% if object.pk %}
+                <a href="{% url 'problems:check_author_solution' pk=object.pk %}">
+                    {% if object.is_correct %}
+                    <i class="bi bi-check-circle status-icon" style="color: green;" title="{% trans 'Task is correct' %}"></i>
+                    {% else %}
+                        <i class="bi bi-x-circle status-icon" style="color: red;" title="{% trans 'The task needs to be rechecked' %}"></i>
+                    {% endif %}
+                    <button id="addTaskButton" class="btn btn-info">
+                        <i class="bi bi-arrow-clockwise"></i> {% trans 'Check solution' %}
+                    </button>
+                </a>
+                {% endif %}
+            </div>
+            {% if request.resolver_match.view_name == "problems:update" or request.resolver_match.view_name == "problems:tests" %}
+            <ul class="nav nav-tabs mt-3">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'problems:update' %}active{% endif %}"
+                       href="{% url 'problems:update' pk=object.pk %}">
+                        <i class="bi bi-gear me-1"></i>{% translate "General" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'problems:tests' %}active{% endif %}"
+                       href="{% url 'problems:tests' pk=object.pk %}">
+                        <i class="bi bi-list-check me-1"></i>{% translate "Tests" %}
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <h5 class="alert-heading"><i class="bi bi-exclamation-triangle me-2"></i>{% trans 'Error' %}</h5>
+                    <ul class="mb-0">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endif %}
+
+                <div class="row g-3">
+                    <div class="col-md-12">
+                      <label class="form-label fw-bold">{% trans 'Title' %}</label>
+                            {{ form.title }}
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{% trans 'Description' %}</label>
+                            {{ form.description }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                            <label>{% trans 'Difficulty' %}</label>
+                            {{ form.difficult }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-check form-switch mb-3 pt-4">
+                            {{ form.is_public }}
+                            <label class="form-check-label">
+                                {% trans 'Public Problem' %}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                          <label>{% trans 'Time Limit (ms)' %}</label>
+                            {{ form.time_limit }}
+                    </div>
+
+                    <div class="col-md-6">
+                            <label>{% trans 'Memory Limit (MB)' %}</label>
+                            {{ form.memory_limit }}
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{% trans 'Author Solution' %}</label>
+                            {{ form.author_solution }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                          <label>{% trans 'Solution Language' %}</label>
+                          {{ form.author_language }}
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{% trans 'Input Format' %}</label>
+                            {{ form.input_format }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{% trans 'Output Format' %}</label>
+                            {{ form.output_format }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{% trans 'Tags' %}</label>
+                            {{ form.tags }}
+                            <div class="form-text">{% trans 'Select multiple tags with Ctrl/Cmd click' %}</div>
+                        </div>
+                    </div>
+                    {% if object.pk %}
+                    <div class="col-md-4">
+                        <h5>{% trans 'Status' %}: {{ object.get_status_display }}</h5>
+                        <h5>{% trans 'Error test' %}: {% if object.test_error%}{{ object.test_error }}{% endif %}</h5>
+                        <h5>{% trans 'Logs' %}: {% if object.logs %}{{ object.logs }}{% endif %}</h5>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-save me-2"></i>{% trans 'Save Problem' %}e
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-floating textarea.form-control {
+        height: auto;
+        min-height: 100px;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+        color: #495057;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #0d6efd;
+        border-bottom: 2px solid #0d6efd;
+        background-color: transparent;
+    }
+
+    .form-check-input:checked {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .tox-tinymce {
+        border-radius: 0.375rem !important;
+    }
+</style>
+{% endblock %}

@@ -2,14 +2,27 @@ import os
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
+import dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-ewd5vgkqvxe$rgay&(*g0kyxb8x_ctx8heaq_dj#xz-6$m&fi-'
+dotenv.load_dotenv()
 
-DEBUG = True
 
-ALLOWED_HOSTS = []
+def get_env_bool(key: str, default: str = 'True') -> bool:
+    return os.getenv(key, default) in (
+        'true',
+        'True',
+        'yes',
+        'YES',
+        '1',
+        'y',
+    )
+
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'YOUR_KEY')
+DEBUG = get_env_bool('DJANGO_DEBUG')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 DEFAULT_USER_IS_ACTIVE = os.getenv(
     'DJANGO_DEFAULT_USER_IS_ACTIVE',
@@ -23,6 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Installed applications
+    'tinymce',
+    # Project applications
+    'contests.apps.ContestsConfig',
+    'problems.apps.ProblemsConfig',
+    'submissions.apps.SubmissionsConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -34,6 +53,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Installed middleware
+    'django.middleware.locale.LocaleMiddleware',
+    # Project middleware
+    'clash_of_code.middleware.OptimizedUserMiddleware',
+    'contests.middleware.TimezoneMiddleware',
+]
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'clash_of_code.urls'
@@ -84,25 +116,28 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'users.backends.EmailAuthBackend',
+    'users.backends.UsernameOrEmailBackend',
 ]
 
 LANGUAGE_CODE = 'ru'
 
-LANGUAGES = [
-    ('ru', _('Русский')),
-    ('en', _('English')),
-]
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = 'login'
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('ru', _('Russian')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 STATIC_URL = 'static/'
 
@@ -122,3 +157,32 @@ EMAIL_FILE_PATH = 'send_mail/'
 MAIL = os.getenv('DJANGO_MAIL', 'example@example.com')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'auth.User'
+
+
+REDIS_HOST = os.getenv('DJANGO_REDIS_HOST', '0.0.0.0')
+REDIS_PORT = os.getenv('DJANGO_REDIS_PORT', '6379')
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 120}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

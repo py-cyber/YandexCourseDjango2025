@@ -1,0 +1,90 @@
+.test-example {
+    background-color: #112837;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.test-example pre {
+    background-color: #0a1c2b;
+    border: 1px solid #1a3a4f;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.test-example h5 {
+    margin-bottom: 1rem;
+}
+
+.test-example .accordion-button {
+    background-color: #0a1c2b;
+}
+
+.test-example .accordion-button:not(.collapsed) {
+    background-color: #1a3a4f;
+    color: #ffffff;
+}
+
+.test-example .accordion-body {
+    background-color: #112837;
+}
+
+.test-example pre:hover {
+    border-color: #00bf8e;
+}
+
+.test-example pre::after {
+    position: absolute;
+    font-size: 0.8f;
+    color:
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.test-example pre:hover::after {
+    opacity: 1;
+}
+
+.test-example pre.copied {
+    border-color: #4caf50;
+}
+
+.test-example pre.copied::after {
+    color: #4caf50;
+}
+
+.test-example pre {
+    position: relative;
+    cursor: pointer;
+    padding-top: 2rem;
+    transition: all 0.3s ease;
+    background-color: #0a1c2b;
+    border: 1px solid #1a3a4f;
+    border-radius: 0.25rem;
+}
+
+.test-example pre::after {
+    content: "Копировать";
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.8rem;
+    color: #00bf8e;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    background: rgba(10, 28, 43, 0.8);
+    padding: 0.1rem 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.test-example pre:hover::after {
+    background: rgba(16, 42, 67, 0.9);
+}
+
+.test-example pre.copied::after {
+    content: "Скопировано!";
+    color: #4caf50;
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.2);
+}

@@ -1,18 +1,69 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load static%}
 
 {% block content %}
+<div class="container mt-4">
+    <div class="leaderboard-card card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 pb-1">
+            <h2 class="h4">{% translate "Player Rankings" %}</h2>
+        </div>
+        
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th style="width: 60px;" class="ps-4">#</th>
+                            <th>{% translate "Player" %}</th>
+                            <th style="width: 100px;" class="text-center">{% translate "Joined" %}</th>
+                            <th style="width: 100px;" class="text-center">{% translate "Rating" %}</th>
+                            <th style="width: 120px;" class="text-end pe-4">{% translate "Profile" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for profile_user in users %}
+                        <tr class="leaderboard-row">
+                            <td class="ps-4 fw-bold position-cell">{{ forloop.counter }}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-container me-3">
+                                        {% if profile_user.profile.image %}
+                                            <img src="{{ profile_user.profile.image.url }}"
+                                                 class="avatar-img rounded-circle"
+                                                 alt="{{ user.username }}">
+                                        {% else %}
+                                            <div class="avatar-default rounded-circle d-flex align-items-center justify-content-center">
+                                                {{ profile_user.username|first|upper }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <span class="username">{{ profile_user.username }}</span>
+                                </div>
+                            </td>
+                            <td class="text-center text-muted small">
+                                {{ profile_user.date_joined|date:"d.m.Y" }}
+                            </td>
+                            <td class="text-center">
+                                <span class="rating-badge">
+                                    {{ profile_user.profile.score }}
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <a href="{% url 'user_detail' profile_user.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-person-fill me-1"></i> {% translate "Profile" %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
-<h2>Список пользователей</h2>
-<ul>
-    {% for user in users %}
-    <li>
-        {% if user.profile.image %}
-            <img src="{{ user.profile.image.url }}" alt="Аватарка" style="width: 50px; height: 50px;">
-        {% else %}
-            <img src="" alt="Аватарка" style="width: 50px; height: 50px; background-color: #ccc;">
-        {% endif %}
-        {{ user.username }} - {{ user.profile.birthday|date:"d M" }}
-    </li>
-    {% endfor %}
-</ul>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/user_list.css' %}">
 {% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-header bg-white border-0 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h4 mb-0">{% trans 'Test Cases Management' %}</h2>
+                <button id="addTaskButton" class="btn btn-success">
+                    <i class="bi bi-plus-circle me-2"></i>{% trans 'Add Test' %}
+                </button>
+            </div>
+
+            {% if request.resolver_match.view_name == 'problems:update' or request.resolver_match.view_name == 'problems:tests' %}
+            <ul class="nav nav-tabs mt-3">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'problems:update' %}active{% endif %}"
+                       href="{% url 'problems:update' pk=object.pk %}">
+                        <i class="bi bi-gear me-1"></i>{% translate "General" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'problems:tests' %}active{% endif %}"
+                       href="{% url 'problems:tests' pk=object.pk %}">
+                        <i class="bi bi-list-check me-1"></i>{% translate "Tests" %}
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="card-body">
+            <div id="tasksContainer">
+                {% for test in tests.all %}
+                <div class="test-case mb-4 border rounded-3 p-3" data-index="{{ forloop.counter0 }}">
+                    <form method="post" enctype="multipart/form-data" class="test-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="number" value="{{ test.number }}">
+                        <input type="hidden" name="pk" value="{{ test.pk }}">
+
+                        <div class="row g-3">
+                            <div class="col-md-11">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{% trans 'Input data' %}</label>
+                                    <textarea name="input_data" class="form-control code-editor" rows="5">{{ test.input_data }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{% trans 'Output data' %}</label>
+                                    <textarea name="output_data" class="form-control code-editor" rows="5">{{ test.output_data }}</textarea>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="id_is_sample" name="is_sample"
+                                           {% if test.is_sample %}checked{% endif %}>
+                                    <label class="form-check-label" for="id_is_sample">{% trans 'Sample Test Case' %}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1 d-flex flex-column">
+                                <button type="button" class="btn btn-outline-danger mb-2 delete-test"
+                                        data-url="{% url 'problems:delete_test' pk=test.pk %}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary mb-2 move-up-button">
+                                    <i class="bi bi-arrow-up"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary move-down-button">
+                                    <i class="bi bi-arrow-down"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save me-2"></i>{% trans 'Save' %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                {% empty %}
+                <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle me-2"></i>
+                    {% trans 'No test cases found. Please add at least one test case.' %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const URL = "{% url 'problems:update_task_order' pk=object.pk %}";
+    const INPUT_DATA_TRANS = "{% trans 'Input data' %}";
+    const OUTPUT_DATA_TRANS = "{% trans 'Output data' %}";
+    const IS_SAMPLE_TRANS = "{% trans 'Is sample' %}";
+    const SAVE_TRANS = "{% trans 'Save' %}";
+</script>
+<script src="{% static 'js/problem_test_manager.js' %}"></script>
+
+<style>
+    .test-case {
+        background-color: #061721;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+        color: #495057;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #0d6efd;
+        border-bottom: 2px solid #0d6efd;
+        background-color: transparent;
+    }
+</style>
+{% endblock %}

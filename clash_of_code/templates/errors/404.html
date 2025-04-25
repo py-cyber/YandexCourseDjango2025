@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-card text-center">
+        <h1 class="error-title">{% trans "Page not found" %}</h1>
+        <p class="error-text">
+            {% trans "The requested page doesn't exist or has been moved." %}
+        </p>
+        <div class="error-actions mt-4">
+            <a href="/" class="btn btn-primary btn-lg">
+                <i class="fas fa-home"></i>{% trans "Home" %}
+            </a>
+            <a href="javascript:history.back()" class="btn btn-outline-secondary btn-lg ms-2">
+                <i class="fas fa-arrow-left"></i>{% trans "Back" %}
+            </a>
+        </div>
+        {% if DEBUG %}
+        <div class="error-debug mt-4 p-3 bg-light rounded">
+            <small class="text-muted">
+                {% trans "Path" %}: {{ request.path }}<br>
+                {% trans "Exception" %}: {{ exception }}
+            </small>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 2rem;
+}
+.error-card {
+    max-width: 600px;
+    padding: 2rem;
+    border-radius: 1rem;
+    background: #061721;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+.error-title {
+    font-size: 2.5rem;
+    color: #dc3545;
+    margin: 1.5rem 0;
+}
+.error-text {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+</style>
+{% endblock %}

@@ -1,9 +1,9 @@
-import users.models
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+
 from users.forms import CustomUserChangeForm
-from users.models import Profile
+import users.models
+from users.models import Profile, User
 
 
 class ProfileInline(admin.StackedInline):
@@ -22,7 +22,4 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
 
 
-admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
-
-__all__ = []

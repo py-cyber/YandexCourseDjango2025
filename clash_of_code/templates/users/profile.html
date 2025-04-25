@@ -1,26 +1,44 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load static %}
 
 {% block content %}
-
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title text-center">Мой профиль</h2>
+                    <h2 class="card-title text-center">{% translate "My profile" %}</h2>
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="mb-4 text-center">
                                 {% if user.profile.image %}
-                                    <img src="{{ user.profile.image.url }}" alt="Аватарка" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px;">
+                                    <div class="position-relative d-inline-block">
+                                        <img src="{{ user.profile.image.url }}" alt="Аватарка" 
+                                             class="img-fluid rounded-circle mb-3" 
+                                             style="width: 150px; height: 150px;">
+                                        <button type="button" 
+                                                class="position-absolute bottom-0 end-0 btn btn-danger btn-circle p-2"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#deleteAvatarModal"
+                                                title="{% translate 'Delete avatar' %}">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
                                 {% else %}
-                                    <img src="" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; background-color: #ccc;">
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <div class="rounded-circle bg-light text-dark d-flex align-items-center justify-content-center"
+                                             style="width: 150px; height: 150px;">
+                                            <span class="display-4">{{ user.username|first|upper }}</span>
+                                        </div>
+                                    </div>
                                 {% endif %}
-                                <p class="text-muted">Рейтинг: {{ score }}</p>
+                                <p class="text-muted">{% translate "Rating" %}: {{ score }}</p>
                             </div>
-                            <form method="post" enctype="multipart/form-data">
+
+                            <form method="post" enctype="multipart/form-data" id="profile-form">
                                 {% csrf_token %}
                                 {% if form.errors %}
                                     <div class="alert alert-danger">
@@ -31,27 +49,35 @@
                                         {% endfor %}
                                     </div>
                                 {% endif %}
+
                                 <div class="mb-3">
-                                    <label for="id_username" class="form-label">Логин</label>
+                                    <label for="id_username" class="form-label">{% translate "Username" %}</label>
                                     <input type="text" class="form-control" id="id_username" value="{{ user.username }}" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="id_email" class="form-label">Email</label>
+                                    <label for="id_email" class="form-label">{% translate "Email" %}</label>
                                     <input type="email" class="form-control" id="id_email" name="email" value="{{ form.email.value|default:user.email }}">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="id_first_name" class="form-label">Имя</label>
+                                    <label for="id_first_name" class="form-label">{% translate "Name" %}</label>
                                     <input type="text" class="form-control" id="id_first_name" name="first_name" value="{{ form.first_name.value|default:user.first_name }}">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="id_last_name" class="form-label">Фамилия</label>
+                                    <label for="id_last_name" class="form-label">{% translate "Surname" %}</label>
                                     <input type="text" class="form-control" id="id_last_name" name="last_name" value="{{ form.last_name.value|default:user.last_name }}">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="id_image" class="form-label">Аватарка</label>
-                                    <input type="file" class="form-control" id="id_image" name="image">
+                                    <label for="id_image" class="form-label">{% translate "Avatar" %}</label>
+                                    <input type="file"
+                                           class="form-control"
+                                           id="id_image"
+                                           name="image"
+                                           accept="image/*"
+                                           title="{% translate 'Choose file' %}"
+                                           data-browse-text="{% translate 'Choose file' %}"
+                                           data-placeholder="{% translate 'No file chosen' %}">
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">Сохранить изменения</button>
+                                <button type="submit" class="btn btn-primary w-100">{% translate "Save" %}</button>
                             </form>
                         </div>
                     </div>
@@ -60,7 +86,7 @@
                     <div class="d-flex justify-content-between">
                         <form action="{% url 'logout' %}" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Выйти из аккаунта</button>
+                            <button type="submit" class="btn btn-danger">{% translate "Logout" %}</button>
                         </form>
                     </div>
                 </div>
@@ -68,4 +94,46 @@
         </div>
     </div>
 </div>
+
+<!-- Модальное окно подтверждения удаления -->
+{% if user.profile.image %}
+<div class="modal fade" id="deleteAvatarModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% translate "Confirm deletion" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                {% translate "Are you sure you want to delete your avatar?" %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+                <button type="submit" name="delete_image" value="true" class="btn btn-danger" form="profile-form">
+                    {% translate "Delete" %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .btn-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translate(25%, 25%);
+        transition: all 0.2s ease;
+    }
+    
+    .btn-circle:hover {
+        transform: translate(25%, 25%) scale(1.1);
+    }
+</style>
 {% endblock %}

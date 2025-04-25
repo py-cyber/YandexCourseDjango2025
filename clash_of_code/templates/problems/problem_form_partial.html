@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load static %}
+
+<div class="mb-3">
+    <label for="{{ form.title.id_for_label }}" class="form-label">{% translate "Title" %}</label>
+    {{ form.title }}
+    {{ form.title.errors }}
+</div>
+<div class="mb-3">
+    <label for="{{ form.description.id_for_label }}" class="form-label">{% translate "Description" %}</label>
+    {{ form.description }}
+</div>

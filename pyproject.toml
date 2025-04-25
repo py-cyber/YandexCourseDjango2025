@@ -1,5 +1,5 @@
 [tool.flake8]
-application-import-names = ["clash_of_code", "users",]
+application-import-names = ['clash_of_code', 'core', 'contests', 'duet', 'homepage', 'problems', 'submissions', 'users']
 exclude = [".git","__pycache",".venv","*migrations/"]
 import-order-style = "google"
 max-line-length = 88
@@ -12,6 +12,7 @@ exclude = '''
 (
   .vscode
   |venv
+  |.venv
   |migrations/
   |.git
   |__pycache__/
@@ -24,7 +25,3 @@ exclude = '''
   |.flake8
 )
 '''
-
-[tool.isort]
-profile = "black"
-line_length = 88

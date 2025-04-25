@@ -1,0 +1,30 @@
+[flake8]
+max-line-length = 88
+application_import_names = clash_of_code core contests duet homepage problems submissions users
+black-config = .black
+import-order-style = google
+
+ignore = W503, F811
+exclude =
+    */migrations/,
+    venv/,
+    .venv/,
+    .env,
+    .git,
+    __pycache__,
+    media/,
+    lyceum/media,
+    lyceum/media/,
+    lyceum/manage.py
+
+per-file-ignores =
+    */migrations/,
+    */media/,
+    */settings.py:E501
+forbidden_imports = inspect,sys
+forbidden-functions =
+    *: datetime.datetime.now, we use django utils
+    *: sys.path.append, usage of sys.path is banned
+    *: globals, usage of globals is banned
+    *: locals, usage of locals is banned
+inline-quotes = '

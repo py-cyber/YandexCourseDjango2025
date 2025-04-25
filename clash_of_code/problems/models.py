@@ -73,13 +73,13 @@ class Problem(django.db.models.Model):
     description = tinymce.models.HTMLField(
         verbose_name=_('description'),
         help_text=_('Explain the idea of the task'),
-        max_length=8000,
+        max_length=100000,
     )
 
     input_format = tinymce.models.HTMLField(
         verbose_name=_('input data format'),
         help_text=_('Input data format'),
-        max_length=1000,
+        max_length=50000,
         null=True,
         blank=True,
     )
@@ -87,7 +87,7 @@ class Problem(django.db.models.Model):
     output_format = tinymce.models.HTMLField(
         verbose_name=_('output data format'),
         help_text=_('Output data format'),
-        max_length=1000,
+        max_length=50000,
         null=True,
         blank=True,
     )

@@ -1,381 +1,256 @@
 [
 {
-    "model": "contenttypes.contenttype",
-    "pk": 1,
-    "fields": {
-        "app_label": "admin",
-        "model": "logentry"
-    }
+  "model": "contests.contest",
+  "pk": 1,
+  "fields": {
+    "name": "Contest#1",
+    "description": "Best contest ever",
+    "start_time": "2025-04-25T00:00:00Z",
+    "end_time": "2025-04-25T02:00:00Z",
+    "is_public": true,
+    "registration_open": true,
+    "created_by": 2
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 2,
-    "fields": {
-        "app_label": "auth",
-        "model": "permission"
-    }
+  "model": "contests.contest",
+  "pk": 2,
+  "fields": {
+    "name": "Contest#2",
+    "description": "Root contest",
+    "start_time": "2025-04-25T00:38:00Z",
+    "end_time": "2025-05-08T00:31:00Z",
+    "is_public": true,
+    "registration_open": true,
+    "created_by": 1
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 3,
-    "fields": {
-        "app_label": "auth",
-        "model": "group"
-    }
+  "model": "contests.contestproblem",
+  "pk": 1,
+  "fields": {
+    "contest": 1,
+    "problem": 1,
+    "points": 100,
+    "order": 1
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 4,
-    "fields": {
-        "app_label": "auth",
-        "model": "user"
-    }
+  "model": "contests.contestproblem",
+  "pk": 2,
+  "fields": {
+    "contest": 2,
+    "problem": 2,
+    "points": 100,
+    "order": 1
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 5,
-    "fields": {
-        "app_label": "contenttypes",
-        "model": "contenttype"
-    }
+  "model": "contests.contestregistration",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "contest": 2,
+    "registration_time": "2025-04-25T00:37:36.993Z",
+    "is_approved": true
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 6,
-    "fields": {
-        "app_label": "sessions",
-        "model": "session"
-    }
+  "model": "problems.problem",
+  "pk": 1,
+  "fields": {
+    "title": "A. Миля и два массива",
+    "author": 2,
+    "description": "<p>Массив называется хорошим, если для любого элемента 𝑥, который встречается в этом массиве, верно, что 𝑥 встречается хотя бы дважды в этом массиве. Например, массивы [1,2,1,1,2], [3,3], [1,2,4,1,2,4] являются хорошими, а массивы [1], [1,2,1] и [2,3,4,4] не являются хорошими. У Мили есть два хороших массива 𝑎 и 𝑏 длины 𝑛. Он может произвольным образом переставить местами элементы в массиве 𝑎. После этого он получает массив 𝑐 длины 𝑛, где 𝑐𝑖=𝑎𝑖+𝑏𝑖 (1&le;𝑖&le;𝑛). Определите, может ли Миля переставить местами элементы в массиве 𝑎 так, чтобы в массиве 𝑐 было хотя бы 3 различных числа.</p>",
+    "input_format": "<p>Каждый тест состоит из нескольких наборов входных данных.</p>\r\n<p>Первая строка содержит одно целое число <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">t</span></span></span></span> ( <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\">1</span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord mathnormal\">t</span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord\">1000</span></span></span></span> ) &mdash; количество наборов входных данных. Далее следует описание наборов входных данных.</p>\r\n<ol>\r\n<li>\r\n<p>Первая строка каждого набора входных данных содержит единственное целое число <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span> ( <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\">3</span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord mathnormal\">n</span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord\">50</span></span></span></span> ) &mdash; длина массивов <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">a</span></span></span></span> и <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">b</span></span></span></span>.</p>\r\n</li>\r\n<li>\r\n<p>Вторая строка каждого набора входных данных содержит <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span> целых чисел <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"mord mathnormal\">a</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span><span class=\"mpunct\">,</span><span class=\"mord\"><span class=\"mord mathnormal\">a</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span><span class=\"mpunct\">,</span><span class=\"minner\">&hellip;</span><span class=\"mpunct\">,</span><span class=\"mord\"><span class=\"mord mathnormal\">a</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span> ( <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\">1</span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord\"><span class=\"mord mathnormal\">a</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord\">1</span><span class=\"mord\">0<span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">9</span></span></span></span></span></span></span></span></span></span> ) &mdash; элементы массива <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">a</span></span></span></span>.</p>\r\n</li>\r\n<li>\r\n<p>Третья строка каждого набора входных данных содержит <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">n</span></span></span></span> целых чисел <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\"><span class=\"mord mathnormal\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span><span class=\"mpunct\">,</span><span class=\"mord\"><span class=\"mord mathnormal\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span><span class=\"mpunct\">,</span><span class=\"minner\">&hellip;</span><span class=\"mpunct\">,</span><span class=\"mord\"><span class=\"mord mathnormal\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span></span></span></span> ( <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord\">1</span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord\"><span class=\"mord mathnormal\">b</span><span class=\"msupsub\"><span class=\"vlist-t vlist-t2\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span><span class=\"vlist-s\">​</span></span></span></span></span><span class=\"mrel\">&le;</span></span><span class=\"base\"><span class=\"mord\">1</span><span class=\"mord\">0<span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\"><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">9</span></span></span></span></span></span></span></span></span></span> ) &mdash; элементы массива <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">b</span></span></span></span>.</p>\r\n</li>\r\n</ol>",
+    "output_format": "<p>Для каждого набора входных данных выведите &laquo;YES&raquo; (без кавычек), если можно получить хотя бы 3 различных элемента в массиве <span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"mord mathnormal\">c</span></span></span></span>, и &laquo;NO&raquo; иначе.</p>\r\n<p>Вы можете вывести каждую букву в любом регистре (например, &laquo;YES&raquo;, &laquo;Yes&raquo;, &laquo;yes&raquo;, &laquo;yEs&raquo; будут распознаны как положительный ответ).</p>",
+    "is_public": true,
+    "difficult": 20,
+    "author_solution": "for j in range(int(input())):\r\n    n = int(input())\r\n    L1 = list(map(int, input().split()))\r\n    L2 = list(map(int, input().split()))\r\n    a = len(set(L1))\r\n    b = len(set(L2))\r\n    if a>2 or b>2:\r\n        print('YES')\r\n    elif a == 1 or b == 1:\r\n        print(\"NO\")\r\n    else:\r\n        print(\"YES\")",
+    "author_language": "Py3.11",
+    "time_limit": 1,
+    "memory_limit": 256,
+    "is_correct": false,
+    "status": "AC",
+    "test_error": null,
+    "logs": null,
+    "created_at": "2025-04-25T00:03:30.205Z",
+    "tags": []
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 7,
-    "fields": {
-        "app_label": "users",
-        "model": "profile"
-    }
+  "model": "problems.problem",
+  "pk": 2,
+  "fields": {
+    "title": "A. Easy",
+    "author": 1,
+    "description": "<p>write a+b</p>",
+    "input_format": "<p>2 digit</p>",
+    "output_format": "<p>sum of digit</p>",
+    "is_public": false,
+    "difficult": 1,
+    "author_solution": "a = int(input())\r\nb = int(input())\r\nprint(a+b)",
+    "author_language": "Py3.11",
+    "time_limit": 1,
+    "memory_limit": 256,
+    "is_correct": false,
+    "status": "AC",
+    "test_error": null,
+    "logs": null,
+    "created_at": "2025-04-25T00:31:51.686Z",
+    "tags": []
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 8,
-    "fields": {
-        "app_label": "users",
-        "model": "user"
-    }
+  "model": "problems.testcase",
+  "pk": 1,
+  "fields": {
+    "problem": 1,
+    "is_sample": true,
+    "input_data": "5\r\n4\r\n1 2 1 2\r\n1 2 1 2\r\n6\r\n1 2 3 3 2 1\r\n1 1 1 1 1 1\r\n3\r\n1 1 1\r\n1 1 1\r\n6\r\n1 52 52 3 1 3\r\n59 4 3 59 3 4\r\n4\r\n100 1 100 1\r\n2 2 2 2",
+    "output_data": "YES\r\nYES\r\nNO\r\nYES\r\nNO",
+    "number": 1
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 9,
-    "fields": {
-        "app_label": "contests",
-        "model": "contest"
-    }
+  "model": "problems.testcase",
+  "pk": 2,
+  "fields": {
+    "problem": 1,
+    "is_sample": false,
+    "input_data": "27\r\n3\r\n1 1 1\r\n1 1 1\r\n3\r\n1 1 1\r\n2 2 2\r\n3\r\n1 1 1\r\n3 3 3\r\n3\r\n1 1 1\r\n4 4 4\r\n3\r\n2 2 2\r\n1 1 1\r\n3\r\n2 2 2\r\n2 2 2\r\n3\r\n2 2 2\r\n3 3 3\r\n3\r\n2 2 2\r\n4 4 4\r\n3\r\n3 3 3\r\n1 1 1\r\n3\r\n3 3 3\r\n2 2 2\r\n3\r\n3 3 3\r\n3 3 3\r\n3\r\n3 3 3\r\n4 4 4\r\n3\r\n4 4 4\r\n1 1 1\r\n3\r\n4 4 4\r\n2 2 2\r\n3\r\n4 4 4\r\n3 3 3\r\n3\r\n4 4 4\r\n4 4 4\r\n4\r\n1 1 1 1\r\n1 1 1 1\r\n4\r\n1 1 1 1\r\n1 1 2 2\r\n4\r\n1 1 1 1\r\n1 1 3 3\r\n4\r\n1 1 1 1\r\n1 2 1 2\r\n4\r\n1 1 1 1\r\n1 2 2 1\r\n4\r\n1 1 1 1\r\n1 3 1 3\r\n4\r\n1 1 1 1\r\n1 3 3 1\r\n4\r\n1 1 1 1\r\n2 1 1 2\r\n4\r\n1 1 1 1\r\n2 1 2 1\r\n4\r\n1 1 1 1\r\n2 2 1 1\r\n4\r\n1 1 1 1\r\n2 2 2 2",
+    "output_data": "NO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO\r\nNO",
+    "number": 2
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 10,
-    "fields": {
-        "app_label": "contests",
-        "model": "contestproblem"
-    }
+  "model": "problems.testcase",
+  "pk": 3,
+  "fields": {
+    "problem": 2,
+    "is_sample": true,
+    "input_data": "1\r\n2",
+    "output_data": "3",
+    "number": 1
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 11,
-    "fields": {
-        "app_label": "contests",
-        "model": "contestsolution"
-    }
+  "model": "problems.testcase",
+  "pk": 4,
+  "fields": {
+    "problem": 2,
+    "is_sample": false,
+    "input_data": "2\r\n3",
+    "output_data": "5",
+    "number": 2
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 12,
-    "fields": {
-        "app_label": "contests",
-        "model": "contestregistration"
-    }
+  "model": "submissions.submission",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "contest": null,
+    "problem": 1,
+    "code": "for j in range(int(input())):\r\n    n = int(input())\r\n    L1 = list(map(int, input().split()))\r\n    L2 = list(map(int, input().split()))\r\n    a = len(set(L1))\r\n    b = len(set(L2))\r\n    if a>2 or b>2:\r\n        print('YES')\r\n    elif a == 1 or b == 1:\r\n        print(\"NO\")\r\n    else:\r\n        print(\"YES\")",
+    "language": "Py3.11",
+    "verdict": "WA",
+    "test_error": 1,
+    "logs": "Wrong answer on test 1 received YES\nYES\nNO\nYES\nNO excepted YES\r\nYES\r\nNO\r\nYES\r\nNO",
+    "submitted_at": "2025-04-25T00:12:19.074Z"
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 13,
-    "fields": {
-        "app_label": "duet",
-        "model": "programminglanguage"
-    }
+  "model": "submissions.submission",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "contest": null,
+    "problem": 1,
+    "code": "for j in range(int(input())):\r\n    n = int(input())\r\n    L1 = list(map(int, input().split()))\r\n    L2 = list(map(int, input().split()))\r\n    a = len(set(L1))\r\n    b = len(set(L2))\r\n    if a>2 or b>2:\r\n        print('YES')\r\n    elif a == 1 or b == 1:\r\n        print(\"NO\")\r\n    else:\r\n        print(\"YES\")",
+    "language": "Py3.11",
+    "verdict": "WA",
+    "test_error": 1,
+    "logs": "Wrong answer on test 1 received YES\nYES\nNO\nYES\nNO excepted YES\r\nYES\r\nNO\r\nYES\r\nNO",
+    "submitted_at": "2025-04-25T00:13:08.873Z"
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 14,
-    "fields": {
-        "app_label": "duet",
-        "model": "coderoom"
-    }
+  "model": "submissions.submission",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "contest": null,
+    "problem": 1,
+    "code": "from random import randint\r\nfrom time import sleep, time\r\nimport heapq\r\n\r\nfor test in range(int(input())):\r\n    n = int(input())\r\n    A = list(map(int, input().split()))\r\n    B = list(map(int, input().split()))\r\n    ab = {len(set(A)), len(set(B))}\r\n    print(\"yes\" if max(ab) >= 3 or min(ab) == 2 else \"no\")",
+    "language": "Py3.11",
+    "verdict": "WA",
+    "test_error": 1,
+    "logs": "Wrong answer on test 1 received yes\nyes\nno\nyes\nno excepted YES\r\nYES\r\nNO\r\nYES\r\nNO",
+    "submitted_at": "2025-04-25T00:14:45.224Z"
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 15,
-    "fields": {
-        "app_label": "duet",
-        "model": "roominvitation"
-    }
+  "model": "submissions.submission",
+  "pk": 4,
+  "fields": {
+    "user": 2,
+    "contest": null,
+    "problem": 1,
+    "code": "from random import randint\r\nfrom time import sleep, time\r\nimport heapq\r\n\r\nfor test in range(int(input())):\r\n    n = int(input())\r\n    A = list(map(int, input().split()))\r\n    B = list(map(int, input().split()))\r\n    ab = {len(set(A)), len(set(B))}\r\n    print(\"YES\" if max(ab) >= 3 or min(ab) == 2 else \"NO\")",
+    "language": "Py3.11",
+    "verdict": "WA",
+    "test_error": 1,
+    "logs": "Wrong answer on test 1 received YES\nYES\nNO\nYES\nNO excepted YES\r\nYES\r\nNO\r\nYES\r\nNO",
+    "submitted_at": "2025-04-25T00:15:07.107Z"
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 16,
-    "fields": {
-        "app_label": "problems",
-        "model": "problem"
-    }
+  "model": "submissions.submission",
+  "pk": 5,
+  "fields": {
+    "user": 1,
+    "contest": 2,
+    "problem": 2,
+    "code": "a = int(input())\r\nb = int(input())\r\nprint(a+b)",
+    "language": "Py3.11",
+    "verdict": "AC",
+    "test_error": null,
+    "logs": null,
+    "submitted_at": "2025-04-25T00:33:54.275Z"
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 17,
-    "fields": {
-        "app_label": "problems",
-        "model": "testcase"
-    }
+  "model": "submissions.submission",
+  "pk": 6,
+  "fields": {
+    "user": 2,
+    "contest": 2,
+    "problem": 2,
+    "code": "a = int(input())\r\nb = int(input())\r\nprint(a+b)",
+    "language": "Py3.11",
+    "verdict": "AC",
+    "test_error": null,
+    "logs": null,
+    "submitted_at": "2025-04-25T00:38:15.391Z"
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 18,
-    "fields": {
-        "app_label": "problems",
-        "model": "tag"
-    }
+  "model": "users.profile",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "image": "",
+    "score": 0
+  }
 },
 {
-    "model": "contenttypes.contenttype",
-    "pk": 19,
-    "fields": {
-        "app_label": "submissions",
-        "model": "submission"
-    }
-},
-{
-    "model": "users.profile",
-    "pk": 1,
-    "fields": {
-        "user": 1,
-        "image": "profile_images/plow_gUIRdkj.jpg",
-        "score": 0
-    }
-},
-{
-    "model": "users.profile",
-    "pk": 2,
-    "fields": {
-        "user": 2,
-        "image": "",
-        "score": 0
-    }
-},
-{
-    "model": "users.profile",
-    "pk": 3,
-    "fields": {
-        "user": 3,
-        "image": "",
-        "score": 0
-    }
-},
-{
-    "model": "users.profile",
-    "pk": 4,
-    "fields": {
-        "user": 4,
-        "image": "",
-        "score": 0
-    }
-},
-{
-    "model": "duet.programminglanguage",
-    "pk": 1,
-    "fields": {
-        "name": "python",
-        "ace_mode": "python"
-    }
-},
-{
-    "model": "duet.coderoom",
-    "pk": 2,
-    "fields": {
-        "name": "тест",
-        "language": 1,
-        "content": "",
-        "created_at": "2025-04-13T12:25:47.985Z",
-        "updated_at": "2025-04-13T12:25:48.000Z",
-        "owner": 1,
-        "participants": [
-            1
-        ]
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 1,
-    "fields": {
-        "name": "Динамическое программирование"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 2,
-    "fields": {
-        "name": "Математика"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 3,
-    "fields": {
-        "name": "Теория чисел"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 4,
-    "fields": {
-        "name": "Теория игр"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 5,
-    "fields": {
-        "name": "Графы"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 6,
-    "fields": {
-        "name": "DFS"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 7,
-    "fields": {
-        "name": "BFS"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 8,
-    "fields": {
-        "name": "Деревья"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 9,
-    "fields": {
-        "name": "Жадный алгоритм"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 10,
-    "fields": {
-        "name": "бин поиск"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 11,
-    "fields": {
-        "name": "сортировка"
-    }
-},
-{
-    "model": "problems.tag",
-    "pk": 12,
-    "fields": {
-        "name": "дерево отрезков"
-    }
-},
-{
-    "model": "problems.problem",
-    "pk": 1,
-    "fields": {
-        "title": "сумма а и б",
-        "author": 1,
-        "description": "<p>сложить а и б</p>",
-        "input_format": "<p>2 числа через пробел <strong>a, b</strong> (0 &lt;= | a, b | &lt;= 10^9)</p>",
-        "output_format": "<p>1 число - сумма а и б</p>",
-        "is_public": true,
-        "difficult": 1,
-        "author_solution": "a, b = map(int, input().split())\r\nprint(a + b)",
-        "author_language": "Py3.11",
-        "time_limit": 1,
-        "memory_limit": 256,
-        "created_at": "2025-04-12T16:50:06.193Z",
-        "tags": []
-    }
-},
-{
-    "model": "problems.problem",
-    "pk": 2,
-    "fields": {
-        "title": "Сортировка пузырьком",
-        "author": 3,
-        "description": "<p>отсортировать массив использую <strong>только сортировку пузырьком&nbsp;</strong></p>",
-        "input_format": "<p>на первой строчке вводится число <strong>n (1 &lt;= n &lt;= 1000)</strong></p>\r\n<p style=\"text-align: left;\">на второй строке через пробел вводится <strong>n</strong> целых чисел&nbsp;<strong>a</strong><em><strong>i</strong> (1 &lt;= a &lt;= 10^9)</em></p>",
-        "output_format": "<p>n чисел, отсортированный массив a</p>",
-        "is_public": true,
-        "difficult": 5,
-        "author_solution": "def bubble(array):\r\n    iterations = len(array) - 1\r\n    for i in range(iterations):\r\n        for j in range(iterations-i):\r\n            if array[j] > array[j+1]:\r\n                array[j], array[j+1] = array[j+1], array[j]\r\n\r\n\r\nn = int(input())\r\na = list(map(int, input().split())\r\nbubble(a)\r\nprint(a)",
-        "author_language": "Py3.11",
-        "time_limit": 1,
-        "memory_limit": 256,
-        "created_at": "2025-04-13T17:01:05.564Z",
-        "tags": [
-            11
-        ]
-    }
-},
-{
-    "model": "problems.testcase",
-    "pk": 1,
-    "fields": {
-        "problem": 1,
-        "is_sample": true,
-        "input_data": "1 1",
-        "output_data": "2",
-        "number": 0
-    }
-},
-{
-    "model": "problems.testcase",
-    "pk": 2,
-    "fields": {
-        "problem": 1,
-        "is_sample": true,
-        "input_data": "2 2",
-        "output_data": "4",
-        "number": 2
-    }
-},
-{
-    "model": "problems.testcase",
-    "pk": 3,
-    "fields": {
-        "problem": 1,
-        "is_sample": true,
-        "input_data": "1 1",
-        "output_data": "2",
-        "number": 1
-    }
-},
-{
-    "model": "problems.testcase",
-    "pk": 4,
-    "fields": {
-        "problem": 2,
-        "is_sample": true,
-        "input_data": "5 \r\n1 2 3 4 5",
-        "output_data": "1 2 3 4 5",
-        "number": 1
-    }
+  "model": "users.profile",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "image": "",
+    "score": 0
+  }
 }
 ]

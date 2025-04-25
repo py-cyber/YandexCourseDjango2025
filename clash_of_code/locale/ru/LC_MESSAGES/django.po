@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-24 19:00+0300\n"
+"POT-Creation-Date: 2025-04-25 18:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,25 +20,40 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: clash_of_code/settings.py:148
+#: clash_of_code/settings.py:134
 msgid "English"
 msgstr "Английский"
 
-#: clash_of_code/settings.py:149
+#: clash_of_code/settings.py:135
 msgid "Russian"
 msgstr "Русский"
 
-#: contests/apps.py:8 templates/includes/header.html:67
+#: contests/apps.py:8 templates/includes/header.html:62
 msgid "Contests"
 msgstr "Соревнования"
+
+#: contests/views.py:59 contests/views.py:279
+msgid "Not enough rights"
+msgstr "Не хватает прав"
+
+#: contests/views.py:137
+#, fuzzy
+#| msgid "Are you sure you want to register for this contest?"
+msgid "You are already registered for this contest"
+msgstr "Вы уверены, что хотите удалить соревнование"
+
+#: contests/views.py:270
+msgid "Please log in to access this page"
+msgstr "Пожалуйста, войдите в систему, чтобы получить доступ к этой странице"
+
+#: contests/views.py:343
+#, python-brace-format
+msgid "Error sending email: {error}"
+msgstr "Ошибка при отправке электронного письма: {error}"
 
 #: core/apps.py:8
 msgid "Core"
 msgstr "Ядро"
-
-#: duet/apps.py:8
-msgid "Duet"
-msgstr "Дуэли"
 
 #: homepage/apps.py:8
 msgid "Homepage"
@@ -49,7 +64,7 @@ msgstr "Главная"
 msgid "Problems"
 msgstr "Задачи"
 
-#: problems/models.py:16 templates/duet/invitations_list.html:17
+#: problems/models.py:16
 msgid "Accept"
 msgstr "Принято"
 
@@ -256,7 +271,7 @@ msgstr "Создать новую"
 msgid "Search task"
 msgstr "Поиск задачи"
 
-#: templates/contests/add_problem.html:71 templates/includes/header.html:114
+#: templates/contests/add_problem.html:71 templates/includes/header.html:101
 #: templates/problems/my_tasks.html:8
 msgid "My tasks"
 msgstr "Мои задачи"
@@ -306,6 +321,7 @@ msgid "Task parameters in the contest"
 msgstr "Параметры задания в контесте"
 
 #: templates/contests/add_problem.html:127 templates/contests/detail.html:80
+#: templates/contests/standings.html:28
 msgid "Points"
 msgstr "Баллы"
 
@@ -318,9 +334,7 @@ msgid "Add"
 msgstr "Добавить"
 
 #: templates/contests/add_problem.html:140 templates/contests/create.html:82
-#: templates/contests/register.html:19 templates/duet/create_room.html:28
-#: templates/duet/invite_user.html:24
-#: templates/duet/room_confirm_delete.html:18 templates/users/profile.html:111
+#: templates/contests/register.html:19 templates/users/profile.html:111
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -453,7 +467,7 @@ msgid "Register"
 msgstr "Зарегистрирован"
 
 #: templates/contests/detail.html:49 templates/contests/standings.html:5
-#: templates/contests/standings.html:9
+#: templates/contests/standings.html:10
 msgid "Results"
 msgstr "Результаты"
 
@@ -473,25 +487,21 @@ msgstr "Задача"
 msgid "Status"
 msgstr "Статус"
 
-#: templates/contests/detail.html:110
+#: templates/contests/detail.html:113
 msgid "Solved"
 msgstr "Решено"
 
-#: templates/contests/detail.html:112
+#: templates/contests/detail.html:115
 msgid "Not Solved"
 msgstr "Не решено"
 
-#: templates/contests/detail.html:123
+#: templates/contests/detail.html:126
 msgid "There are currently no problems in this contest"
 msgstr "В настоящее время в этом контесте нет никаких проблем"
 
-#: templates/contests/detail.html:135 templates/duet/user_rooms.html:28
+#: templates/contests/detail.html:138
 msgid "Participants"
 msgstr "Участники"
-
-#: templates/contests/detail.html:147
-msgid "rating"
-msgstr "Рейтинг"
 
 #: templates/contests/list.html:10
 msgid "Contests List"
@@ -521,122 +531,25 @@ msgstr "Вы уверены, что хотите удалить соревнов
 msgid "Confirm Registration"
 msgstr "Подтвердить регистрацию"
 
-#: templates/contests/standings.html:16
+#: templates/contests/standings.html:12
+#, fuzzy
+#| msgid "Submissions"
+msgid "Back to contest"
+msgstr "Посылки"
+
+#: templates/contests/standings.html:21
 msgid "Participant"
 msgstr "Участник"
 
-#: templates/contests/standings.html:20
-msgid "Total"
-msgstr "Всего"
+#: templates/contests/standings.html:29
+msgid "Penalty"
+msgstr "Штраф"
 
-#: templates/duet/create_room.html:10
-msgid "Create new code room"
-msgstr "Создать новую комнату для кода"
-
-#: templates/duet/create_room.html:16
-msgid "Room name"
-msgstr "Название комнаты"
-
-#: templates/duet/create_room.html:20
-msgid "Programming language"
-msgstr "Язык программирования"
-
-#: templates/duet/create_room.html:29
-msgid "Create room"
-msgstr "Создать комнату"
-
-#: templates/duet/invitations_list.html:6 templates/duet/user_rooms.html:12
-#: templates/includes/header.html:106
-msgid "My invitations"
-msgstr "Мои приглашения"
-
-#: templates/duet/invitations_list.html:14
-msgid "Invited by"
-msgstr "Приглашение от"
-
-#: templates/duet/invitations_list.html:23
-msgid "You have no pending invitations"
-msgstr "У вас нет ожидающих приглашений"
-
-#: templates/duet/invite_user.html:10
-msgid "Invite user to"
-msgstr "Пригласить пользователя в"
-
-#: templates/duet/invite_user.html:16
-msgid "Select user"
-msgstr "Выберите пользователя"
-
-#: templates/duet/invite_user.html:25
-msgid "Send invitation"
-msgstr "Отправить приглашение"
-
-#: templates/duet/room.html:32
-msgid "Invite user"
-msgstr "Пригласить пользователя"
-
-#: templates/duet/room.html:35 templates/problems/problem_add_test.html:76
-#: templates/problems/problem_add_test.html:97 templates/users/profile.html:80
-msgid "Save"
-msgstr "Сохранить"
-
-#: templates/duet/room.html:39 templates/duet/room_confirm_delete.html:17
-#: templates/duet/user_rooms.html:42 templates/users/profile.html:113
-msgid "Delete"
-msgstr "Удалить"
-
-#: templates/duet/room.html:45
-msgid "My rooms"
-msgstr "Мои комнаты"
-
-#: templates/duet/room.html:73
-msgid "Success"
-msgstr "Успешно"
-
-#: templates/duet/room.html:77
-msgid "Code saved successfully!"
-msgstr "Код успешно сохранен"
-
-#: templates/duet/room_confirm_delete.html:11
-msgid "Are you sure you want to delete the room"
-msgstr "Вы уверены, что хотите удалить комнату"
-
-#: templates/duet/room_confirm_delete.html:12
-msgid "This action cannot be undone"
-msgstr "Это действие не может быть отменено"
-
-#: templates/duet/user_rooms.html:7 templates/includes/header.html:62
-msgid "My code rooms"
-msgstr "Мои комнаты для кода"
-
-#: templates/duet/user_rooms.html:9
-msgid "Create new room"
-msgstr "Создать новую комнату"
-
-#: templates/duet/user_rooms.html:27
-msgid "Owner"
-msgstr "Владелец"
-
-#: templates/duet/user_rooms.html:31
-msgid "Last updated"
-msgstr "Последнее обновление"
-
-#: templates/duet/user_rooms.html:31
-msgid "ago"
-msgstr "назад"
-
-#: templates/duet/user_rooms.html:36
-msgid "Open room"
-msgstr "Открыть комнату"
-
-#: templates/duet/user_rooms.html:40
-msgid "Invite"
-msgstr "Пригласить"
-
-#: templates/duet/user_rooms.html:51
-msgid "You don't have any code rooms yet. Create one to start collaborating!"
-msgstr ""
-"У вас пока нет комнат для кода. Создайте одну, чтобы начать совместную "
-"работу!"
+#: templates/contests/standings.html:59
+#, fuzzy
+#| msgid "Participants"
+msgid "No participants yet"
+msgstr "Участники"
 
 #: templates/errors/403.html:8
 msgid "Access denied"
@@ -710,7 +623,7 @@ msgstr "Присоединитесь к нам"
 msgid "Sign up to get access to all features"
 msgstr "Зарегистрируйтесь, чтобы получить доступ ко всем функциям"
 
-#: templates/homepage/home.html:32 templates/includes/header.html:133
+#: templates/homepage/home.html:32 templates/includes/header.html:120
 msgid "Sign Up"
 msgstr "Зарегистрироваться"
 
@@ -734,20 +647,20 @@ msgstr "Все права защищены"
 msgid "Leaderboard"
 msgstr "Список лучших"
 
-#: templates/includes/header.html:73
+#: templates/includes/header.html:68
 msgid "Admin"
 msgstr "Админ-панель"
 
-#: templates/includes/header.html:101 templates/users/user_list.html:21
+#: templates/includes/header.html:96 templates/users/user_list.html:21
 #: templates/users/user_list.html:54
 msgid "Profile"
 msgstr "Профиль"
 
-#: templates/includes/header.html:121 templates/users/profile.html:89
+#: templates/includes/header.html:108 templates/users/profile.html:89
 msgid "Logout"
 msgstr "Выйти"
 
-#: templates/includes/header.html:128 templates/users/login.html:18
+#: templates/includes/header.html:115 templates/users/login.html:9
 msgid "Login"
 msgstr "Войти"
 
@@ -841,6 +754,11 @@ msgstr "Выходные данные"
 #: templates/problems/problem_add_test.html:56
 msgid "Sample Test Case"
 msgstr "Тест для примера"
+
+#: templates/problems/problem_add_test.html:76
+#: templates/problems/problem_add_test.html:97 templates/users/profile.html:80
+msgid "Save"
+msgstr "Сохранить"
 
 #: templates/problems/problem_add_test.html:84
 msgid "No test cases found. Please add at least one test case."
@@ -1035,11 +953,11 @@ msgstr "Посылки"
 msgid "To Problem"
 msgstr "Задача"
 
-#: templates/users/login.html:21
+#: templates/users/login.html:12
 msgid "Forgot password"
 msgstr "Забыли пароль"
 
-#: templates/users/login.html:22
+#: templates/users/login.html:13
 msgid "Don't have an account"
 msgstr "У вас нет учетной записи"
 
@@ -1144,6 +1062,10 @@ msgstr "Подтвердить"
 msgid "Are you sure you want to delete your avatar?"
 msgstr "Вы точно хотите удалить"
 
+#: templates/users/profile.html:113
+msgid "Delete"
+msgstr "Удалить"
+
 #: templates/users/signup.html:10
 #, fuzzy
 #| msgid "Registration Open"
@@ -1205,6 +1127,93 @@ msgid ""
 msgstr ""
 "Письмо с подтверждением отправлено на %(email)s. Проверьте свой почтовый "
 "ящик."
+
+#~ msgid "Пожалуйста, войдите в систему для доступа к этой странице"
+#~ msgstr "Please log in to access this page"
+
+#~ msgid "Duet"
+#~ msgstr "Дуэли"
+
+#~ msgid "rating"
+#~ msgstr "Рейтинг"
+
+#~ msgid "Total"
+#~ msgstr "Всего"
+
+#~ msgid "Create new code room"
+#~ msgstr "Создать новую комнату для кода"
+
+#~ msgid "Room name"
+#~ msgstr "Название комнаты"
+
+#~ msgid "Programming language"
+#~ msgstr "Язык программирования"
+
+#~ msgid "Create room"
+#~ msgstr "Создать комнату"
+
+#~ msgid "My invitations"
+#~ msgstr "Мои приглашения"
+
+#~ msgid "Invited by"
+#~ msgstr "Приглашение от"
+
+#~ msgid "You have no pending invitations"
+#~ msgstr "У вас нет ожидающих приглашений"
+
+#~ msgid "Invite user to"
+#~ msgstr "Пригласить пользователя в"
+
+#~ msgid "Select user"
+#~ msgstr "Выберите пользователя"
+
+#~ msgid "Send invitation"
+#~ msgstr "Отправить приглашение"
+
+#~ msgid "Invite user"
+#~ msgstr "Пригласить пользователя"
+
+#~ msgid "My rooms"
+#~ msgstr "Мои комнаты"
+
+#~ msgid "Success"
+#~ msgstr "Успешно"
+
+#~ msgid "Code saved successfully!"
+#~ msgstr "Код успешно сохранен"
+
+#~ msgid "Are you sure you want to delete the room"
+#~ msgstr "Вы уверены, что хотите удалить комнату"
+
+#~ msgid "This action cannot be undone"
+#~ msgstr "Это действие не может быть отменено"
+
+#~ msgid "My code rooms"
+#~ msgstr "Мои комнаты для кода"
+
+#~ msgid "Create new room"
+#~ msgstr "Создать новую комнату"
+
+#~ msgid "Owner"
+#~ msgstr "Владелец"
+
+#~ msgid "Last updated"
+#~ msgstr "Последнее обновление"
+
+#~ msgid "ago"
+#~ msgstr "назад"
+
+#~ msgid "Open room"
+#~ msgstr "Открыть комнату"
+
+#~ msgid "Invite"
+#~ msgstr "Пригласить"
+
+#~ msgid ""
+#~ "You don't have any code rooms yet. Create one to start collaborating!"
+#~ msgstr ""
+#~ "У вас пока нет комнат для кода. Создайте одну, чтобы начать совместную "
+#~ "работу!"
 
 #~ msgid "403 Error"
 #~ msgstr "Ошибка 403"

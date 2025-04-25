@@ -5,6 +5,7 @@ import django.db.models
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 import contests.forms
@@ -21,20 +22,17 @@ class ContestCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
-
-        if form.cleaned_data['start_time']:
-            user_local_start = form.cleaned_data['start_time']
-            form.instance.start_time = user_local_start - timezone.timedelta(
-                minutes=tz_offset,
-            )
-
-        if form.cleaned_data['end_time']:
-            user_local_end = form.cleaned_data['end_time']
-            form.instance.end_time = user_local_end - timezone.timedelta(
-                minutes=tz_offset,
-            )
-
         form.instance.created_by = self.request.user
+
+        for field in ['start_time', 'end_time']:
+            if form.cleaned_data.get(field):
+                user_local_time = form.cleaned_data[field]
+                setattr(
+                    form.instance,
+                    field,
+                    user_local_time - timezone.timedelta(minutes=tz_offset),
+                )
+
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -55,10 +53,10 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
         if not (
             contest.is_public
             or contest.created_by == user
-            or contest.participants.filter(id=user.id).exists()
+            or user.id in contest.participants.values_list('id', flat=True)
             or user.is_staff
         ):
-            raise PermissionDenied('Недостаточно прав')
+            raise PermissionDenied(_('Not enough rights'))
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -69,21 +67,24 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
         user = self.request.user
 
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
-        contest.display_start_time = contest.start_time + timezone.timedelta(
-            minutes=tz_offset,
-        )
-        contest.display_end_time = contest.end_time + timezone.timedelta(
-            minutes=tz_offset,
-        )
+        time_diff = timezone.timedelta(minutes=tz_offset)
+        contest.display_start_time = contest.start_time + time_diff
+        contest.display_end_time = contest.end_time + time_diff
 
-        solved_problems = set()
+        contest_status = {
+            'is_past': now > contest.end_time,
+            'is_running': contest.start_time <= now <= contest.end_time,
+            'is_upcoming': now < contest.start_time,
+        }
         is_registered = (
             contest.participants.filter(id=self.request.user.id).exists()
             or user.is_staff
             or contest.created_by == user
         )
+
+        solved_problems = set()
         qs_sub = submissions.models.Submission
-        if (now >= contest.start_time) and is_registered:
+        if contest_status['is_running'] and is_registered:
             solved_problems = set(
                 qs_sub.objects.filter(
                     user=self.request.user,
@@ -94,20 +95,16 @@ class ContestDetailView(LoginRequiredMixin, DetailView):
 
         context.update(
             {
-                'is_past': now > contest.end_time,
-                'is_running': contest.start_time <= now <= contest.end_time,
-                'is_upcoming': now < contest.start_time,
+                **contest_status,
                 'is_registered': is_registered,
-                'is_creator': contest.created_by == self.request.user,
-                'problems': contest.contestproblem_set.all()
-                .select_related('problem')
-                .order_by('order'),
+                'is_creator': contest.created_by == user,
+                'problems': contest.contestproblem_set.all().order_by('order'),
                 'duration': contest.end_time - contest.start_time,
                 'solved_problems': solved_problems,
             },
         )
 
-        if self.request.user.is_staff:
+        if user.is_staff:
             context['participants'] = contest.participants.all().order_by('username')
 
         return context
@@ -118,19 +115,32 @@ class ContestRegisterView(LoginRequiredMixin, CreateView):
     fields = []
     template_name = 'contests/register.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['contest'] = get_object_or_404(
-            contests.models.Contest,
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.contest = get_object_or_404(
+            contests.models.Contest.objects.only('id', 'name', 'is_public'),
             pk=self.kwargs['pk'],
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['contest'] = self.contest
         return context
 
     def form_valid(self, form):
-        contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
+        if self.model.objects.filter(
+            user=self.request.user,
+            contest=self.contest,
+        ).exists():
+            messages.warning(
+                self.request,
+                _('You are already registered for this contest'),
+            )
+            return redirect(self.get_success_url())
+
         form.instance.user = self.request.user
-        form.instance.contest = contest
-        form.instance.is_approved = contest.is_public
+        form.instance.contest = self.contest
+        form.instance.is_approved = self.contest.is_public
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -142,22 +152,35 @@ class ContestStandingsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
+        contest = get_object_or_404(
+            contests.models.Contest.objects.select_related('created_by'),
+            pk=self.kwargs['pk'],
+        )
 
         contest_problems = contest.contestproblem_set.select_related(
             'problem',
         ).order_by('order')
+        problem_ids = [cp.problem_id for cp in contest_problems]
+        registrations = (
+            contest.contestregistration_set.filter(
+                is_approved=True,
+            )
+            .select_related('user')
+            .only('user__id', 'user__username', 'contest_id')
+        )
         qs_sub = submissions.models.Submission
         all_submissions = (
-            qs_sub.objects.filter(contest=contest)
+            qs_sub.objects.filter(
+                contest=contest,
+                problem_id__in=problem_ids,
+                user_id__in=[r.user_id for r in registrations],
+            )
             .select_related('user', 'problem')
             .order_by('submitted_at')
         )
-        registrations = contest.contestregistration_set.filter(
-            is_approved=True,
-        ).select_related('user')
 
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+        time_diff = timezone.timedelta(minutes=tz_offset)
 
         standings = []
         for registration in registrations:
@@ -193,9 +216,7 @@ class ContestStandingsView(TemplateView):
                         'verdict': 'AC',
                         'points': points,
                         'penalty': penalty,
-                        'time': (
-                            ac_sub.submitted_at + timezone.timedelta(minutes=tz_offset)
-                        ).strftime('%H:%M'),
+                        'time': (ac_sub.submitted_at + time_diff).strftime('%H:%M'),
                         'attempts': attempts,
                         'problem_id': cp.problem.id,
                     }
@@ -246,7 +267,7 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
         if not request.user.is_authenticated:
             messages.warning(
                 request,
-                'Пожалуйста, войдите в систему для доступа к этой странице',
+                _('Please log in to access this page'),
             )
             return redirect('login')
 
@@ -255,7 +276,7 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
             or request.user == self.contest.created_by
             or request.user.is_superuser
         ):
-            raise PermissionDenied('Недостаточно прав')
+            raise PermissionDenied(_('Not enough rights'))
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -317,7 +338,10 @@ class AddProblemToContestView(LoginRequiredMixin, CreateView):
             form.instance.contest = self.contest
             return super().form_valid(form)
         except Exception as e:
-            messages.error(self.request, f'Ошибка при отправке письма: {str(e)}')
+            messages.error(
+                self.request,
+                _('Error sending email: {error}').format(error=str(e)),
+            )
             return self.form_invalid(form)
 
     def get_success_url(self):
@@ -365,44 +389,59 @@ class ContestSubmissionsView(LoginRequiredMixin, ListView):
     model = submissions.models.Submission
     template_name = 'contests/contest_submissions.html'
     context_object_name = 'my_submissions'
+    paginate_by = 25
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.contest = get_object_or_404(
+            contests.models.Contest.objects.only(
+                'id',
+                'start_time',
+                'end_time',
+                'created_by_id',
+            ),
+            pk=self.kwargs['pk'],
+        )
+        self.is_admin = (
+            request.user.is_staff
+            or request.user.id == self.contest.created_by_id
+            or request.user.is_superuser
+        )
+
+    def get_base_queryset(self):
+        q = self.model.objects.filter(
+            user=self.request.user,
+            contest=self.contest,
+            problem__in=self.contest.contestproblem_set.values('problem'),
+        )
+        q.select_related('problem', 'user')
+        q.only(
+            'id',
+            'submitted_at',
+            'verdict',
+            'language',
+            'problem__time_limit',
+            'problem__memory_limit',
+            'problem__title',
+            'problem__id',
+            'user__username',
+        )
+        q.order_by('-submitted_at')
+        return q
 
     def get_queryset(self):
-        self.contest = get_object_or_404(contests.models.Contest, pk=self.kwargs['pk'])
+        if self.is_admin:
+            return self.get_base_queryset()
 
-        return (
-            self.model.objects.filter(
-                user=self.request.user,
-                contest=self.contest,
-                problem__in=self.contest.contestproblem_set.values('problem'),
-            )
-            .select_related('problem', 'user')
-            .order_by('-submitted_at')
-        )
+        return self.get_base_queryset().filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['contest'] = self.contest
 
-        if self.request.user.is_staff or self.request.user == self.contest.created_by:
-            contest_problem_ids = contests.models.ContestProblem.objects.filter(
-                contest=self.contest,
-            ).values_list('problem_id', flat=True)
-
-            context['all_submissions'] = self.model.objects.filter(
-                contest=self.contest,
-                problem_id__in=contest_problem_ids,
-                submitted_at__range=(
-                    self.contest.start_time,
-                    self.contest.end_time,
-                ),
-            )
-            context['all_submissions'].select_related('problem', 'user')
-            context['all_submissions'].order_by('-submitted_at')
-
         tz_offset = int(self.request.COOKIES.get('tz_offset', 0))
+        time_diff = timezone.timedelta(minutes=tz_offset)
         for submission in context['my_submissions']:
-            submission.display_submitted_at = (
-                submission.submitted_at + timezone.timedelta(minutes=tz_offset)
-            )
+            submission.display_submitted_at = submission.submitted_at + time_diff
 
         return context

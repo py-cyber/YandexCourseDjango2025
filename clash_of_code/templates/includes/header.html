@@ -8,7 +8,7 @@
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon" style="background-color: #00bf8e;"></span>
             </button>
 
             <div class="dropdown">
@@ -73,20 +73,29 @@
 
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
-                        {% if user.profile.image %}
-                            <img src="{{ user.profile.image.url }}" alt="Avatar" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px;">
+                        {% if user.is_authenticated %}
+                            {% if user.profile.image %}
+                                <img src="{{ user.profile.image.url }}" alt="Avatar" class="img-fluid rounded-circle nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 60px; height: 60px;">
+                            {% else %}
+                                <div class="d-flex justify-content-center position-relative" role="button" data-bs-toggle="dropdown">
+                                    <div class="rounded-circle bg-light text-dark d-flex align-items-center justify-content-center"
+                                         style="width: 60px; height: 60px;">
+                                        <span class="display-6">{{ user.username|first|upper }}</span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if invitations_count > 0 %}
+                                <div class="position-absolute bottom-0 end-0 translate-middle rounded-circle bg-danger text-white d-flex align-items-center justify-content-center"
+                                     style="width: 20px; height: 20px; font-size: 10px;">
+                                    <span>{{ invitations_count }}</span>
+                                </div>
+                            {% endif %}
                         {% else %}
                             <div class="d-flex justify-content-center position-relative" role="button" data-bs-toggle="dropdown">
                                 <div class="rounded-circle bg-light text-dark d-flex align-items-center justify-content-center"
                                      style="width: 60px; height: 60px;">
-                                    <span class="display-6">{{ user.username|first|upper }}</span>
+                                    <i class="bi bi-person display-6"></i>
                                 </div>
-                            </div>
-                        {% endif %}
-                        {% if invitations_count > 0 %}
-                            <div class="position-absolute bottom-0 end-0 translate-middle rounded-circle bg-danger text-white d-flex align-items-center justify-content-center"
-                                 style="width: 20px; height: 20px; font-size: 10px;">
-                                <span>{{ invitations_count }}</span>
                             </div>
                         {% endif %}
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -128,3 +137,10 @@
         </div>
     </nav>
 </header>
+{% block extra_css %}
+<style>
+    .active{
+        color: var(--bs-primary) !important;
+    }
+</style>
+{% endblock %}
